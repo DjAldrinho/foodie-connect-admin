@@ -1,0 +1,39 @@
+<div class="auth-container" role="presentation">
+  <div class="auth-background" aria-hidden="true"></div>
+
+  <div class="auth-content">
+    <!-- Logo/Header Section -->
+    <header class="auth-header">
+      <div class="logo-wrapper">
+        <img
+          ngSrc="/assets/images/logo.png"
+          alt="Foodie Connect Logo"
+          width="120"
+          height="60"
+          class="logo"
+          priority
+        />
+      </div>
+      <h1 class="app-title">Foodie Connect Admin</h1>
+    </header>
+
+    <!-- Main Content Outlet -->
+    <main class="auth-main" role="main">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer -->
+    <footer class="auth-footer">
+      <p class="copyright">
+        &copy; {{ currentYear }} Foodie Connect. Todos los derechos reservados.
+      </p>
+      <nav class="footer-links" aria-label="Enlaces del pie de página">
+        <a href="/terms" class="footer-link">Términos</a>
+        <span class="separator" aria-hidden="true">•</span>
+        <a href="/privacy" class="footer-link">Privacidad</a>
+        <span class="separator" aria-hidden="true">•</span>
+        <a href="/contact" class="footer-link">Contacto</a>
+      </nav>
+    </footer>
+  </div>
+</div>

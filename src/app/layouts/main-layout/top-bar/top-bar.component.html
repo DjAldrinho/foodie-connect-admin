@@ -1,0 +1,22 @@
+<header class="top-bar" role="banner">
+  <div class="top-bar-container">
+    <!-- Mobile Menu Toggle -->
+    <button
+      class="menu-toggle"
+      (click)="menuToggle.emit()"
+      aria-label="Abrir menú de navegación"
+      type="button"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Breadcrumbs -->
+    <app-breadcrumbs class="breadcrumbs"></app-breadcrumbs>
+
+    <!-- Right Side Actions -->
+    <div class="top-bar-actions">
+      <!-- Notification Bell -->
+      <app-notification-bell></app-notification-bell>
+    </div>
+  </div>
+</header>

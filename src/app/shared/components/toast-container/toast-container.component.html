@@ -1,0 +1,46 @@
+<div class="toast-container">
+  <!-- ARIA Live Region for Screen Readers -->
+  <div
+    class="sr-only"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    @for (toast of visibleToasts(); track toast.id) {
+      <div [attr.aria-label]="toast.message"></div>
+    }
+  </div>
+
+  <!-- Toast Notifications -->
+  @for (toast of visibleToasts(); track toast.id; let isLast = $last) {
+    <div
+      class="toast"
+      [class.toast-success]="toast.type === 'success'"
+      [class.toast-error]="toast.type === 'error'"
+      [class.toast-warning]="toast.type === 'warning'"
+      [class.toast-info]="toast.type === 'info'"
+      [attr.aria-label]="toast.type + ': ' + toast.message"
+      role="alert"
+    >
+      <!-- Icon -->
+      <div class="toast-icon">
+        <mat-icon>{{ getIcon(toast.type) }}</mat-icon>
+      </div>
+
+      <!-- Content -->
+      <div class="toast-content">
+        <p class="toast-message">{{ toast.message }}</p>
+      </div>
+
+      <!-- Close Button -->
+      <button
+        class="toast-close"
+        (click)="dismiss(toast.id)"
+        aria-label="Cerrar notificación"
+        type="button"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  }
+</div>

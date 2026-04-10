@@ -1,0 +1,74 @@
+<div class="notification-bell-wrapper">
+  <button
+    class="notification-bell"
+    (click)="togglePanel()"
+    [attr.aria-expanded]="isPanelOpen()"
+    aria-haspopup="true"
+    [attr.aria-label]="'Notificaciones' + (unreadCount() > 0 ? ` (${unreadCount()} sin leer)` : '')"
+    type="button"
+  >
+    <mat-icon
+      matBadge="{{ badgeContent() }}"
+      [matBadgeColor]="badgeColor()"
+      matBadgeOverlap="false"
+      class="bell-icon"
+    >
+      notifications
+    </mat-icon>
+  </button>
+
+  <!-- ARIA Live Region for Screen Readers -->
+  <div class="sr-only" role="status" aria-live="polite">
+    {{ announcementText() }}
+  </div>
+
+  <!-- Notifications Panel (Dropdown) -->
+  @if (isPanelOpen()) {
+    <div class="notifications-panel" role="dialog" aria-label="Panel de notificaciones">
+      <div class="notifications-header">
+        <h3 class="notifications-title">Notificaciones</h3>
+        <button
+          class="mark-read-btn"
+          (click)="markAllAsRead()"
+          aria-label="Marcar todas como leídas"
+          type="button"
+        >
+          Marcar todas como leídas
+        </button>
+      </div>
+
+      <div class="notifications-list">
+        @if (unreadCount() === 0) {
+          <div class="no-notifications">
+            <mat-icon class="no-notifications-icon">check_circle</mat-icon>
+            <p>No tienes notificaciones nuevas</p>
+          </div>
+        } @else {
+          <!-- Sample notification items -->
+          @for (i of [1, 2, 3]; track i) {
+            <div class="notification-item">
+              <div class="notification-content">
+                <p class="notification-title">Notificación de ejemplo {{ i }}</p>
+                <p class="notification-description">Esta es una notificación de prueba</p>
+              </div>
+              <span class="notification-time">Hace 5 minutos</span>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="notifications-footer">
+        <button class="view-all-btn" type="button">
+          Ver todas las notificaciones
+        </button>
+      </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div
+      class="notifications-backdrop"
+      (click)="closePanel()"
+      aria-hidden="true"
+    ></div>
+  }
+</div>

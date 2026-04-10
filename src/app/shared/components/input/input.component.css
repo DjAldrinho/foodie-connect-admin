@@ -1,0 +1,198 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.input-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.required-indicator {
+  color: #e74c3c;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #2c3e50;
+  background: white;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-field:hover:not(:disabled):not(:readonly) {
+  border-color: #95a5a6;
+}
+
+.input-field:focus {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.input-field:disabled {
+  background: #f5f6fa;
+  color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.input-field:readonly {
+  background: #f5f6fa;
+  cursor: default;
+}
+
+.input-field::placeholder {
+  color: #bdc3c7;
+}
+
+/* Icons */
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #7f8c8d;
+  pointer-events: none;
+}
+
+.input-field:has(+ .password-toggle) {
+  padding-right: 3rem;
+}
+
+.input-field:has(~ .suffix-icon-btn) {
+  padding-right: 3rem;
+}
+
+.input-wrapper:has(.prefix-icon) .input-field {
+  padding-left: 3rem;
+}
+
+/* Password Toggle */
+.password-toggle,
+.suffix-icon-btn {
+  position: absolute;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #7f8c8d;
+  transition: all 0.2s ease;
+}
+
+.password-toggle:hover,
+.suffix-icon-btn:hover {
+  background: #f5f6fa;
+  color: #2c3e50;
+}
+
+.password-toggle:focus,
+.suffix-icon-btn:focus {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+.password-toggle mat-icon,
+.suffix-icon-btn mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Error State */
+.input-wrapper.has-error .input-field {
+  border-color: #e74c3c;
+}
+
+.input-wrapper.has-error .input-field:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.input-error {
+  font-size: 0.875rem;
+  color: #e74c3c;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.input-error::before {
+  content: '⚠';
+  font-size: 1rem;
+}
+
+.input-helper {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+/* Character Counter */
+.character-counter {
+  font-size: 0.75rem;
+  color: #95a5a6;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .input-field,
+  .password-toggle,
+  .suffix-icon-btn {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .input-field {
+    border: 2px solid #000;
+  }
+
+  .input-field:focus {
+    border-width: 2px;
+  }
+}
+
+/* RTL Support */
+[dir='rtl'] .input-icon {
+  left: auto;
+  right: 1rem;
+}
+
+[dir='rtl'] .password-toggle,
+[dir='rtl'] .suffix-icon-btn {
+  right: auto;
+  left: 0.5rem;
+}
+
+[dir='rtl'] .input-wrapper:has(.prefix-icon) .input-field {
+  padding-left: 1rem;
+  padding-right: 3rem;
+}

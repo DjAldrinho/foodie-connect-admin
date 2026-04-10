@@ -1,0 +1,22 @@
+@if (isLoading()) {
+  <div
+    class="loading-overlay"
+    [attr.aria-busy]="ariaBusy()"
+    role="status"
+    aria-live="polite"
+  >
+    <!-- Screen Reader Announcement -->
+    <div class="sr-only">
+      Cargando...
+    </div>
+
+    <div class="loading-content">
+      <!-- Spinner -->
+      <mat-spinner
+        diameter="48"
+        mode="indeterminate"
+        [attr.aria-hidden]="'true'"
+      ></mat-spinner>
+    </div>
+  </div>
+}

@@ -1,0 +1,16 @@
+<div class="login-page">
+  <div class="login-page-header">
+    <h1 class="login-page-title">{{ pageTitle }}</h1>
+    <p class="login-page-subtitle">
+      Bienvenido de nuevo al panel de administración
+    </p>
+  </div>
+
+  <app-login-form (loginSuccess)="onLoginSuccess()"></app-login-form>
+
+  <div class="login-page-footer">
+    <a routerLink="/auth/forgot-password" class="forgot-password-link">
+      ¿Olvidaste tu contraseña?
+    </a>
+  </div>
+</div>

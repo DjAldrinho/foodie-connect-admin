@@ -1,0 +1,130 @@
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+/* Sidebar */
+app-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background: #2c3e50;
+  color: white;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 1000;
+}
+
+app-sidebar.collapsed {
+  width: 70px;
+}
+
+/* Mobile Sidebar */
+app-sidebar.mobile {
+  transform: translateX(-100%);
+}
+
+app-sidebar.mobile.open {
+  transform: translateX(0);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar Overlay (mobile only) */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.sidebar-shifted {
+  margin-left: 280px;
+}
+
+/* Mobile Layout */
+.main-layout.mobile .main-content {
+  margin-left: 0;
+}
+
+/* Top Bar */
+app-top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Page Content */
+.page-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-content.sidebar-shifted {
+    margin-left: 70px;
+  }
+
+  .page-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-content {
+    padding: 1rem;
+  }
+
+  app-sidebar {
+    width: 280px;
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  app-sidebar,
+  .main-content,
+  .sidebar-overlay {
+    transition: none;
+  }
+}
+
+/* Accessibility - High Contrast Mode */
+@media (prefers-contrast: high) {
+  app-sidebar {
+    border-right: 2px solid #fff;
+  }
+
+  app-top-bar {
+    border-bottom: 2px solid #000;
+  }
+}

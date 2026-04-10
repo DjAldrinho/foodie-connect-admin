@@ -1,0 +1,31 @@
+<div class="main-layout" [class.mobile]="isMobile()">
+  <!-- Sidebar -->
+  <app-sidebar
+    [class.open]="sidebarOpen"
+    [class.mobile]="isMobile()"
+    [collapsed]="!sidebarOpen && !isMobile()"
+    (close)="closeSidebar()"
+    role="complementary"
+    aria-label="Menú de navegación principal"
+  ></app-sidebar>
+
+  <!-- Overlay for mobile sidebar -->
+  @if (isMobile() && sidebarOpen) {
+    <div
+      class="sidebar-overlay"
+      (click)="closeSidebar()"
+      aria-hidden="true"
+    ></div>
+  }
+
+  <!-- Main Content Area -->
+  <div class="main-content" [class.sidebar-shifted]="sidebarOpen && !isMobile()">
+    <!-- Top Bar -->
+    <app-top-bar (menuToggle)="toggleSidebar()"></app-top-bar>
+
+    <!-- Page Content -->
+    <main class="page-content" role="main">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

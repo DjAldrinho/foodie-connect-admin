@@ -1,0 +1,17 @@
+<button
+  [attr.type]="type()"
+  [disabled]="disabled() || loading()"
+  [class]="getClasses().join(' ')"
+  (click)="onClick()"
+  [attr.aria-busy]="loading()"
+>
+  @if (loading()) {
+    <mat-icon class="spinner">autorenew</mat-icon>
+  } @else if (icon()) {
+    <mat-icon class="icon">{{ icon() }}</mat-icon>
+  }
+
+  @if (!iconOnly()) {
+    <ng-content></ng-content>
+  }
+</button>

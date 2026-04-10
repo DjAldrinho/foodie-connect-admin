@@ -1,0 +1,103 @@
+<nav
+  class="sidebar"
+  [class.collapsed]="collapsed()"
+  [class.mobile]="mobile()"
+  [class.open]="open()"
+  role="navigation"
+  aria-label="Menú principal de navegación"
+>
+  <!-- Close Button (Mobile Only) -->
+  @if (mobile() && open()) {
+    <button
+      class="close-btn"
+      (click)="onClose()"
+      aria-label="Cerrar menú"
+      type="button"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+
+  <!-- Logo Section -->
+  <div class="sidebar-header">
+    @if (!collapsed()) {
+      <div class="logo">
+        <img
+          ngSrc="/assets/images/logo.png"
+          alt="Foodie Connect"
+          width="120"
+          height="40"
+          class="logo-img"
+          priority
+        />
+        <span class="logo-text">Foodie Connect</span>
+      </div>
+    } @else {
+      <img
+        ngSrc="/assets/images/logo.png"
+        alt="Foodie Connect"
+        width="40"
+        height="40"
+        class="logo-img-collapsed"
+        priority
+      />
+    }
+  </div>
+
+  <!-- Navigation Menu -->
+  <ul class="nav-menu" role="menubar" aria-label="Opciones de navegación">
+    @for (item of menuItems; track item.path; let i = $index) {
+      <li role="none">
+        <a
+          class="nav-item"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [attr.aria-current]="routerLinkActive.isActive ? 'page' : null"
+          #routerLinkActive="routerLinkActive"
+          [class.collapsed-nav]="collapsed()"
+          (click)="onNavClick()"
+          (keydown)="onKeydown($event, i)"
+          role="menuitem"
+          [attr.tabindex]="collapsed() ? -1 : 0"
+        >
+          <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+          @if (!collapsed()) {
+            <span class="nav-label">{{ item.label }}</span>
+          }
+          @if (item.badge && !collapsed()) {
+            <span class="nav-badge" [attr.aria-label]="item.badge + ' notificaciones'">
+              {{ item.badge > 99 ? '99+' : item.badge }}
+            </span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+
+  <!-- User Menu Section -->
+  @if (!collapsed()) {
+    <div class="user-menu">
+      <div class="user-info">
+        <div class="user-avatar">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <div class="user-details">
+          <p class="user-name">{{ userName }}</p>
+          <p class="user-role">{{ userRole }}</p>
+        </div>
+      </div>
+
+      <div class="user-actions">
+        <button
+          class="user-action-btn"
+          (click)="onLogout()"
+          aria-label="Cerrar sesión"
+          type="button"
+        >
+          <mat-icon>logout</mat-icon>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+    </div>
+  }
+</nav>

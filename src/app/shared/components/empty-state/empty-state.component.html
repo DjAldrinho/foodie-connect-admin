@@ -1,0 +1,33 @@
+<div
+  class="empty-state"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  role="status"
+  aria-live="polite"
+>
+  <div class="empty-state-content">
+    <!-- Icon -->
+    <div class="empty-state-icon">
+      <mat-icon>{{ icon() }}</mat-icon>
+    </div>
+
+    <!-- Title -->
+    <h2 class="empty-state-title">{{ title() }}</h2>
+
+    <!-- Description -->
+    @if (description()) {
+      <p class="empty-state-description">{{ description() }}</p>
+    }
+
+    <!-- Action Button -->
+    @if (actionButton()) {
+      <button
+        class="empty-state-action"
+        mat-raised-button
+        (click)="onAction()"
+      >
+        {{ actionButton()!.label }}
+      </button>
+    }
+  </div>
+</div>

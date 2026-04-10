@@ -1,0 +1,83 @@
+.top-bar {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.top-bar-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #2c3e50;
+  transition: background 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background: #f5f6fa;
+}
+
+.menu-toggle:focus {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+.menu-toggle mat-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  flex: 1;
+}
+
+/* Right Side Actions */
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .top-bar-container {
+    padding: 0 1rem;
+  }
+
+  .breadcrumbs {
+    font-size: 0.875rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .menu-toggle {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .top-bar {
+    border-bottom: 2px solid #000;
+  }
+}

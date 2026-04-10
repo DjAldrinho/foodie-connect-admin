@@ -1,0 +1,62 @@
+<form
+  [formGroup]="form"
+  (submit)="onSubmit()"
+  (keydown.enter)="onKeyPress($event)"
+  class="login-form"
+  novalidate
+>
+  <!-- Email Input -->
+  <app-input
+    type="email"
+    label="Email"
+    placeholder="tu@email.com"
+    [required]="true"
+    prefixIcon="email"
+    [error]="getEmailError()"
+  >
+  </app-input>
+
+  <!-- Password Input -->
+  <app-input
+    type="password"
+    label="Contraseña"
+    placeholder="••••••••"
+    [required]="true"
+    prefixIcon="lock"
+    [error]="getPasswordError()"
+  >
+  </app-input>
+
+  <!-- Remember Me Checkbox -->
+  <div class="form-row">
+    <label class="checkbox-label">
+      <input
+        type="checkbox"
+        formControlName="rememberMe"
+        class="checkbox"
+      />
+      <span>Recordarme</span>
+    </label>
+  </div>
+
+  <!-- Server Error -->
+  @if (serverError()) {
+    <div class="server-error" role="alert" aria-live="assertive">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ serverError() }}</p>
+    </div>
+  }
+
+  <!-- Submit Button -->
+  <app-button
+    type="submit"
+    variant="primary"
+    size="large"
+    [loading]="isLoading()"
+    [disabled]="!isFormValid()"
+    (click)="onSubmit()"
+    class="submit-btn"
+  >
+    {{ isLoading() ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+  </app-button>
+</form>

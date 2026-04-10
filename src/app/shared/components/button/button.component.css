@@ -1,0 +1,147 @@
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:focus-visible {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+/* Sizes */
+button.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  height: 36px;
+}
+
+button.medium {
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+  height: 42px;
+}
+
+button.large {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  height: 48px;
+}
+
+/* Variants */
+button.primary {
+  background: #ff6b35;
+  color: white;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #e55a2b;
+}
+
+button.secondary {
+  background: white;
+  color: #2c3e50;
+  border: 1px solid #bdc3c7;
+}
+
+button.secondary:hover:not(:disabled) {
+  background: #f5f6fa;
+  border-color: #95a5a6;
+}
+
+button.text {
+  background: transparent;
+  color: #ff6b35;
+  padding: 0.5rem;
+}
+
+button.text:hover:not(:disabled) {
+  background: rgba(255, 107, 53, 0.1);
+}
+
+button.icon-only {
+  padding: 0.5rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+button.icon-only.small {
+  width: 36px;
+  height: 36px;
+}
+
+button.icon-only.large {
+  width: 48px;
+  height: 48px;
+}
+
+/* Icons */
+.icon,
+.spinner {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+button.small .icon,
+button.small .spinner {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+button.large .icon,
+button.large .spinner {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  button.primary {
+    border: 2px solid #000;
+  }
+
+  button.secondary {
+    border: 2px solid #000;
+  }
+}

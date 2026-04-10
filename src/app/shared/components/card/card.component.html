@@ -1,0 +1,27 @@
+<article
+  [class]="getClasses().join(' ')"
+  [attr.role]="clickable() ? 'button' : null"
+  [attr.tabindex]="clickable() ? 0 : null"
+  [attr.aria-label]="ariaLabel()"
+  (click)="onClick($event)"
+  (keydown.enter)="onClick($event)"
+>
+  @if (clickable()) {
+    <div class="card-focus-indicator"></div>
+  }
+
+  <!-- Header Slot -->
+  <header class="card-header">
+    <ng-content select="[header]"></ng-content>
+  </header>
+
+  <!-- Content Slot -->
+  <div class="card-content">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Footer Slot -->
+  <footer class="card-footer">
+    <ng-content select="[footer]"></ng-content>
+  </footer>
+</article>
