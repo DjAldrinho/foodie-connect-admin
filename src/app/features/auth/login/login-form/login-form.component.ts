@@ -1,5 +1,4 @@
 import { Component, inject, signal, computed, output } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,7 +36,6 @@ import { ButtonComponent } from '../../../../shared/components/button';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatIconModule,
     InputComponent,
     ButtonComponent,
@@ -46,19 +44,22 @@ import { ButtonComponent } from '../../../../shared/components/button';
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent {
-  private readonly fb = inject(FormBuilder);
   private readonly authService = AuthService();
   private readonly toastService = inject(ToastNotificationService);
   private readonly router = inject(Router);
 
   /**
-   * Login form group
+   * Form fields
    */
-  readonly form: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
-    rememberMe: [false],
-  });
+  readonly email = signal('');
+  readonly password = signal('');
+  readonly rememberMe = signal(false);
+
+  /**
+   * Field touched states
+   */
+  readonly emailTouched = signal(false);
+  readonly passwordTouched = signal(false);
 
   /**
    * Loading state
@@ -78,33 +79,63 @@ export class LoginFormComponent {
   /**
    * Form validation state
    */
-  readonly isFormValid = computed(() => this.form.valid && !this.isLoading());
+  readonly isFormValid = computed(() => {
+    const email = this.email();
+    const password = this.password();
 
-  /**
-   * Get email control
-   */
-  get emailControl() {
-    return this.form.get('email');
-  }
+    // Email validation
+    const emailValid = email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  /**
-   * Get password control
-   */
-  get passwordControl() {
-    return this.form.get('password');
-  }
+    // Password validation
+    const passwordValid = password.length >= 8;
 
-  /**
-   * Get remember me control
-   */
-  get rememberMeControl() {
-    return this.form.get('rememberMe');
-  }
+    return emailValid && passwordValid && !this.isLoading();
+  });
 
   /**
    * Login success event
    */
   readonly loginSuccess = output<void>();
+
+  /**
+   * Get error message for email field
+   */
+  getEmailError(): string {
+    const email = this.email();
+
+    // Only show error if field is touched or form was submitted
+    if (!this.emailTouched() && !this.submitted()) {
+      return '';
+    }
+
+    if (email.length === 0) {
+      return 'El email es requerido';
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Ingresa un email válido';
+    }
+    return '';
+  }
+
+  /**
+   * Get error message for password field
+   */
+  getPasswordError(): string {
+    const password = this.password();
+
+    // Only show error if field is touched or form was submitted
+    if (!this.passwordTouched() && !this.submitted()) {
+      return '';
+    }
+
+    if (password.length === 0) {
+      return 'La contraseña es requerida';
+    }
+    if (password.length < 8) {
+      return 'La contraseña debe tener al menos 8 caracteres';
+    }
+    return '';
+  }
 
   /**
    * Handle form submission
@@ -113,17 +144,20 @@ export class LoginFormComponent {
     // Mark form as submitted
     this.submitted.set(true);
 
-    if (this.form.invalid || this.isLoading()) {
+    // Validate
+    if (!this.isFormValid()) {
       return;
     }
 
     this.isLoading.set(true);
     this.serverError.set('');
 
-    const { email, password, rememberMe } = this.form.value;
-
     try {
-      await this.authService.login({ email, password, rememberMe });
+      await this.authService.login({
+        email: this.email(),
+        password: this.password(),
+        rememberMe: this.rememberMe(),
+      });
 
       this.toastService.success('Inicio de sesión exitoso');
       this.loginSuccess.emit();
@@ -151,43 +185,17 @@ export class LoginFormComponent {
   }
 
   /**
-   * Get error message for email field
+   * Handle email input blur
    */
-  getEmailError(): string {
-    const control = this.emailControl;
-
-    // Only show error if field is touched or form was submitted
-    if (!control?.touched && !this.submitted()) {
-      return '';
-    }
-
-    if (control?.errors?.['required']) {
-      return 'El email es requerido';
-    }
-    if (control?.errors?.['email']) {
-      return 'Ingresa un email válido';
-    }
-    return '';
+  onEmailBlur(): void {
+    this.emailTouched.set(true);
   }
 
   /**
-   * Get error message for password field
+   * Handle password input blur
    */
-  getPasswordError(): string {
-    const control = this.passwordControl;
-
-    // Only show error if field is touched or form was submitted
-    if (!control?.touched && !this.submitted()) {
-      return '';
-    }
-
-    if (control?.errors?.['required']) {
-      return 'La contraseña es requerida';
-    }
-    if (control?.errors?.['minlength']) {
-      return 'La contraseña debe tener al menos 8 caracteres';
-    }
-    return '';
+  onPasswordBlur(): void {
+    this.passwordTouched.set(true);
   }
 
   /**
