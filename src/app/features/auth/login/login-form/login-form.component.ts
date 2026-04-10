@@ -141,13 +141,23 @@ export class LoginFormComponent {
    * Handle form submission
    */
   async onSubmit(): Promise<void> {
+    console.log('🔐 Form submitted!');
+    console.log('📧 Email:', this.email());
+    console.log('🔑 Password length:', this.password().length);
+
     // Mark form as submitted
     this.submitted.set(true);
 
     // Validate
     if (!this.isFormValid()) {
+      console.log('❌ Form is invalid');
+      console.log('❌ isFormValid:', this.isFormValid());
+      console.log('❌ email:', this.email());
+      console.log('❌ password:', this.password());
       return;
     }
+
+    console.log('✅ Form is valid, attempting login...');
 
     this.isLoading.set(true);
     this.serverError.set('');

@@ -1,9 +1,4 @@
-<form
-  (submit)="onSubmit()"
-  (keydown.enter)="onKeyPress($event)"
-  class="login-form"
-  novalidate
->
+<form (ngSubmit)="onSubmit()" (keydown.enter)="onKeyPress($event)" class="login-form" novalidate>
   <!-- Email Input -->
   <app-input
     type="email"
@@ -58,7 +53,6 @@
     size="large"
     [loading]="isLoading()"
     [disabled]="!isFormValid()"
-    (click)="onSubmit()"
     class="submit-btn"
   >
     {{ isLoading() ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
