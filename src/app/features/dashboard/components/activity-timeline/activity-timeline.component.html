@@ -1,0 +1,86 @@
+<div class="activity-timeline">
+  <!-- Header -->
+  <div class="timeline-header">
+    <h2 class="timeline-title">Recent Activity</h2>
+    <p class="timeline-subtitle">Latest actions across your platform</p>
+  </div>
+
+  <!-- Loading State -->
+  <ng-container *ngIf="loading$(); else contentTemplate">
+    <div class="timeline-loading">
+      <app-loading-spinner message="Loading activities..." size="small" />
+    </div>
+  </ng-container>
+
+  <!-- Error State -->
+  <ng-container *ngIf="error(); else contentTemplate">
+    <div class="timeline-error">
+      <app-empty-state
+        icon="error_outline"
+        title="Failed to load activities"
+        message="There was an error loading the activity timeline."
+        size="small"
+      />
+    </div>
+  </ng-container>
+
+  <!-- Timeline Content -->
+  <ng-template #contentTemplate>
+    <ng-container *ngIf="activities().length > 0; else emptyState">
+      <div class="timeline-list">
+        <div
+          *ngFor="let item of activities(); trackBy: trackById"
+          class="timeline-item"
+          [class.clickable]="true"
+          (click)="onItemClick(item, $event)"
+          (keydown.enter)="onItemClick(item, $event)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="`${item.description} by ${item.actorName}, ${item.timestamp | relativeTime}`"
+        >
+          <!-- Icon -->
+          <div class="timeline-icon" [style.background-color]="getActivityColor(item.type) + '20'">
+            <mat-icon [style.color]="getActivityColor(item.type)">{{ item.icon }}</mat-icon>
+          </div>
+
+          <!-- Content -->
+          <div class="timeline-content">
+            <p class="timeline-description">{{ item.description }}</p>
+            <div class="timeline-meta">
+              <span class="timeline-actor">{{ item.actorName }}</span>
+              <ng-container *ngIf="item.targetName">
+                <span class="timeline-target"> → {{ item.targetName }}</span>
+              </ng-container>
+              <span class="timeline-time">{{ item.timestamp | relativeTime }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="timeline-footer" *ngIf="hasMore()">
+        <button
+          class="load-more-button"
+          (click)="loadMore()"
+          [disabled]="loading$()"
+          type="button"
+        >
+          <span>Load More</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <!-- Empty State -->
+  <ng-template #emptyState>
+    <div class="timeline-empty">
+      <app-empty-state
+        icon="timeline_outlined"
+        title="No recent activity"
+        message="Activity will appear here once users start interacting with your platform."
+        size="small"
+      />
+    </div>
+  </ng-template>
+</div>

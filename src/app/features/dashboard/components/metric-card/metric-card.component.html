@@ -1,0 +1,49 @@
+<ng-container *ngIf="!loading(); else loadingTemplate">
+  <div
+    class="metric-card"
+    [class.clickable]="data().route"
+    (click)="onClick()"
+    [attr.aria-label]="getAriaLabel()"
+    [attr.role]="data().route ? 'button' : 'article'"
+    [attr.tabindex]="data().route ? 0 : -1"
+    (keydown.enter)="onClick()"
+  >
+    <!-- Icon Section -->
+    <div class="metric-icon" [style.background-color]="data().color + '20'">
+      <mat-icon [style.color]="data().color">{{ data().icon }}</mat-icon>
+    </div>
+
+    <!-- Content Section -->
+    <div class="metric-content">
+      <h3 class="metric-title">{{ data().title }}</h3>
+
+      <div class="metric-value">
+        <span class="value">{{ data().value }}</span>
+        <ng-container *ngIf="data().trend">
+          <span
+            class="metric-trend"
+            [class]="trendClass()"
+          >
+            <mat-icon class="trend-icon">{{ trendIcon() }}</mat-icon>
+            <span class="trend-value">{{ trendValue() }}</span>
+          </span>
+        </ng-container>
+      </div>
+
+      <p *ngIf="data().subtitle" class="metric-subtitle">
+        {{ data().subtitle }}
+      </p>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <div class="metric-card loading" aria-hidden="true">
+    <div class="skeleton-icon"></div>
+    <div class="metric-content">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-value"></div>
+      <div class="skeleton-subtitle"></div>
+    </div>
+  </div>
+</ng-template>

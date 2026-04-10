@@ -1,0 +1,84 @@
+<div class="dashboard">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="dashboard-title">Dashboard</h1>
+      <p class="dashboard-description">Overview of your Foodie Connect platform</p>
+    </div>
+    <button
+      class="refresh-button"
+      (click)="refreshDashboard()"
+      [disabled]="refreshing() || loading()"
+      [attr.aria-label]="getRefreshAriaLabel()"
+      type="button"
+    >
+      <mat-icon [class.spinning]="refreshing()">refresh</mat-icon>
+      <span>Refresh</span>
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <ng-container *ngIf="loading(); else contentTemplate">
+    <div class="dashboard-loading">
+      <app-loading-spinner message="Loading dashboard..." />
+    </div>
+  </ng-container>
+
+  <!-- Error State -->
+  <ng-container *ngIf="error(); else contentTemplate">
+    <div class="dashboard-error">
+      <app-empty-state
+        icon="error_outline"
+        title="Failed to load dashboard"
+        description="There was an error loading the dashboard data. Please try again."
+        [actionButton]="{ label: 'Retry', callback: () => loadDashboard() }"
+      />
+    </div>
+  </ng-container>
+
+  <!-- Dashboard Content -->
+  <ng-template #contentTemplate>
+    <ng-container *ngIf="metrics(); else emptyState">
+      <div class="dashboard-content">
+        <!-- Metric Cards Grid -->
+        <div class="metrics-grid">
+          <app-metric-card
+            *ngFor="let card of metricCards()"
+            [data]="card"
+            [loading]="refreshing()"
+            (clicked)="onMetricClick($event)"
+          />
+        </div>
+
+        <!-- Dashboard Sections Grid -->
+        <div class="dashboard-grid">
+          <!-- Activity Timeline -->
+          <div class="grid-item">
+            <app-activity-timeline [limit]="10" />
+          </div>
+
+          <!-- Rating Distribution Chart -->
+          <div class="grid-item">
+            <app-rating-chart />
+          </div>
+
+          <!-- Recent Activity Table (Full Width) -->
+          <div class="grid-item grid-item-full">
+            <app-recent-activity />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <!-- Empty State -->
+  <ng-template #emptyState>
+    <div class="dashboard-empty">
+      <app-empty-state
+        icon="dashboard_outlined"
+        title="No dashboard data available"
+        message="Dashboard metrics will appear once there is activity in your platform."
+      />
+    </div>
+  </ng-template>
+</div>

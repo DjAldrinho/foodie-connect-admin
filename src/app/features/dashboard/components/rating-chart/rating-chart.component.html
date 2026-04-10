@@ -1,0 +1,61 @@
+<div class="rating-chart">
+  <!-- Header -->
+  <div class="chart-header">
+    <div class="header-content">
+      <h2 class="chart-title">Rating Distribution</h2>
+      <p class="chart-subtitle">Breakdown of customer reviews by star rating</p>
+    </div>
+    <div class="chart-stats">
+      <div class="stat-item">
+        <span class="stat-label">Average</span>
+        <span class="stat-value">{{ getAverageRating() }}</span>
+        <mat-icon class="stat-icon">star</mat-icon>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Total</span>
+        <span class="stat-value">{{ getTotalRatings() }}</span>
+        <mat-icon class="stat-icon">reviews</mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <ng-container *ngIf="loading(); else contentTemplate">
+    <div class="chart-loading">
+      <app-loading-spinner message="Loading ratings..." size="small" />
+    </div>
+  </ng-container>
+
+  <!-- Error State -->
+  <ng-container *ngIf="error(); else contentTemplate">
+    <div class="chart-error">
+      <app-empty-state
+        icon="error_outline"
+        title="Failed to load ratings"
+        message="There was an error loading the rating distribution."
+        size="small"
+      />
+    </div>
+  </ng-container>
+
+  <!-- Chart Content -->
+  <ng-template #contentTemplate>
+    <ng-container *ngIf="distribution(); else emptyState">
+      <div class="chart-container">
+        <canvas #chartCanvas></canvas>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <!-- Empty State -->
+  <ng-template #emptyState>
+    <div class="chart-empty">
+      <app-empty-state
+        icon="star_outline"
+        title="No ratings yet"
+        message="Rating distribution will appear once customers start leaving reviews."
+        size="small"
+      />
+    </div>
+  </ng-template>
+</div>
