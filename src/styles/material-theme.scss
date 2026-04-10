@@ -1,0 +1,167 @@
+// Custom Material Theme for Foodie Connect Admin
+@import '@angular/material/theming';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+// Brand Colors
+$foodie-primary: #FF6B35; // Naranja vibrante
+$foodie-secondary: #2C3E50; // Azul oscuro
+$foodie-accent: #F39C12; // Amarillo
+
+// Semantic Colors
+$foodie-success: #27AE60;
+$foodie-warning: #F39C12;
+$foodie-error: #E74C3C;
+$foodie-info: #3498DB;
+
+// Define custom theme palettes
+$foodie-primary-palette: (
+  50: #FFF3E6,
+  100: #FFE0B3,
+  200: #FFCC80,
+  300: #FFB34D,
+  400: #FF991A,
+  500: #FF6B35,
+  600: #E65A2B,
+  700: #CC4A21,
+  800: #B33917,
+  900: #99280D,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #FFFFFF,
+    600: #FFFFFF,
+    700: #FFFFFF,
+    800: #FFFFFF,
+    900: #FFFFFF,
+  ),
+);
+
+$foodie-secondary-palette: (
+  50: #E8EDF2,
+  100: #C5D2E0,
+  200: #A0B7CC,
+  300: #7B9CB8,
+  400: #5681A4,
+  500: #2C3E50,
+  600: #273748,
+  700: #223140,
+  800: #1D2B38,
+  900: #121519,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #FFFFFF,
+    500: #FFFFFF,
+    600: #FFFFFF,
+    700: #FFFFFF,
+    800: #FFFFFF,
+    900: #FFFFFF,
+  ),
+);
+
+$foodie-accent-palette: (
+  50: #FEF5E6,
+  100: #FCE7B3,
+  200: #FAD980,
+  300: #F8CB4D,
+  400: #F6BD1A,
+  500: #F39C12,
+  600: #E8910F,
+  700: #DD860C,
+  800: #D27B09,
+  900: #C76906,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #FFFFFF,
+    600: #FFFFFF,
+    700: #FFFFFF,
+    800: #FFFFFF,
+    900: #FFFFFF,
+  ),
+);
+
+// Define the theme
+$foodie-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.define-palette($foodie-primary-palette),
+      secondary: mat.define-palette($foodie-secondary-palette),
+      tertiary: mat.define-palette($foodie-accent-palette),
+      error: mat.define-palette(mat.$red-palette),
+    ),
+    typography: mat.define-typography-config(
+      $font-family: 'Inter, sans-serif',
+      $display-4: mat.define-typography-level(112px, 112px, 300, 'Poppins', $letter-spacing: -0.05em),
+      $display-3: mat.define-typography-level(56px, 56px, 400, 'Poppins', $letter-spacing: -0.02em),
+      $display-2: mat.define-typography-level(45px, 48px, 400, 'Poppins', $letter-spacing: -0.005em),
+      $display-1: mat.define-typography-level(34px, 40px, 400, 'Poppins'),
+      $headline: mat.define-typography-level(24px, 32px, 400, 'Poppins'),
+      $title: mat.define-typography-level(20px, 32px, 500, 'Poppins'),
+      $subheading-2: mat.define-typography-level(16px, 28px, 400, 'Inter'),
+      $subheading-1: mat.define-typography-level(15px, 24px, 400, 'Inter'),
+      $body-2: mat.define-typography-level(14px, 24px, 500, 'Inter'),
+      $body-1: mat.define-typography-level(14px, 20px, 400, 'Inter'),
+      $caption: mat.define-typography-level(12px, 20px, 400, 'Inter'),
+      $button: mat.define-typography-level(14px, 14px, 500, 'Poppins', $letter-spacing: 0.089em),
+    ),
+    density: 0,
+  )
+);
+
+// Mixin to apply theme
+@mixin foodie-theme($theme) {
+  @include mat.all-component-themes($theme);
+
+  // Custom styles
+  .mat-mdc-button-base {
+    @include mat.button-density(0);
+  }
+
+  // Custom scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+
+    &:hover {
+      background: #555;
+    }
+  }
+}
+
+// Apply theme
+:root {
+  @include foodie-theme($foodie-theme);
+
+  // Custom CSS variables for brand colors
+  --foodie-primary: #{$foodie-primary};
+  --foodie-secondary: #{$foodie-secondary};
+  --foodie-accent: #{$foodie-accent};
+  --foodie-success: #{$foodie-success};
+  --foodie-warning: #{$foodie-warning};
+  --foodie-error: #{$foodie-error};
+  --foodie-info: #{$foodie-info};
+}
+
+// Dark mode support (future)
+@media (prefers-color-scheme: dark) {
+  // Dark theme can be defined here in the future
+}
