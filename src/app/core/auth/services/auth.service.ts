@@ -45,19 +45,29 @@ export const AuthService = () => {
    * Login with email and password
    */
   const login = (credentials: LoginCredentials): Observable<User> => {
+    const loginUrl = `${environment.apiUrl}/auth/login`;
+    console.log('🔐 Attempting login to:', loginUrl);
+    console.log('📧 Credentials:', { email: credentials.email, password: '***' });
+
     return http
-      .post<LoginResponse>(`${environment.apiUrl}/auth/login`, credentials)
+      .post<LoginResponse>(loginUrl, credentials)
       .pipe(
         tap((response) => {
+          console.log('✅ Login response received:', response);
           tokenStorage.setAccessToken(response.accessToken);
           tokenStorage.setRefreshToken(response.refreshToken);
           tokenStorage.setUserData(response.user);
           currentUserSignal.set(response.user);
-          console.log('Login successful, user:', response.user);
+          console.log('✅ Tokens stored, user set to:', response.user);
         }),
-        switchMap((response) => of(response.user)),
+        switchMap((response) => {
+          console.log('✅ Returning user from login:', response.user);
+          return of(response.user);
+        }),
         catchError((error) => {
-          console.error('Login failed:', error);
+          console.error('❌ Login failed:', error);
+          console.error('❌ Error status:', error.status);
+          console.error('❌ Error message:', error.message);
           throw error;
         })
       );
