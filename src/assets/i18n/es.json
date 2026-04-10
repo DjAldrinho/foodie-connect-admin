@@ -1,0 +1,152 @@
+{
+  "common": {
+    "yes": "Sí",
+    "no": "No",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "import": "Importar",
+    "loading": "Cargando...",
+    "noData": "No hay datos disponibles",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "rememberMe": "Recordarme",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "loginSuccess": "Inicio de sesión exitoso",
+    "loginError": "Credenciales inválidas",
+    "sessionExpired": "Sesión expirada. Por favor inicia sesión nuevamente."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Usuarios",
+    "restaurants": "Restaurantes",
+    "moderation": "Moderación",
+    "notifications": "Notificaciones",
+    "analytics": "Analíticas",
+    "settings": "Configuración"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "metrics": {
+      "totalUsers": "Usuarios Totales",
+      "totalRestaurants": "Restaurantes Totales",
+      "activeReports": "Reportes Activos",
+      "pendingReviews": "Revisiones Pendientes"
+    },
+    "recentActivity": "Actividad Reciente",
+    "ratingDistribution": "Distribución de Calificaciones",
+    "viewAll": "Ver todo"
+  },
+  "users": {
+    "title": "Usuarios",
+    "list": "Lista de Usuarios",
+    "add": "Agregar Usuario",
+    "edit": "Editar Usuario",
+    "delete": "Eliminar Usuario",
+    "role": "Rol",
+    "status": "Estado",
+    "email": "Correo",
+    "name": "Nombre",
+    "createdAt": "Fecha de Creación",
+    "lastLogin": "Último Acceso",
+    "roles": {
+      "USER": "Usuario",
+      "ADMIN": "Administrador",
+      "SUPER_ADMIN": "Super Administrador"
+    },
+    "statuses": {
+      "ACTIVE": "Activo",
+      "INACTIVE": "Inactivo",
+      "SUSPENDED": "Suspendido"
+    },
+    "stats": {
+      "reviews": "Reseñas",
+      "photos": "Fotos",
+      "restaurants": "Restaurantes",
+      "reports": "Reportes"
+    },
+    "activity": "Actividad",
+    "overview": "Resumen",
+    "changeRole": "Cambiar Rol",
+    "changeStatus": "Cambiar Estado"
+  },
+  "restaurants": {
+    "title": "Restaurantes",
+    "list": "Lista de Restaurantes",
+    "add": "Agregar Restaurante",
+    "edit": "Editar Restaurante",
+    "delete": "Eliminar Restaurante",
+    "name": "Nombre",
+    "category": "Categoría",
+    "rating": "Calificación",
+    "status": "Estado",
+    "verificationStatus": "Estado de Verificación",
+    "address": "Dirección",
+    "photos": "Fotos",
+    "menu": "Menú",
+    "reviews": "Reseñas",
+    "owner": "Propietario",
+    "verificationStatuses": {
+      "PENDING": "Pendiente",
+      "VERIFIED": "Verificado",
+      "REJECTED": "Rechazado"
+    },
+    "overview": "Resumen",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "gridView": "Vista de Cuadrícula",
+    "listView": "Vista de Lista"
+  },
+  "moderation": {
+    "title": "Moderación",
+    "reports": "Reportes",
+    "reviews": "Reseñas",
+    "photos": "Fotos",
+    "resolve": "Resolver",
+    "pending": "Pendientes",
+    "resolved": "Resueltos",
+    "reportType": "Tipo de Reporte",
+    "reportedBy": "Reportado por",
+    "target": "Objetivo",
+    "reason": "Razón",
+    "status": "Estado",
+    "createdAt": "Fecha de Creación"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "markAllRead": "Marcar todos como leídos",
+    "noNotifications": "No hay notificaciones",
+    "unread": "No leído"
+  },
+  "analytics": {
+    "title": "Analíticas",
+    "userGrowth": "Crecimiento de Usuarios",
+    "restaurantGrowth": "Crecimiento de Restaurantes",
+    "engagement": "Participación",
+    "activity": "Actividad",
+    "reports": "Reportes",
+    "dateRange": "Rango de Fechas"
+  },
+  "settings": {
+    "title": "Configuración",
+    "profile": "Perfil",
+    "security": "Seguridad",
+    "preferences": "Preferencias",
+    "notifications": "Notificaciones",
+    "language": "Idioma",
+    "theme": "Tema"
+  }
+}

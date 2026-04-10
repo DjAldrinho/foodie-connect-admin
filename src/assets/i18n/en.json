@@ -1,0 +1,152 @@
+{
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot your password?",
+    "loginSuccess": "Login successful",
+    "loginError": "Invalid credentials",
+    "sessionExpired": "Session expired. Please login again."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "restaurants": "Restaurants",
+    "moderation": "Moderation",
+    "notifications": "Notifications",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "metrics": {
+      "totalUsers": "Total Users",
+      "totalRestaurants": "Total Restaurants",
+      "activeReports": "Active Reports",
+      "pendingReviews": "Pending Reviews"
+    },
+    "recentActivity": "Recent Activity",
+    "ratingDistribution": "Rating Distribution",
+    "viewAll": "View all"
+  },
+  "users": {
+    "title": "Users",
+    "list": "Users List",
+    "add": "Add User",
+    "edit": "Edit User",
+    "delete": "Delete User",
+    "role": "Role",
+    "status": "Status",
+    "email": "Email",
+    "name": "Name",
+    "createdAt": "Created At",
+    "lastLogin": "Last Login",
+    "roles": {
+      "USER": "User",
+      "ADMIN": "Admin",
+      "SUPER_ADMIN": "Super Admin"
+    },
+    "statuses": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended"
+    },
+    "stats": {
+      "reviews": "Reviews",
+      "photos": "Photos",
+      "restaurants": "Restaurants",
+      "reports": "Reports"
+    },
+    "activity": "Activity",
+    "overview": "Overview",
+    "changeRole": "Change Role",
+    "changeStatus": "Change Status"
+  },
+  "restaurants": {
+    "title": "Restaurants",
+    "list": "Restaurants List",
+    "add": "Add Restaurant",
+    "edit": "Edit Restaurant",
+    "delete": "Delete Restaurant",
+    "name": "Name",
+    "category": "Category",
+    "rating": "Rating",
+    "status": "Status",
+    "verificationStatus": "Verification Status",
+    "address": "Address",
+    "photos": "Photos",
+    "menu": "Menu",
+    "reviews": "Reviews",
+    "owner": "Owner",
+    "verificationStatuses": {
+      "PENDING": "Pending",
+      "VERIFIED": "Verified",
+      "REJECTED": "Rejected"
+    },
+    "overview": "Overview",
+    "approve": "Approve",
+    "reject": "Reject",
+    "gridView": "Grid View",
+    "listView": "List View"
+  },
+  "moderation": {
+    "title": "Moderation",
+    "reports": "Reports",
+    "reviews": "Reviews",
+    "photos": "Photos",
+    "resolve": "Resolve",
+    "pending": "Pending",
+    "resolved": "Resolved",
+    "reportType": "Report Type",
+    "reportedBy": "Reported By",
+    "target": "Target",
+    "reason": "Reason",
+    "status": "Status",
+    "createdAt": "Created At"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "unread": "Unread"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "userGrowth": "User Growth",
+    "restaurantGrowth": "Restaurant Growth",
+    "engagement": "Engagement",
+    "activity": "Activity",
+    "reports": "Reports",
+    "dateRange": "Date Range"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "security": "Security",
+    "preferences": "Preferences",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme"
+  }
+}
