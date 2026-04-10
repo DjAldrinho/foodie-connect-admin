@@ -71,6 +71,11 @@ export class LoginFormComponent {
   readonly serverError = signal('');
 
   /**
+   * Form submitted state
+   */
+  readonly submitted = signal(false);
+
+  /**
    * Form validation state
    */
   readonly isFormValid = computed(() => this.form.valid && !this.isLoading());
@@ -105,6 +110,9 @@ export class LoginFormComponent {
    * Handle form submission
    */
   async onSubmit(): Promise<void> {
+    // Mark form as submitted
+    this.submitted.set(true);
+
     if (this.form.invalid || this.isLoading()) {
       return;
     }
@@ -146,10 +154,17 @@ export class LoginFormComponent {
    * Get error message for email field
    */
   getEmailError(): string {
-    if (this.emailControl?.errors?.['required']) {
+    const control = this.emailControl;
+
+    // Only show error if field is touched or form was submitted
+    if (!control?.touched && !this.submitted()) {
+      return '';
+    }
+
+    if (control?.errors?.['required']) {
       return 'El email es requerido';
     }
-    if (this.emailControl?.errors?.['email']) {
+    if (control?.errors?.['email']) {
       return 'Ingresa un email válido';
     }
     return '';
@@ -159,10 +174,17 @@ export class LoginFormComponent {
    * Get error message for password field
    */
   getPasswordError(): string {
-    if (this.passwordControl?.errors?.['required']) {
+    const control = this.passwordControl;
+
+    // Only show error if field is touched or form was submitted
+    if (!control?.touched && !this.submitted()) {
+      return '';
+    }
+
+    if (control?.errors?.['required']) {
       return 'La contraseña es requerida';
     }
-    if (this.passwordControl?.errors?.['minlength']) {
+    if (control?.errors?.['minlength']) {
       return 'La contraseña debe tener al menos 8 caracteres';
     }
     return '';
