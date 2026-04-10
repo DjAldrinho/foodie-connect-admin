@@ -43,13 +43,10 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-# Documentation (local only, not in repo)
-/docs/
-
 # Temporary files
 *.log
 build.log
 fix-errors.sh
 
-# SDD artifacts
+# SDD artifacts (but keep docs)
 .atl/

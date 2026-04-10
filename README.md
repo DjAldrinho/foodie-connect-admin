@@ -1,59 +1,281 @@
-# FoodieConnectAdmin
+# 🍽️ Foodie Connect Admin CRM
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+> Panel de administración para la red social gastronómica Foodie Connect
 
-## Development server
+## 📋 Overview
 
-To start a local development server, run:
+Foodie Connect Admin es un panel de administración moderno y responsive construido con **Angular 21**, **Material Design**, y **Tailwind CSS**. Permite a los administradores gestionar usuarios, restaurantes, contenido y analytics de la plataforma.
 
-```bash
-ng serve
+## ✨ Features Implementados
+
+### ✅ Phase 1: Foundation & Core Infrastructure
+- **Core Services**: BaseService, ToastNotification, LoadingState, ApiCache
+- **Authentication**: AuthService (functional), TokenStorageService
+- **HTTP Interceptors**: Auth, Loading, Error, Retry con exponential backoff
+- **Route Guards**: auth, admin, superAdmin, guest
+- **Type Definitions**: auth, common, users, dashboard types
+- **Environment Configuration**: dev/prod configurations
+- **ESLint**: Strict TypeScript configuration
+
+### ✅ Phase 2: Layout & Auth Components
+- **Layouts**:
+  - `AuthLayout`: Centered card con gradient background para login
+  - `MainLayout`: Sidebar + TopBar + Content area
+  - `Sidebar`: 7 navigation links, collapsible, mobile drawer
+  - `TopBar`: Breadcrumbs, notification bell, mobile toggle
+
+- **Shared Components**:
+  - `Button`: 4 variants (primary, secondary, danger, ghost), 3 sizes
+  - `Input`: Reusable input con validation y error states
+  - `Card`: 3 variants (default, bordered, elevated)
+  - `EmptyState`: Empty state component con icon y message
+  - `LoadingSpinner`: Global loading spinner
+  - `ToastContainer`: Global toast notifications
+
+- **Auth Module**:
+  - Login page con form validation
+  - Forgot password page
+  - Responsive design (mobile-first)
+
+### ✅ Phase 3: Dashboard Module
+- **Dashboard Components**:
+  - `MetricCard`: Stat card con trend indicator
+  - `ActivityTimeline`: Activity feed con 8 event types
+  - `RatingChart`: Chart.js bar chart para ratings
+  - `RecentActivity`: Recent activity table con pagination
+
+- **Features**:
+  - 4 key metrics (users, restaurants, reviews, reports)
+  - Activity timeline con color-coded events
+  - Rating distribution chart
+  - Recent activity con pagination
+  - Responsive grid layout
+
+### ✅ Phase 4: Users Module (100% Complete)
+- **Users List**:
+  - Advanced filters (search, role, status, date range)
+  - Material table con sorting y pagination
+  - Bulk actions (change role, change status, delete)
+  - Export to CSV functionality
+  - User row con avatar, badges, actions dropdown
+
+- **User Detail**:
+  - Header con avatar, name, email, role/status badges
+  - Stats card (Posts, Followers, Following)
+  - 3 tabs: Posts, Reviews, Activity
+  - Action buttons (Edit Role, Activate/Deactivate, Delete)
+
+- **Services**:
+  - Complete CRUD con mock data (15 users)
+  - User statistics, restaurants, reviews, activity
+  - Bulk actions y export functionality
+
+## 🛠️ Tech Stack
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Angular** | 21.2.0 | Framework frontend |
+| **TypeScript** | 5.9.2 | Type safety |
+| **Material Design** | 19.0.0 | UI components |
+| **Tailwind CSS** | 4.1.12 | Utility-first CSS |
+| **Chart.js** | 4.4.0 | Data visualization |
+| **@ngx-translate** | 15.0.0 | i18n (Spanish/English) |
+
+## 📁 Project Structure
+
+```
+src/app/
+├── core/                  # Core infrastructure
+│   ├── auth/             # Authentication services & guards
+│   ├── interceptors/     # HTTP interceptors
+│   └── services/         # Core services (BaseService, etc.)
+├── features/             # Feature modules
+│   ├── auth/            # Login, forgot password
+│   ├── dashboard/       # Dashboard module
+│   └── users/           # Users module (list, detail)
+├── layouts/             # Layout components
+│   ├── auth-layout/     # Login layout
+│   └── main-layout/     # Main layout (sidebar, top-bar)
+├── shared/              # Shared components
+│   ├── components/      # Reusable UI components
+│   ├── directives/      # Custom directives
+│   ├── pipes/           # Angular pipes
+│   └── utils/           # Utility functions
+├── models/              # TypeScript interfaces
+├── assets/              # Static assets (images, i18n)
+└── styles/              # Global styles
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🚀 Getting Started
 
-## Code scaffolding
+### Prerequisites
+- Node.js 20+
+- npm 11+
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Installation
 
 ```bash
-ng generate --help
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run tests
+npm test
 ```
 
-## Building
-
-To build the project run:
+### Development
 
 ```bash
-ng build
+# Start dev server (http://localhost:4200)
+npm run dev
+
+# Build with watch mode
+npm run build -- --watch
+
+# Run linter
+npm run lint
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 📦 Modules
 
-## Running unit tests
+### Authentication Module
+- JWT-based authentication
+- Token refresh automático
+- Protected routes con guards
+- Login con remember me
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Dashboard Module
+- Real-time metrics
+- Activity timeline
+- Rating distribution chart
+- Recent activity table
+
+### Users Module
+- User management (CRUD)
+- Advanced filtering y sorting
+- Bulk operations
+- User profile con tabs
+- Activity tracking
+
+## 🎨 Design System
+
+### Colors
+- **Primary**: `#FF6B35` (Naranja vibrante)
+- **Secondary**: `#2C3E50` (Azul oscuro)
+- **Accent**: `#F39C12` (Amarillo)
+- **Success**: `#27AE60`
+- **Warning**: `#F39C12`
+- **Error**: `#E74C3C`
+
+### Typography
+- **Font Family**: Inter (body), Poppins (headings)
+- **Sizes**: 12px (caption) to 112px (display)
+
+### Components
+- Material Design components
+- Tailwind CSS utilities
+- Custom shared components
+- Responsive design (mobile-first)
+
+## 🔒 Security
+
+- JWT token management
+- Route guards (auth, admin, superAdmin)
+- HTTP interceptors para auth headers
+- Token refresh automático
+- Secure token storage (SSR-safe)
+
+## 📱 Responsive Design
+
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px
+- **Desktop**: > 1024px
+
+## 🌐 i18n
+
+- Spanish (default)
+- English
+- Easy to add new languages
+
+## 🧪 Testing
 
 ```bash
-ng test
+# Unit tests
+npm test
+
+# E2E tests
+npm run e2e
+
+# Test coverage
+npm run test:coverage
 ```
 
-## Running end-to-end tests
+## 📝 Code Style
 
-For end-to-end (e2e) testing, run:
+- **TypeScript**: Strict mode
+- **Linting**: ESLint con Angular rules
+- **Format**: Prettier (recommended)
+- **Commit**: Conventional commits
 
-```bash
-ng e2e
-```
+## 🔧 Configuration
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Environment Files
+- `src/environments/environment.ts` - Development
+- `src/environments/environment.prod.ts` - Production
 
-## Additional Resources
+### Key Files
+- `angular.json` - Angular configuration
+- `tailwind.config.js` - Tailwind configuration
+- `.eslintrc.json` - ESLint rules
+- `tsconfig.json` - TypeScript configuration
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📚 Documentation
+
+Para documentación detallada sobre arquitectura, patrones y aprendizaje, mirá:
+
+- [docs/LEARNING.md](docs/LEARNING.md) - Guía de aprendizaje completa
+- [docs/SPECIFICATION.md](docs/SPECIFICATION.md) - Especificación funcional
+- [docs/DESIGN.md](docs/DESIGN.md) - Diseño técnico
+- [docs/TASKS.md](docs/TASKS.md) - Breakdown de tareas
+
+## 🚧 Roadmap
+
+### ✅ Completado
+- [x] Phase 1: Foundation & Core Infrastructure
+- [x] Phase 2: Layout & Auth Components
+- [x] Phase 3: Dashboard Module
+- [x] Phase 4: Users Module
+
+### 🔄 En Progreso
+- [ ] Phase 5: Restaurants Module
+- [ ] Phase 6: Moderation Module
+- [ ] Phase 7: Notifications Module
+- [ ] Phase 8: Analytics Module
+- [ ] Phase 9: Settings Module
+
+### 📋 Planeado
+- [ ] Phase 10: Polish & Testing
+- [ ] Phase 11: Documentation
+
+## 🤝 Contributing
+
+Este es un proyecto privado. Por favor contactá al maintainers antes de hacer contribuciones.
+
+## 📄 License
+
+Proprietary - All rights reserved
+
+## 👥 Team
+
+- **Developer**: Aldray Narvaez
+- **Architecture**: Angular 21 + Signals + Material Design
+- **Design**: Foodie Connect brand guidelines
+
+---
+
+**Hecho con ❤️ usando Angular 21**
