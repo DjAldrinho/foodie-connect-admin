@@ -45,62 +45,6 @@ export const AuthService = () => {
    * Login with email and password
    */
   const login = (credentials: LoginCredentials): Observable<User> => {
-    // Mock login for development
-    if (!environment.production) {
-      console.log('Mock login:', credentials);
-
-      const mockUser: User = {
-        id: '1',
-        email: credentials.email,
-        firstName: 'Admin',
-        lastName: 'User',
-        fullName: 'Admin User',
-        avatar: 'https://i.pravatar.cc/150?img=1',
-        role: UserRole.SUPER_ADMIN,
-        status: UserStatus.ACTIVE,
-        permissions: [
-          'read:users' as Permission,
-          'write:users' as Permission,
-          'delete:users' as Permission,
-          'read:restaurants' as Permission,
-          'write:restaurants' as Permission,
-          'delete:restaurants' as Permission,
-          'verify:restaurants' as Permission,
-          'read:reports' as Permission,
-          'resolve:reports' as Permission,
-          'moderate:reviews' as Permission,
-          'moderate:photos' as Permission,
-          'read:analytics' as Permission,
-          'manage:settings' as Permission,
-        ],
-        lastLogin: new Date().toISOString(),
-        emailVerified: true,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-
-      const mockResponse: LoginResponse = {
-        user: mockUser,
-        accessToken: 'mock-jwt-token',
-        refreshToken: 'mock-refresh-token',
-        expiresIn: 3600,
-      };
-
-      // Simular delay de red
-      return of(mockResponse).pipe(
-        delay(800), // Simular delay de red
-        tap((response) => {
-          tokenStorage.setAccessToken(response.accessToken);
-          tokenStorage.setRefreshToken(response.refreshToken);
-          tokenStorage.setUserData(response.user);
-          currentUserSignal.set(response.user);
-          console.log('Login successful, user:', response.user);
-        }),
-        switchMap((response) => of(response.user))
-      );
-    }
-
-    // Producción: llamada HTTP real
     return http
       .post<LoginResponse>(`${environment.apiUrl}/auth/login`, credentials)
       .pipe(
@@ -109,6 +53,7 @@ export const AuthService = () => {
           tokenStorage.setRefreshToken(response.refreshToken);
           tokenStorage.setUserData(response.user);
           currentUserSignal.set(response.user);
+          console.log('Login successful, user:', response.user);
         }),
         switchMap((response) => of(response.user)),
         catchError((error) => {

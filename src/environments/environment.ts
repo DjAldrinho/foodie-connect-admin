@@ -3,7 +3,7 @@
  */
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'http://localhost:3000',
   wsUrl: 'ws://localhost:3000',
   appName: 'Foodie Connect Admin',
   version: '1.0.0',
