@@ -1,0 +1,100 @@
+<div class="user-filters">
+  <div class="filters-header">
+    <h3 class="filters-title">Filters</h3>
+    @if (hasActiveFilters) {
+      <button
+        type="button"
+        class="reset-btn"
+        (click)="onReset()"
+        aria-label="Reset all filters"
+      >
+        <mat-icon>refresh</mat-icon>
+        Reset
+      </button>
+    }
+  </div>
+
+  <form [formGroup]="filterForm" class="filters-form">
+    <!-- Search -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        formControlName="search"
+        placeholder="Search by name or email"
+        aria-label="Search users"
+      >
+      @if (filterForm.get('search')?.value) {
+        <mat-icon
+          matSuffix
+          class="clear-icon"
+          (click)="clearFilter('search')"
+          aria-label="Clear search"
+        >
+          close
+        </mat-icon>
+      }
+    </mat-form-field>
+
+    <!-- Role -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role" aria-label="Filter by role">
+        <mat-option value="">All Roles</mat-option>
+        @for (option of roleOptions; track option.value) {
+          <mat-option [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Status -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" aria-label="Filter by status">
+        <mat-option value="">All Statuses</mat-option>
+        @for (option of statusOptions; track option.value) {
+          <mat-option [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Date Range -->
+    <div class="date-range-group">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>From</mat-label>
+        <input
+          matInput
+          formControlName="startDate"
+          [matDatepicker]="startDatePicker"
+          placeholder="Start date"
+          aria-label="Filter by start date"
+        >
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>To</mat-label>
+        <input
+          matInput
+          formControlName="endDate"
+          [matDatepicker]="endDatePicker"
+          placeholder="End date"
+          aria-label="Filter by end date"
+        >
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

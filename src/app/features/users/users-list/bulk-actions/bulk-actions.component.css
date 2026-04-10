@@ -1,0 +1,135 @@
+.bulk-actions-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bulk-actions-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+}
+
+.selection-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  flex: 1;
+}
+
+.selection-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
+}
+
+.selection-count {
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.deselect-btn {
+  color: white;
+  font-size: 0.875rem;
+}
+
+.deselect-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.action-btn mat-icon:first-child {
+  margin-right: 0.5rem;
+}
+
+.action-btn mat-icon:not(:first-child):not(:last-child) {
+  margin: 0 0.5rem;
+}
+
+.delete-btn {
+  background: rgba(220, 38, 38, 0.9);
+  border-color: rgba(220, 38, 38, 1);
+}
+
+.delete-btn:hover {
+  background: rgba(220, 38, 38, 1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bulk-actions-content {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .selection-info {
+    justify-content: space-between;
+  }
+
+  .selection-count {
+    font-size: 0.875rem;
+  }
+
+  .action-buttons {
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    flex: 1;
+    min-width: calc(50% - 0.25rem);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bulk-actions-bar {
+    border: 2px solid white;
+  }
+
+  .action-btn {
+    border: 2px solid white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .bulk-actions-bar {
+    animation: none;
+  }
+}

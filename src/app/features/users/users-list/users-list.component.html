@@ -1,0 +1,100 @@
+<div class="users-list-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Users</h1>
+      <p class="page-subtitle">Manage user accounts and permissions</p>
+    </div>
+    <div class="header-actions">
+      <button
+        mat-button
+        (click)="onRefresh()"
+        aria-label="Refresh users list"
+      >
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+      <button
+        mat-button
+        (click)="onExportToCsv()"
+        aria-label="Export users to CSV"
+      >
+        <mat-icon>download</mat-icon>
+        Export CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Bulk Actions Bar -->
+  @if (hasSelection()) {
+    <app-bulk-actions
+      [selectedCount]="selectedCount()"
+      (deselectAll)="onDeselectAll()"
+      (delete)="onBulkDelete()"
+      (changeRole)="onBulkChangeRole($event)"
+      (changeStatus)="onBulkChangeStatus($event)"
+    >
+    </app-bulk-actions>
+  }
+
+  <!-- Filters and Table -->
+  <div class="content-container">
+    <!-- Filters Sidebar -->
+    <aside class="filters-sidebar">
+      <app-user-filters
+        [initialFilters]="filters()"
+        (filtersChange)="onFiltersChange($event)"
+        (reset)="onResetFilters()"
+      >
+      </app-user-filters>
+    </aside>
+
+    <!-- Users Table -->
+    <main class="table-section">
+      <app-users-table
+        [users]="users()"
+        [selectedIds]="selectedIds()"
+        [loading]="loading()"
+        (selectionChange)="onSelectionChange($event)"
+        (view)="onViewUser($event)"
+        (editRole)="onEditRole($event)"
+        (deactivate)="onDeactivateUser($event)"
+        (delete)="onDeleteUser($event)"
+        (sortChange)="onSortChange($event)"
+      >
+      </app-users-table>
+
+      <!-- Pagination -->
+      @if (totalPages() > 1) {
+        <div class="pagination-container">
+          <div class="pagination-info">
+            Showing {{ paginationStart() }} to
+            {{ paginationEnd() }}
+            of {{ totalUsers() }} users
+          </div>
+          <div class="pagination-controls">
+            <button
+              mat-button
+              [disabled]="currentPage() === 1"
+              (click)="onPageChange(currentPage() - 1)"
+              aria-label="Previous page"
+            >
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="page-indicator">
+              {{ currentPage() }} of {{ totalPages() }}
+            </span>
+            <button
+              mat-button
+              [disabled]="currentPage() === totalPages()"
+              (click)="onPageChange(currentPage() + 1)"
+              aria-label="Next page"
+            >
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </main>
+  </div>
+</div>

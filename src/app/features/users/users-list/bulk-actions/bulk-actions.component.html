@@ -1,0 +1,78 @@
+<div class="bulk-actions-bar">
+  <div class="bulk-actions-content">
+    <!-- Selection count -->
+    <div class="selection-info">
+      <mat-icon class="selection-icon">check_circle</mat-icon>
+      <span class="selection-count">
+        {{ selectedCount() }} user{{ selectedCount() !== 1 ? 's' : '' }} selected
+      </span>
+      <button
+        mat-button
+        class="deselect-btn"
+        (click)="deselectAll.emit()"
+        aria-label="Deselect all users"
+      >
+        Deselect all
+      </button>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-buttons">
+      <!-- Change Role -->
+      <button
+        mat-button
+        [matMenuTriggerFor]="roleMenu"
+        class="action-btn"
+        aria-label="Change role for selected users"
+      >
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Change Role</span>
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #roleMenu="matMenu">
+        @for (option of roleOptions; track option.value) {
+          <button
+            mat-menu-item
+            (click)="onChangeRole(option.value)"
+          >
+            {{ option.label }}
+          </button>
+        }
+      </mat-menu>
+
+      <!-- Change Status -->
+      <button
+        mat-button
+        [matMenuTriggerFor]="statusMenu"
+        class="action-btn"
+        aria-label="Change status for selected users"
+      >
+        <mat-icon>toggle_on</mat-icon>
+        <span>Change Status</span>
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #statusMenu="matMenu">
+        @for (option of statusOptions; track option.value) {
+          <button
+            mat-menu-item
+            (click)="onChangeStatus(option.value)"
+          >
+            {{ option.label }}
+          </button>
+        }
+      </mat-menu>
+
+      <!-- Delete -->
+      <button
+        mat-button
+        color="warn"
+        class="action-btn delete-btn"
+        (click)="onDelete()"
+        aria-label="Delete selected users"
+      >
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+</div>

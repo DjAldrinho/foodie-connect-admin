@@ -1,0 +1,101 @@
+<td class="checkbox-cell">
+  <mat-checkbox
+    [checked]="selected()"
+    (change)="onCheckboxChange($event)"
+    (click)="$event.stopPropagation()"
+    aria-label="Select user"
+  >
+  </mat-checkbox>
+</td>
+
+<td class="avatar-cell">
+  @if (user().avatar) {
+    <img
+      [src]="user().avatar"
+      [alt]="user().fullName"
+      class="user-avatar"
+      loading="lazy"
+    >
+  } @else {
+    <div class="user-avatar user-avatar-initials">
+      {{ getInitials(user().firstName, user().lastName) }}
+    </div>
+  }
+  <div class="user-info">
+    <div class="user-name">{{ user().fullName }}</div>
+    <div class="user-email">{{ user().email }}</div>
+  </div>
+</td>
+
+<td class="role-cell">
+  <span class="badge {{ getRoleBadgeClass(user().role) }}">
+    {{ user().role.replace('_', ' ') }}
+  </span>
+</td>
+
+<td class="status-cell">
+  <span class="badge {{ getStatusBadgeClass(user().status) }}">
+    {{ user().status }}
+  </span>
+</td>
+
+<td class="date-cell">
+  {{ formatDate(user().createdAt) }}
+</td>
+
+<td class="last-login-cell">
+  {{ formatLastLogin(user().lastLoginAt) }}
+</td>
+
+<td class="actions-cell">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="actionsMenu"
+    aria-label="User actions"
+    (click)="$event.stopPropagation()"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #actionsMenu="matMenu" xPosition="before">
+    <button
+      mat-menu-item
+      (click)="view.emit(user().id)"
+    >
+      <mat-icon>visibility</mat-icon>
+      <span>View</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="editRole.emit(user().id)"
+    >
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>Edit Role</span>
+    </button>
+    @if (user().status === 'ACTIVE') {
+      <button
+        mat-menu-item
+        (click)="deactivate.emit(user().id)"
+      >
+        <mat-icon>person_off</mat-icon>
+        <span>Deactivate</span>
+      </button>
+    } @else {
+      <button
+        mat-menu-item
+        (click)="deactivate.emit(user().id)"
+      >
+        <mat-icon>person_add</mat-icon>
+        <span>Activate</span>
+      </button>
+    }
+    <button
+      mat-menu-item
+      class="delete-action"
+      (click)="delete.emit(user().id)"
+    >
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+</td>
