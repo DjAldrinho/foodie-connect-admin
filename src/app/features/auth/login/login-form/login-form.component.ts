@@ -48,6 +48,10 @@ export class LoginFormComponent {
   private readonly toastService = inject(ToastNotificationService);
   private readonly router = inject(Router);
 
+  constructor() {
+    console.log('🔧 LoginFormComponent initialized');
+  }
+
   /**
    * Form fields
    */
@@ -89,7 +93,18 @@ export class LoginFormComponent {
     // Password validation
     const passwordValid = password.length >= 8;
 
-    return emailValid && passwordValid && !this.isLoading();
+    const valid = emailValid && passwordValid && !this.isLoading();
+
+    console.log('🔄 isFormValid computed:', {
+      email,
+      password: `${password.length} chars`,
+      emailValid,
+      passwordValid,
+      isLoading: this.isLoading(),
+      valid,
+    });
+
+    return valid;
   });
 
   /**
@@ -198,6 +213,7 @@ export class LoginFormComponent {
    * Handle email input blur
    */
   onEmailBlur(): void {
+    console.log('📧 Email blur, value:', this.email());
     this.emailTouched.set(true);
   }
 
@@ -205,6 +221,7 @@ export class LoginFormComponent {
    * Handle password input blur
    */
   onPasswordBlur(): void {
+    console.log('🔑 Password blur, length:', this.password().length);
     this.passwordTouched.set(true);
   }
 
@@ -212,8 +229,10 @@ export class LoginFormComponent {
    * Handle Enter key press
    */
   onKeyPress(event: Event): void {
+    console.log('⌨️  Key pressed:', (event as KeyboardEvent).key);
     const keyboardEvent = event as KeyboardEvent;
     if (keyboardEvent.key === 'Enter' && this.isFormValid()) {
+      console.log('⌨️  Enter pressed with valid form, submitting...');
       this.onSubmit();
     }
   }
