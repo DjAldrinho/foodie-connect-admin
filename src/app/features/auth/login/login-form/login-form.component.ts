@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { lastValueFrom } from 'rxjs';
 import { AuthService } from '../../../../core/auth/services';
 import { ToastNotificationService } from '../../../../core/services';
 import { InputComponent } from '../../../../shared/components/input';
@@ -155,7 +156,12 @@ export class LoginFormComponent {
   /**
    * Handle form submission
    */
-  async onSubmit(): Promise<void> {
+  async onSubmit(event?: Event): Promise<void> {
+    // Prevent default form submission (page reload)
+    if (event) {
+      event.preventDefault();
+    }
+
     console.log('🔐 Form submitted!');
     console.log('📧 Email:', this.email());
     console.log('🔑 Password length:', this.password().length);
@@ -178,16 +184,20 @@ export class LoginFormComponent {
     this.serverError.set('');
 
     try {
-      await this.authService.login({
-        email: this.email(),
-        password: this.password(),
-        rememberMe: this.rememberMe(),
-      });
+      // Convert Observable to Promise and wait for completion
+      const user = await lastValueFrom(
+        this.authService.login({
+          email: this.email(),
+          password: this.password(),
+          rememberMe: this.rememberMe(),
+        })
+      );
 
+      console.log('✅ Login successful! User:', user);
       this.toastService.success('Inicio de sesión exitoso');
       this.loginSuccess.emit();
     } catch (error: any) {
-      console.error('Login error:', error);
+      console.error('❌ Login error:', error);
       this.handleLoginError(error);
     } finally {
       this.isLoading.set(false);
@@ -233,6 +243,7 @@ export class LoginFormComponent {
     const keyboardEvent = event as KeyboardEvent;
     if (keyboardEvent.key === 'Enter' && this.isFormValid()) {
       console.log('⌨️  Enter pressed with valid form, submitting...');
+      keyboardEvent.preventDefault();
       this.onSubmit();
     }
   }

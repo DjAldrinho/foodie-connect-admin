@@ -12,7 +12,7 @@ import type {
   LoginResponse,
   RefreshTokenResponse,
 } from '../../../models/auth.types';
-import { UserRole, UserStatus, Permission } from '../../../models/auth.types';
+import { UserRole, UserStatus, Permission, ROLE_PERMISSIONS } from '../../../models/auth.types';
 
 /**
  * Authentication service with login/logout/token management
@@ -25,8 +25,30 @@ export const AuthService = () => {
   // Internal state
   const currentUserSignal = signal<User | null>(tokenStorage.getUserData<User>());
   const isAuthenticatedSignal = computed(() => currentUserSignal() !== null);
-  const userRoleSignal = computed(() => currentUserSignal()?.role);
-  const userPermissionsSignal = computed(() => currentUserSignal()?.permissions || []);
+  const userRoleSignal = computed(() => {
+    const role = currentUserSignal()?.role;
+    // Handle role as string or object
+    if (typeof role === 'string') {
+      return role as UserRole;
+    }
+    if (typeof role === 'object' && role?.name) {
+      return role.name as UserRole;
+    }
+    return undefined;
+  });
+  const userPermissionsSignal = computed(() => {
+    const user = currentUserSignal();
+    // Get permissions from user object or derive from role
+    if (user?.permissions && user.permissions.length > 0) {
+      return user.permissions;
+    }
+    // Derive permissions from role
+    const role = userRoleSignal();
+    if (role && ROLE_PERMISSIONS[role]) {
+      return ROLE_PERMISSIONS[role];
+    }
+    return [];
+  });
 
   // Refresh token timer
   let refreshTimer: ReturnType<typeof setTimeout> | null = null;
@@ -54,14 +76,20 @@ export const AuthService = () => {
       .pipe(
         tap((response) => {
           console.log('✅ Login response received:', response);
+          console.log('📦 User from response:', response.user);
+
           tokenStorage.setAccessToken(response.accessToken);
           tokenStorage.setRefreshToken(response.refreshToken);
           tokenStorage.setUserData(response.user);
           currentUserSignal.set(response.user);
-          console.log('✅ Tokens stored, user set to:', response.user);
+
+          console.log('✅ Tokens stored');
+          console.log('✅ User signal set to:', response.user);
+          console.log('✅ User authenticated:', currentUserSignal() !== null);
         }),
         switchMap((response) => {
           console.log('✅ Returning user from login:', response.user);
+          console.log('✅ User has permissions:', response.user?.permissions || 'No permissions field');
           return of(response.user);
         }),
         catchError((error) => {
@@ -103,27 +131,20 @@ export const AuthService = () => {
       })
       .pipe(
         tap((response) => {
+          console.log('✅ Refresh response received:', response);
           tokenStorage.setAccessToken(response.accessToken);
           tokenStorage.setRefreshToken(response.refreshToken);
-
-          // Update user data in token storage
-          const payload = tokenStorage.getTokenPayload();
-          if (payload && currentUserSignal()) {
-            const updatedUser = {
-              ...currentUserSignal()!,
-              role: payload.role,
-              permissions: payload.permissions,
-            };
-            tokenStorage.setUserData(updatedUser);
-            currentUserSignal.set(updatedUser);
-          }
+          console.log('✅ Tokens refreshed successfully');
         }),
         switchMap(() => {
           // Fetch fresh user data
-          return http.get<User>(`${environment.apiUrl}/auth/me`).pipe(
+          console.log('🔄 Fetching fresh user data from /users/me');
+          return http.get<User>(`${environment.apiUrl}/users/me`).pipe(
             tap((user) => {
+              console.log('✅ Fresh user data received:', user);
               tokenStorage.setUserData(user);
               currentUserSignal.set(user);
+              console.log('✅ User data updated in storage and signal');
             })
           );
         }),

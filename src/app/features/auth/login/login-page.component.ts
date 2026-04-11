@@ -33,10 +33,23 @@ export class LoginPageComponent {
    * Handle successful login
    * Redirects to dashboard or stored URL
    */
-  onLoginSuccess(): void {
+  onLoginSuccess(): Promise<boolean> {
+    console.log('🚀 onLoginSuccess called!');
+
     // Get stored redirect URL from query params or default to dashboard
     const redirectUrl = this.router.parseUrl(this.router.url).queryParams['redirect'] as string || '/dashboard';
-    this.router.navigate([redirectUrl]);
+
+    console.log('🔀 Redirecting to:', redirectUrl);
+    console.log('📍 Current URL:', this.router.url);
+
+    const navigationPromise = this.router.navigate([redirectUrl]);
+
+    navigationPromise.then(
+      (success) => console.log('✅ Navigation successful:', success),
+      (error) => console.error('❌ Navigation failed:', error)
+    );
+
+    return navigationPromise;
   }
 
   /**
