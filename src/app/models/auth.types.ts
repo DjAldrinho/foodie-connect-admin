@@ -84,15 +84,18 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
 export interface User extends Timestamped {
   id: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
+  full_name: string;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  bio?: string;
+  profile_picture_url?: string;
   avatar?: string;
-  role: UserRole;
-  status: UserStatus;
-  permissions: Permission[];
+  role: UserRole | { id: string; name: string };
+  status?: UserStatus;
+  permissions?: Permission[];
   lastLogin?: string;
-  emailVerified: boolean;
+  emailVerified?: boolean;
 }
 
 /**
@@ -118,10 +121,10 @@ export interface LoginResponse {
  * Token payload
  */
 export interface TokenPayload {
-  sub: string;
+  userId?: string;
+  sub?: string;
   email: string;
-  role: UserRole;
-  permissions: Permission[];
+  role: string;
   iat: number;
   exp: number;
 }
