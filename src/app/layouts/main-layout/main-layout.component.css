@@ -58,23 +58,28 @@ app-sidebar.mobile.open {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin-left: 70px; /* Default to collapsed sidebar width */
   transition: margin-left 0.3s ease;
 }
 
 .main-content.sidebar-shifted {
-  margin-left: 280px;
+  margin-left: 280px; /* Expanded sidebar width */
 }
 
 /* Mobile Layout */
 .main-layout.mobile .main-content {
-  margin-left: 0;
+  margin-left: 0; /* No margin on mobile - sidebar overlays */
+}
+
+.main-layout.mobile .main-content.sidebar-shifted {
+  margin-left: 0; /* No margin even when sidebar is open on mobile */
 }
 
 /* Top Bar */
 app-top-bar {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1001; /* Higher than sidebar (1000) so menu toggle is always clickable */
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -90,8 +95,12 @@ app-top-bar {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0; /* No margin on tablet/mobile */
+  }
+
   .main-content.sidebar-shifted {
-    margin-left: 70px;
+    margin-left: 70px; /* Collapsed sidebar on tablet */
   }
 
   .page-content {
