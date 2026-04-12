@@ -1,8 +1,8 @@
 <div class="main-layout" [class.mobile]="isMobile()">
   <!-- Sidebar -->
   <app-sidebar
-    [class.open]="sidebarOpen"
-    [class.mobile]="isMobile()"
+    [open]="sidebarOpen"
+    [mobile]="isMobile()"
     [collapsed]="!sidebarOpen && !isMobile()"
     (close)="closeSidebar()"
     role="complementary"

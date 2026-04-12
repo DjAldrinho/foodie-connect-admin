@@ -5,31 +5,8 @@
 }
 
 /* Sidebar */
-app-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 280px;
-  background: #2c3e50;
-  color: white;
-  transition: transform 0.3s ease, width 0.3s ease;
-  z-index: 1000;
-}
-
-app-sidebar.collapsed {
-  width: 70px;
-}
-
-/* Mobile Sidebar */
-app-sidebar.mobile {
-  transform: translateX(-100%);
-}
-
-app-sidebar.mobile.open {
-  transform: translateX(0);
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
-}
+/* Note: Sidebar styles are handled by sidebar.component.css */
+/* main-layout only controls main-content positioning */
 
 /* Sidebar Overlay (mobile only) */
 .sidebar-overlay {
@@ -58,23 +35,28 @@ app-sidebar.mobile.open {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin-left: 70px; /* Default to collapsed sidebar width */
   transition: margin-left 0.3s ease;
 }
 
 .main-content.sidebar-shifted {
-  margin-left: 280px;
+  margin-left: 280px; /* Expanded sidebar width */
 }
 
 /* Mobile Layout */
 .main-layout.mobile .main-content {
-  margin-left: 0;
+  margin-left: 0; /* No margin on mobile - sidebar overlays */
+}
+
+.main-layout.mobile .main-content.sidebar-shifted {
+  margin-left: 0; /* No margin even when sidebar is open on mobile */
 }
 
 /* Top Bar */
 app-top-bar {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1001; /* Higher than sidebar (1000) so menu toggle is always clickable */
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -90,8 +72,12 @@ app-top-bar {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0; /* No margin on tablet/mobile */
+  }
+
   .main-content.sidebar-shifted {
-    margin-left: 70px;
+    margin-left: 70px; /* Collapsed sidebar on tablet */
   }
 
   .page-content {
@@ -103,15 +89,10 @@ app-top-bar {
   .page-content {
     padding: 1rem;
   }
-
-  app-sidebar {
-    width: 280px;
-  }
 }
 
 /* Accessibility - Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  app-sidebar,
   .main-content,
   .sidebar-overlay {
     transition: none;
@@ -120,10 +101,6 @@ app-top-bar {
 
 /* Accessibility - High Contrast Mode */
 @media (prefers-contrast: high) {
-  app-sidebar {
-    border-right: 2px solid #fff;
-  }
-
   app-top-bar {
     border-bottom: 2px solid #000;
   }

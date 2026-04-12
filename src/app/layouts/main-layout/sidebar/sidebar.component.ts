@@ -1,4 +1,4 @@
-import { Component, inject, output, input, booleanAttribute } from '@angular/core';
+import { Component, inject, output, input, booleanAttribute, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -80,12 +80,33 @@ export class SidebarComponent {
   /**
    * Current user display name
    */
-  readonly userName = 'Admin Usuario';
+  readonly userName = computed(() => {
+    const user = this.authService.currentUser();
+    if (!user) return 'Usuario';
+
+    // Try full_name first, then fallback to firstName + lastName, then email
+    if (user.full_name) return user.full_name;
+    if (user.firstName && user.lastName) return `${user.firstName} ${user.lastName}`;
+    if (user.fullName) return user.fullName;
+    return user.email || 'Usuario';
+  });
 
   /**
    * Current user role
    */
-  readonly userRole = 'Super Admin';
+  readonly userRole = computed(() => {
+    const role = this.authService.userRole();
+    if (!role) return 'Sin Rol';
+
+    // Convert role enum to display name
+    const roleNames: Record<string, string> = {
+      'USER': 'Usuario',
+      'ADMIN': 'Administrador',
+      'SUPER_ADMIN': 'Super Admin',
+    };
+
+    return roleNames[role] || role;
+  });
 
   /**
    * Close sidebar (mobile)

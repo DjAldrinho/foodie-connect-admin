@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal, viewChild, ElementRef } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, viewChild, ElementRef, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -53,15 +53,29 @@ export class RatingDistributionChartComponent implements OnInit, OnDestroy {
   private readonly dashboardService = inject(DashboardService);
 
   // Canvas reference
-  readonly canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('chartCanvas');
+  readonly canvasRef = viewChild<ElementRef<HTMLCanvasElement>>('chartCanvas');
 
   // State signals
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
   readonly distribution = signal<RatingDistribution | null>(null);
 
+  // Signal to store pending data for rendering
+  private pendingData = signal<RatingDistribution | null>(null);
+
   // Chart instance
   private chart: Chart | null = null;
+
+  constructor() {
+    // Render chart after DOM is ready if there's pending data
+    afterNextRender(() => {
+      const data = this.pendingData();
+      if (data) {
+        this.renderChart(data);
+        this.pendingData.set(null);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadRatingDistribution();
@@ -84,7 +98,17 @@ export class RatingDistributionChartComponent implements OnInit, OnDestroy {
     this.dashboardService.getRatingDistribution().subscribe({
       next: (data) => {
         this.distribution.set(data);
-        this.renderChart(data);
+
+        // Check if canvas is available
+        const canvasElement = this.canvasRef();
+        if (canvasElement) {
+          // Canvas is ready, render immediately
+          this.renderChart(data);
+        } else {
+          // Canvas not ready, store data for afterNextRender
+          this.pendingData.set(data);
+        }
+
         this.loading.set(false);
       },
       error: (err) => {
@@ -99,12 +123,19 @@ export class RatingDistributionChartComponent implements OnInit, OnDestroy {
    * Render chart using Chart.js
    */
   private renderChart(data: RatingDistribution): void {
+    // Get canvas element (should be available when this is called)
+    const canvasElement = this.canvasRef();
+    if (!canvasElement) {
+      console.error('Canvas element not available when trying to render');
+      return;
+    }
+
     // Destroy existing chart
     if (this.chart) {
       this.chart.destroy();
     }
 
-    const canvas = this.canvasRef().nativeElement;
+    const canvas = canvasElement.nativeElement;
     const ctx = canvas.getContext('2d');
 
     if (!ctx) {
