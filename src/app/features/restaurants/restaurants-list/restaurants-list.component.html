@@ -1,0 +1,115 @@
+<div class="restaurants-list-page">
+  <div class="header">
+    <div class="header-left">
+      <h1 class="page-title">Restaurants</h1>
+      <p class="page-subtitle">Manage and verify restaurants</p>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="onRefresh()" [disabled]="loading()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+      <button mat-stroked-button (click)="onExportToCsv()" [disabled]="loading() || restaurants().length === 0">
+        <mat-icon>download</mat-icon>
+        Export CSV
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  } @else {
+    <div class="content">
+      <!-- Filters Section -->
+      <app-restaurant-filters
+        [filters]="filters()"
+        (filtersChange)="onFiltersChange($event)"
+        (reset)="onResetFilters()"
+      />
+
+      <!-- View Toggle and Results Info -->
+      <div class="results-header">
+        <div class="results-info">
+          <span class="results-count">
+            Showing {{ paginationStart() }}-{{ paginationEnd() }} of {{ totalRestaurants() }} restaurants
+          </span>
+          @if (hasActiveFilters()) {
+            <span class="filters-active">Filters active</span>
+          }
+        </div>
+        <div class="view-controls">
+          <app-view-toggle
+            [viewMode]="viewMode()"
+            (viewModeChange)="onViewModeChange($event)"
+          />
+        </div>
+      </div>
+
+      <!-- Grid View -->
+      @if (viewMode() === 'grid') {
+        <app-grid-view
+          [restaurants]="restaurants()"
+          [loading]="loading()"
+          (restaurantClick)="onViewRestaurant($event)"
+        />
+      }
+
+      <!-- List View -->
+      @if (viewMode() === 'list') {
+        <app-list-view
+          [restaurants]="restaurants()"
+          [loading]="loading()"
+          (sortChange)="onSortChange($event)"
+          (restaurantClick)="onViewRestaurant($event)"
+        />
+      }
+
+      <!-- Empty State -->
+      @if (restaurants().length === 0 && !loading()) {
+        <div class="empty-state">
+          <mat-icon class="empty-icon">restaurant</mat-icon>
+          <h2 class="empty-title">No restaurants found</h2>
+          <p class="empty-description">
+            @if (hasActiveFilters()) {
+              Try adjusting your filters to see more results.
+            } @else {
+              No restaurants have been added yet.
+            }
+          </p>
+          @if (hasActiveFilters()) {
+            <button mat-raised-button color="primary" (click)="onResetFilters()">
+              Clear Filters
+            </button>
+          }
+        </div>
+      }
+
+      <!-- Pagination -->
+      @if (totalPages() > 1) {
+        <div class="pagination">
+          <button
+            mat-button
+            (click)="onPageChange(currentPage() - 1)"
+            [disabled]="currentPage() === 1 || loading()"
+          >
+            <mat-icon>chevron_left</mat-icon>
+            Previous
+          </button>
+
+          <span class="page-info">Page {{ currentPage() }} of {{ totalPages() }}</span>
+
+          <button
+            mat-button
+            (click)="onPageChange(currentPage() + 1)"
+            [disabled]="currentPage() === totalPages() || loading()"
+          >
+            Next
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

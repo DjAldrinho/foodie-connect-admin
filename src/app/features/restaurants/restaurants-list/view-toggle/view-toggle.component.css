@@ -1,0 +1,54 @@
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: #f5f6fa;
+  color: #374151;
+}
+
+.toggle-btn:focus {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+.toggle-btn.active {
+  background: #ff6b35;
+  color: white;
+}
+
+.toggle-btn.active mat-icon {
+  color: white;
+}
+
+.toggle-btn mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .toggle-btn {
+    transition: none;
+  }
+}

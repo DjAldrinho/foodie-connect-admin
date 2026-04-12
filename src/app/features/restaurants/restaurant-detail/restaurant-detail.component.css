@@ -1,0 +1,34 @@
+.restaurant-detail-page {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detail-container mat-tab-group {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .restaurant-detail-page {
+    padding: 1rem;
+  }
+}

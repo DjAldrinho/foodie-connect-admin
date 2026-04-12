@@ -1,0 +1,21 @@
+<div class="verification-actions" *ngIf="showActions">
+  <div class="actions-header">
+    <h3>Verification Pending</h3>
+    <p class="actions-description">This restaurant is waiting for verification. Review the information and take action.</p>
+  </div>
+
+  <div class="actions-buttons">
+    <button mat-raised-button color="primary" (click)="onApprove()">
+      <mat-icon>check_circle</mat-icon>
+      Approve
+    </button>
+    <button mat-stroked-button color="warn" (click)="onReject()">
+      <mat-icon>cancel</mat-icon>
+      Reject
+    </button>
+    <button mat-stroked-button (click)="onRequestInfo()">
+      <mat-icon>contact_support</mat-icon>
+      Request Info
+    </button>
+  </div>
+</div>

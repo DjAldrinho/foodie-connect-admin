@@ -1,0 +1,45 @@
+.verification-actions {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.actions-header {
+  margin-bottom: 1rem;
+}
+
+.actions-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.actions-description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #78350f;
+}
+
+.actions-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.actions-buttons button {
+  flex: 1;
+  min-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .actions-buttons {
+    flex-direction: column;
+  }
+
+  .actions-buttons button {
+    width: 100%;
+  }
+}

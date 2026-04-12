@@ -1,0 +1,58 @@
+<div class="reviews-tab">
+  <div class="tab-header">
+    <h2>Reviews</h2>
+    <div class="filters">
+      <button mat-stroked-button [class.active]="!minRating()">
+        All
+      </button>
+      <button mat-stroked-button [class.active]="minRating() === 4">
+        4+ Stars
+      </button>
+      <button mat-stroked-button [class.active]="minRating() === 5">
+        5 Stars
+      </button>
+      <button mat-stroked-button [class.active]="hasPhotosOnly()">
+        <mat-icon>photo_camera</mat-icon>
+        With Photos
+      </button>
+    </div>
+  </div>
+
+  <div class="reviews-list">
+    @for (review of reviews(); track review.id) {
+      <div class="review-card">
+        <div class="review-header">
+          <div class="user-info">
+            <div class="user-avatar">
+              {{ review.userName.charAt(0) }}
+            </div>
+            <div>
+              <div class="user-name">{{ review.userName }}</div>
+              <div class="review-date">{{ review.date | date:'medium' }}</div>
+            </div>
+          </div>
+          <div class="rating">
+            @for (star of getStarArray(review.rating); track $index) {
+              <mat-icon [class.filled]="star === 1">star</mat-icon>
+            }
+          </div>
+        </div>
+        <p class="review-text">{{ review.text }}</p>
+        <div class="review-footer">
+          <button mat-button class="helpful-button">
+            <mat-icon>thumb_up</mat-icon>
+            Helpful ({{ review.helpfulCount }})
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (reviews().length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">rate_review</mat-icon>
+      <h3>No reviews yet</h3>
+      <p>Be the first to review this restaurant!</p>
+    </div>
+  }
+</div>
