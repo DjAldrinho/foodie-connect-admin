@@ -9,7 +9,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
-import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { authInterceptor } from './core/auth/interceptors/auth.interceptor';
 import { loadingInterceptorFactory } from './core/interceptors/loading.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { RetryInterceptor } from './core/interceptors/retry.interceptor';
