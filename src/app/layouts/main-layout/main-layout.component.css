@@ -17,7 +17,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {
@@ -36,7 +36,7 @@
   flex-direction: column;
   min-height: 100vh;
   margin-left: 70px; /* Default to collapsed sidebar width */
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .main-content.sidebar-shifted {
@@ -95,7 +95,8 @@ app-top-bar {
 @media (prefers-reduced-motion: reduce) {
   .main-content,
   .sidebar-overlay {
-    transition: none;
+    animation: none !important;
+    transition: none !important;
   }
 }
 
