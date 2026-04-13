@@ -1,0 +1,76 @@
+/**
+ * Review Preview Component Styles
+ */
+
+@reference "tailwindcss";
+.review-preview {
+  @apply bg-gray-50 rounded-lg p-6;
+}
+
+.review-content {
+  @apply space-y-4;
+}
+
+.review-header {
+  @apply flex items-center justify-between;
+}
+
+.rating-stars {
+  @apply flex gap-1;
+}
+
+.star {
+  @apply text-gray-300;
+}
+
+.star.filled {
+  @apply text-yellow-400 fill-current;
+}
+
+.review-date {
+  @apply text-sm text-gray-500;
+}
+
+.review-text {
+  @apply text-gray-700 leading-relaxed;
+}
+
+.review-photos {
+  @apply grid grid-cols-3 gap-2;
+}
+
+.review-photo {
+  @apply w-full h-32 object-cover rounded-lg;
+}
+
+.reviewer-info {
+  @apply flex items-center gap-3 border-t border-gray-200 pt-4;
+}
+
+.reviewer-avatar {
+  @apply w-12 h-12 rounded-full object-cover;
+}
+
+.reviewer-avatar-placeholder {
+  @apply w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-lg font-bold;
+}
+
+.reviewer-details {
+  @apply flex-1;
+}
+
+.reviewer-name {
+  @apply font-medium text-gray-900;
+}
+
+.review-label {
+  @apply text-sm text-gray-600;
+}
+
+.restaurant-context {
+  @apply flex items-center gap-2 text-sm text-gray-600 border-t border-gray-200 pt-4;
+}
+
+.restaurant-link {
+  @apply text-blue-600 hover:underline font-medium;
+}

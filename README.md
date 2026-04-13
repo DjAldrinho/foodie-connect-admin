@@ -70,6 +70,28 @@ Foodie Connect Admin es un panel de administración moderno y responsive constru
   - User statistics, restaurants, reviews, activity
   - Bulk actions y export functionality
 
+### ✅ Phase 5: Restaurants Module (100% Complete)
+- **Restaurants List**:
+  - Grid/list view toggle
+  - Advanced filters (search, status, cuisine, price range, rating)
+  - Material table con sorting y pagination
+  - Export to CSV functionality
+  - Restaurant cards con cover images, ratings, badges
+
+- **Restaurant Detail**:
+  - Header con cover image, stats cards
+  - 4 tabs: Overview, Photos, Menu, Reviews
+  - Verification actions (approve, reject, request info)
+  - Contact info, owner details, verification status
+
+- **Services**:
+  - Complete CRUD con mock data (6 restaurants)
+  - Verification workflow (approve/reject/request info)
+  - Photo management (upload, delete)
+  - Menu management (categories, items)
+  - Reviews retrieval with filters
+  - Bulk operations and export functionality
+
 ## 🛠️ Tech Stack
 
 | Technology | Version | Purpose |
@@ -92,7 +114,8 @@ src/app/
 ├── features/             # Feature modules
 │   ├── auth/            # Login, forgot password
 │   ├── dashboard/       # Dashboard module
-│   └── users/           # Users module (list, detail)
+│   ├── users/           # Users module (list, detail)
+│   └── restaurants/     # Restaurants module (list, detail, verification)
 ├── layouts/             # Layout components
 │   ├── auth-layout/     # Login layout
 │   └── main-layout/     # Main layout (sidebar, top-bar)
@@ -250,9 +273,9 @@ Para documentación detallada sobre arquitectura, patrones y aprendizaje, mirá:
 - [x] Phase 2: Layout & Auth Components
 - [x] Phase 3: Dashboard Module
 - [x] Phase 4: Users Module
+- [x] Phase 5: Restaurants Module
 
 ### 🔄 En Progreso
-- [ ] Phase 5: Restaurants Module
 - [ ] Phase 6: Moderation Module
 - [ ] Phase 7: Notifications Module
 - [ ] Phase 8: Analytics Module

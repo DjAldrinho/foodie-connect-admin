@@ -1,0 +1,71 @@
+<div class="review-preview">
+  @if (review()) {
+  <div class="review-content">
+    <!-- Rating and Title -->
+    <div class="review-header">
+      <div class="rating-stars">
+        @for (star of [1, 2, 3, 4, 5]; track star) {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="star"
+          [class.filled]="star <= (review()?.rating || 0)"
+        >
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        }
+      </div>
+
+      <div class="review-date">{{ review()?.createdAt | date:'long' }}</div>
+    </div>
+
+    <!-- Review Text -->
+    <div class="review-text">
+      {{ review()?.text }}
+    </div>
+
+    <!-- Photos Gallery -->
+    @if (review()?.photos && review()!.photos!.length > 0) {
+    <div class="review-photos">
+      @for (photo of review()?.photos; track photo) {
+      <img [src]="photo" alt="Review photo" class="review-photo" />
+      }
+    </div>
+    }
+
+    <!-- Reviewer Info -->
+    <div class="reviewer-info">
+      @if (review()?.reviewer?.avatar) {
+      <img [src]="review()?.reviewer?.avatar" [alt]="review()?.reviewer?.name" class="reviewer-avatar" />
+      } @else {
+      <div class="reviewer-avatar-placeholder">
+        {{ review()?.reviewer?.name?.charAt(0) || '?' }}
+      </div>
+      }
+
+      <div class="reviewer-details">
+        <div class="reviewer-name">{{ review()?.reviewer?.name }}</div>
+        <div class="review-label">Reviewer</div>
+      </div>
+    </div>
+
+    <!-- Restaurant Context -->
+    @if (review()?.restaurant) {
+    <div class="restaurant-context">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+        <path d="M7 2v20"></path>
+        <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+      </svg>
+      <span>Review for</span>
+      <a [routerLink]="['/restaurants', review()?.restaurant?.id]" class="restaurant-link">
+        {{ review()?.restaurant?.name }}
+      </a>
+    </div>
+    }
+  </div>
+  }
+</div>

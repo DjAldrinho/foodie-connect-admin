@@ -1,0 +1,82 @@
+<div class="photo-preview">
+  @if (photo()) {
+  <div class="photo-content">
+    <!-- Main Photo -->
+    <div class="photo-main">
+      <img [src]="photo()?.url" alt="Reported photo" class="photo-image" />
+
+      @if (photo()?.caption) {
+      <div class="photo-caption">{{ photo()?.caption }}</div>
+      }
+    </div>
+
+    <!-- Photo Details -->
+    <div class="photo-details">
+      <!-- EXIF Data -->
+      @if (photo()?.exif) {
+      <div class="exif-data">
+        <h4 class="detail-label">Photo Information</h4>
+
+        <div class="detail-grid">
+          @if (photo()?.exif?.camera) {
+          <div class="detail-item">
+            <span class="detail-label-small">Camera</span>
+            <span class="detail-value">{{ photo()?.exif?.camera }}</span>
+          </div>
+          }
+
+          @if (photo()?.exif?.dateTaken) {
+          <div class="detail-item">
+            <span class="detail-label-small">Date Taken</span>
+            <span class="detail-value">{{ photo()?.exif?.dateTaken | date:'long' }}</span>
+          </div>
+          }
+
+          @if (photo()?.exif?.location) {
+          <div class="detail-item">
+            <span class="detail-label-small">Location</span>
+            <span class="detail-value">{{ photo()?.exif?.location }}</span>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- Uploader Info -->
+      <div class="uploader-info">
+        <h4 class="detail-label">Uploaded By</h4>
+
+        <div class="uploader-details">
+          @if (photo()?.uploader?.avatar) {
+          <img [src]="photo()?.uploader?.avatar" [alt]="photo()?.uploader?.name" class="uploader-avatar" />
+          } @else {
+          <div class="uploader-avatar-placeholder">
+            {{ photo()?.uploader?.name?.charAt(0) || '?' }}
+          </div>
+          }
+
+          <div>
+            <div class="uploader-name">{{ photo()?.uploader?.name }}</div>
+            <div class="upload-date">{{ photo()?.uploadedAt | date:'long' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant Context -->
+      @if (photo()?.restaurant) {
+      <div class="restaurant-context">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+          <path d="M7 2v20"></path>
+          <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+        </svg>
+        <span>Photo for</span>
+        <a [routerLink]="['/restaurants', photo()?.restaurant?.id]" class="restaurant-link">
+          {{ photo()?.restaurant?.name }}
+        </a>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
