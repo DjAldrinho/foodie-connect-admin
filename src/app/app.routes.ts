@@ -37,36 +37,43 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./features/dashboard').then(m => m.DashboardComponent),
+        data: { preload: true }, // Preload: High traffic
       },
       // Users routes
       {
         path: 'users',
         loadChildren: () => import('./features/users/users.routes').then(m => m.usersRoutes),
+        data: { preload: true }, // Preload: High traffic
       },
       // Notifications routes
       {
         path: 'notifications',
         loadChildren: () => import('./features/notifications').then(m => m.NOTIFICATIONS_ROUTES),
+        // No preload: Medium traffic
       },
       // Restaurants routes
       {
         path: 'restaurants',
         loadChildren: () => import('./features/restaurants/restaurants.routes').then(m => m.restaurantsRoutes),
+        data: { preload: true }, // Preload: High traffic
       },
       // Moderation routes
       {
         path: 'moderation',
         loadChildren: () => import('./features/moderation/moderation.routes').then(m => m.moderationRoutes),
+        // No preload: Medium traffic, admin only
       },
       // Analytics routes
       {
         path: 'analytics',
         loadChildren: () => import('./features/analytics').then(m => m.ANALYTICS_ROUTES),
+        // No preload: Lower traffic
       },
       // Settings routes
       {
         path: 'settings',
         loadChildren: () => import('./features/settings/settings.routes').then(m => m.SETTINGS_ROUTES),
+        // No preload: Large module, rarely accessed
       },
       // Other feature routes will be added here
       // Redirect root to dashboard

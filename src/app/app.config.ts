@@ -13,10 +13,14 @@ import { authInterceptor } from './core/auth/interceptors/auth.interceptor';
 import { loadingInterceptorFactory } from './core/interceptors/loading.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { RetryInterceptor } from './core/interceptors/retry.interceptor';
+import { CustomPreloadingStrategy } from './core/routing';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      CustomPreloadingStrategy // Enable custom preloading strategy
+    ),
 
     // HttpClient con interceptors funcionales
     provideHttpClient(withInterceptorsFromDi()),
