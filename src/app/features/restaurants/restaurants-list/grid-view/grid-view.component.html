@@ -9,12 +9,28 @@
     </div>
   } @else {
     <div class="restaurant-grid">
-      @for (restaurant of restaurants(); track restaurant.id) {
+      @for (restaurant of restaurants(); track restaurant.id; let i = $index) {
         <div class="restaurant-card" (click)="onCardClick(restaurant.id)">
           <!-- Cover Image -->
           <div class="card-image">
             @if (restaurant.coverImage) {
-              <img [src]="restaurant.coverImage" [alt]="restaurant.name" />
+              @if (i < 3) {
+                <!-- First 3 images: priority load (above the fold) -->
+                <img
+                  ngSrc="{{ restaurant.coverImage }}"
+                  [alt]="restaurant.name"
+                  width="400"
+                  height="300"
+                  priority
+                />
+              } @else {
+                <!-- Rest: lazy load (below the fold) -->
+                <img
+                  appLazyLoadImage
+                  [src]="restaurant.coverImage"
+                  [alt]="restaurant.name"
+                />
+              }
             } @else {
               <div class="image-placeholder">
                 <mat-icon>restaurant</mat-icon>

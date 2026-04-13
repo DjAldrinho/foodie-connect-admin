@@ -1,10 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner';
+import { LazyLoadImageDirective } from '../../../../shared/directives';
 import type { RestaurantListItem } from '../../../../models/restaurants.types';
 import { RestaurantStatus, VerificationStatus } from '../../../../models/restaurants.types';
 
@@ -18,10 +20,12 @@ interface SortState {
   standalone: true,
   imports: [
     CommonModule,
+    NgOptimizedImage,
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
     LoadingSpinnerComponent,
+    LazyLoadImageDirective,
   ],
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css'],
