@@ -1,0 +1,211 @@
+<div class="compose-notification">
+  <div class="page-header">
+    <h1 class="page-title">Compose Notification</h1>
+    <button class="btn btn-secondary" routerLink="/notifications">
+      <i class="icon-arrow-left"></i>
+      Back to Notifications
+    </button>
+  </div>
+
+  <div class="compose-container">
+    <!-- Form -->
+    <div class="form-section">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <!-- Title -->
+        <div class="form-group">
+          <label for="title">Title *</label>
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            placeholder="Enter notification title"
+            [class.error]="f.title.invalid && f.title.touched"
+          />
+          @if (f.title.invalid && f.title.touched) {
+            <div class="error-message">
+              @if (f.title.errors?.['required']) {
+                Title is required
+              }
+              @if (f.title.errors?.['minlength']) {
+                Title must be at least 5 characters
+              }
+              @if (f.title.errors?.['maxlength']) {
+                Title must be less than 100 characters
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea
+            id="message"
+            formControlName="message"
+            rows="5"
+            placeholder="Enter notification message"
+            [class.error]="f.message.invalid && f.message.touched"
+          ></textarea>
+          @if (f.message.invalid && f.message.touched) {
+            <div class="error-message">
+              @if (f.message.errors?.['required']) {
+                Message is required
+              }
+              @if (f.message.errors?.['minlength']) {
+                Message must be at least 10 characters
+              }
+              @if (f.message.errors?.['maxlength']) {
+                Message must be less than 500 characters
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Type -->
+        <div class="form-group">
+          <label for="type">Type *</label>
+          <select id="type" formControlName="type">
+            @for (type of notificationTypes; track type) {
+              <option [value]="type">{{ getTypeDisplayName(type) }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Priority -->
+        <div class="form-group">
+          <label for="priority">Priority *</label>
+          <select id="priority" formControlName="priority">
+            @for (priority of priorities; track priority) {
+              <option [value]="priority">{{ getPriorityDisplayName(priority) }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Target -->
+        <div class="form-group">
+          <label for="target">Target Audience *</label>
+          <select id="target" formControlName="target">
+            @for (target of targets; track target) {
+              <option [value]="target">{{ getTargetDisplayName(target) }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Target Roles (conditional) -->
+        @if (needsRoleSelection()) {
+          <div class="form-group">
+            <label for="targetRoles">Target Roles</label>
+            <input
+              id="targetRoles"
+              type="text"
+              formControlName="targetRoles"
+              placeholder="Enter roles separated by commas (e.g., USER, ADMIN)"
+            />
+            <small>Enter roles separated by commas</small>
+          </div>
+        }
+
+        <!-- Target User IDs (conditional) -->
+        @if (needsUserIds()) {
+          <div class="form-group">
+            <label for="targetUserIds">Target User IDs</label>
+            <input
+              id="targetUserIds"
+              type="text"
+              formControlName="targetUserIds"
+              placeholder="Enter user IDs separated by commas"
+            />
+            <small>Enter user IDs separated by commas</small>
+          </div>
+        }
+
+        <!-- Scheduling -->
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="sendNow" />
+            Send immediately
+          </label>
+        </div>
+
+        @if (!f.sendNow.value) {
+          <div class="form-group">
+            <label for="scheduledFor">Schedule For</label>
+            <input
+              id="scheduledFor"
+              type="datetime-local"
+              formControlName="scheduledFor"
+            />
+          </div>
+        }
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="togglePreview()"
+          >
+            <i class="icon-preview"></i>
+            Preview
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="isSubmitting()"
+          >
+            @if (isSubmitting()) {
+              Sending...
+            } @else {
+              Send Notification
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Preview Panel -->
+    @if (showPreview() && getPreviewData()) {
+      <div class="preview-section">
+        <h2>Preview</h2>
+        <div class="preview-card mobile">
+          <h3>Mobile Preview</h3>
+          <div class="notification-preview">
+            <div class="preview-header">
+              <span class="preview-badge" [class]="'preview-type-' + getPreviewData()!.type">
+                {{ getTypeDisplayName(getPreviewData()!.type) }}
+              </span>
+              <span class="preview-priority" [class]="'preview-priority-' + getPreviewData()!.priority">
+                {{ getPriorityDisplayName(getPreviewData()!.priority) }}
+              </span>
+            </div>
+            <h4 class="preview-title">{{ getPreviewData()!.title }}</h4>
+            <p class="preview-message">{{ getPreviewData()!.message }}</p>
+          </div>
+        </div>
+
+        <div class="preview-card desktop">
+          <h3>Desktop Preview</h3>
+          <div class="notification-preview">
+            <div class="preview-header">
+              <span class="preview-badge" [class]="'preview-type-' + getPreviewData()!.type">
+                {{ getTypeDisplayName(getPreviewData()!.type) }}
+              </span>
+              <span class="preview-priority" [class]="'preview-priority-' + getPreviewData()!.priority">
+                {{ getPriorityDisplayName(getPreviewData()!.priority) }}
+              </span>
+            </div>
+            <h4 class="preview-title">{{ getPreviewData()!.title }}</h4>
+            <p class="preview-message">{{ getPreviewData()!.message }}</p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
