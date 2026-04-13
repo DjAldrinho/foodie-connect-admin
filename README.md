@@ -250,10 +250,10 @@ Para documentación detallada sobre arquitectura, patrones y aprendizaje, mirá:
 - [x] Phase 2: Layout & Auth Components
 - [x] Phase 3: Dashboard Module
 - [x] Phase 4: Users Module
+- [x] Phase 5: Restaurants Module
 
 ### 🔄 En Progreso
-- [ ] Phase 5: Restaurants Module
-- [ ] Phase 6: Moderation Module
+- [ ] Phase 6: Moderation Module (WIP in feature/moderation-module branch)
 - [ ] Phase 7: Notifications Module
 - [ ] Phase 8: Analytics Module
 - [ ] Phase 9: Settings Module
