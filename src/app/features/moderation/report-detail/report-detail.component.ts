@@ -3,30 +3,29 @@
  * Displays full details of a moderation report with type-specific content previews
  */
 
-import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { ModerationService } from '../services/moderation.service';
 import { ToastNotificationService } from '../../../core/services/toast-notification.service';
+import { ModerationService } from '../services/moderation.service';
 
 // Import preview components
 import {
-  UserPreviewComponent,
-  RestaurantPreviewComponent,
-  ReviewPreviewComponent,
-  PhotoPreviewComponent,
-  CommentPreviewComponent,
+    CommentPreviewComponent,
+    PhotoPreviewComponent,
+    RestaurantPreviewComponent,
+    ReviewPreviewComponent,
+    UserPreviewComponent,
 } from './previews';
 
 import type {
-  ReportDetail,
-  ActionHistoryItem,
-  ReportListItem,
-} from '../../../../models/moderation.types';
-import { ReportType, ModerationAction } from '../../../../models/moderation.types';
+    ActionHistoryItem,
+    ReportDetail,
+    ReportListItem,
+} from '../../../models/moderation.types';
+import { ModerationAction, ReportType } from '../../../models/moderation.types';
 
 /**
  * Report Detail Component

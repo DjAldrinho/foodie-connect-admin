@@ -4,25 +4,25 @@
  */
 
 import { Injectable, signal } from '@angular/core';
-import { Observable, of, delay, map } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { BaseService } from '../../../core/services/base.service';
-import type {
-  Report,
-  ReportListItem,
-  ReportDetail,
-  QueueQuery,
-  ModerationBulkActionRequest,
-  BulkActionResponse,
-  ModerationStatistics,
-  ActionHistoryItem,
-} from '../../../../models/moderation.types';
 import type { PaginatedResponse, PaginationParams } from '../../../models/common.types';
+import type {
+    ActionHistoryItem,
+    BulkActionResponse,
+    ModerationBulkActionRequest,
+    ModerationStatistics,
+    QueueQuery,
+    Report,
+    ReportDetail,
+    ReportListItem,
+} from '../../../models/moderation.types';
 import {
-  ReportType,
-  ReportStatus,
-  Priority,
-  ModerationAction,
-} from '../../../../models/moderation.types';
+    ModerationAction,
+    Priority,
+    ReportStatus,
+    ReportType,
+} from '../../../models/moderation.types';
 
 /**
  * Mock reports data (30 sample reports)

@@ -3,26 +3,26 @@
  * Main component for displaying and managing the moderation queue
  */
 
-import { Component, OnInit, inject, DestroyRef, computed, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { interval } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { interval } from 'rxjs';
 
-import { ModerationService } from '../services/moderation.service';
 import { SelectionService } from '../../../core/services/selection.service';
 import { ToastNotificationService } from '../../../core/services/toast-notification.service';
+import { ModerationService } from '../services/moderation.service';
 
-import type {
-  ReportListItem,
-  QueueQuery,
-  ModerationBulkActionRequest,
-  ModerationStatistics,
-} from '../../../../models/moderation.types';
 import type { PaginatedResponse } from '../../../models/common.types';
 import { PaginationParams } from '../../../models/common.types';
-import { ReportType, ReportStatus, Priority } from '../../../../models/moderation.types';
+import type {
+    ModerationBulkActionRequest,
+    ModerationStatistics,
+    QueueQuery,
+    ReportListItem,
+} from '../../../models/moderation.types';
+import { Priority, ReportStatus, ReportType } from '../../../models/moderation.types';
 
 /**
  * Moderation Queue Component

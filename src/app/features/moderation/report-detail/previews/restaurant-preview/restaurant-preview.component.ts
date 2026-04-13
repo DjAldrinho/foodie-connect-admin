@@ -3,11 +3,11 @@
  * Displays restaurant information in moderation detail view
  */
 
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import type { ReportDetail } from '../../../../../../models/moderation.types';
+import type { ReportDetail } from '../../../../../models/moderation.types';
 
 /**
  * Restaurant Preview Component
