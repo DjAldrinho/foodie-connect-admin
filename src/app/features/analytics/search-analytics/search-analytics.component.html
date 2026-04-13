@@ -1,0 +1,40 @@
+<div class="search-analytics">
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
+  }
+  @if (!isLoading() && analytics()!) {
+    const data = analytics()!;
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Searches</div>
+        <div class="stat-value">{{ analytics()!!.totalSearches.toLocaleString() }}</div>
+      </div>
+    </div>
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>Top Searches</h3>
+        @for (term of analytics()!!.topSearches; track term.term) {
+          <div class="search-term-item">
+            <span class="term-text">{{ term.term }}</span>
+            <span class="term-count">{{ term.count.toLocaleString() }}</span>
+            <span class="term-trend" [class.up]="term.trend === 'up'" [class.down]="term.trend === 'down'" [class.stable]="term.trend === 'stable'">
+              {{ term.trend === 'up' ? '↑' : term.trend === 'down' ? '↓' : '→' }}
+            </span>
+          </div>
+        }
+      </div>
+      <div class="analytics-card">
+        <h3>No Results Searches</h3>
+        @for (term of analytics()!!.noResultsSearches; track term.term) {
+          <div class="search-term-item">
+            <span class="term-text">{{ term.term }}</span>
+            <span class="term-count">{{ term.count.toLocaleString() }}</span>
+            <span class="term-trend" [class.up]="term.trend === 'up'" [class.down]="term.trend === 'down'">
+              {{ term.trend === 'up' ? '↑' : '↓' }}
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

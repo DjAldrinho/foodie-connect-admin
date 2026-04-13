@@ -1,0 +1,74 @@
+<div class="restaurant-analytics">
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
+  }
+  @if (!isLoading() && analytics()) {
+    const data = analytics();
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Restaurants</div>
+        <div class="stat-value">{{ analytics()!.totalRestaurants.toLocaleString() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Verified</div>
+        <div class="stat-value">{{ analytics()!.verifiedRestaurants.toLocaleString() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Verification Rate</div>
+        <div class="stat-value">{{ ((analytics()!.verifiedRestaurants / analytics()!.totalRestaurants) * 100).toFixed(1) }}%</div>
+      </div>
+    </div>
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>By City</h3>
+        @for (city of analytics()!.byCity; track city.city) {
+          <div class="city-item">
+            <span class="city-name">{{ city.city }}</span>
+            <span class="city-count">{{ city.count.toLocaleString() }}</span>
+            <span class="city-percentage">{{ city.percentage }}%</span>
+          </div>
+        }
+      </div>
+      <div class="analytics-card">
+        <h3>Top Rated</h3>
+        @for (restaurant of analytics()!.topRated; track restaurant.id) {
+          <div class="restaurant-item">
+            <div class="restaurant-info">
+              <span class="restaurant-name">{{ restaurant.name }}</span>
+              <span class="restaurant-city">{{ restaurant.city }}</span>
+            </div>
+            <div class="restaurant-rating">
+              <span class="rating-stars">⭐ {{ restaurant.rating }}</span>
+              <span class="rating-count">{{ restaurant.reviewCount }} reviews</span>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="analytics-card">
+        <h3>Rating Summary</h3>
+        <div class="rating-summary">
+          <div class="rating-item">
+            <span>5 Stars</span>
+            <span>{{ analytics()!.reviewsDistribution[5] || 0 }}</span>
+          </div>
+          <div class="rating-item">
+            <span>4 Stars</span>
+            <span>{{ analytics()!.reviewsDistribution[4] || 0 }}</span>
+          </div>
+          <div class="rating-item">
+            <span>3 Stars</span>
+            <span>{{ analytics()!.reviewsDistribution[3] || 0 }}</span>
+          </div>
+          <div class="rating-item">
+            <span>2 Stars</span>
+            <span>{{ analytics()!.reviewsDistribution[2] || 0 }}</span>
+          </div>
+          <div class="rating-item">
+            <span>1 Star</span>
+            <span>{{ analytics()!.reviewsDistribution[1] || 0 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

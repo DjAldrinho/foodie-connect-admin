@@ -1,0 +1,103 @@
+<div class="users-analytics">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading analytics...</p>
+    </div>
+  }
+
+  @if (hasError()) {
+    <div class="error-state">
+      <i class="icon-error"></i>
+      <h3>Error Loading Analytics</h3>
+      <p>Failed to load users analytics data</p>
+    </div>
+  }
+
+  @if (!isLoading() && !hasError() && analytics()) {
+    const data = analytics();
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value">{{ analytics()!.totalUsers.toLocaleString() }}</div>
+        <div class="stat-change positive">+12.5%</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Active Users</div>
+        <div class="stat-value">{{ analytics()!.activeUsers.toLocaleString() }}</div>
+        <div class="stat-change positive">{{ getActivePercentage().toFixed(1) }}%</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Inactive Users</div>
+        <div class="stat-value">{{ analytics()!.inactiveUsers.toLocaleString() }}</div>
+        <div class="stat-change negative">{{ getInactivePercentage().toFixed(1) }}%</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Retention Rate</div>
+        <div class="stat-value">{{ analytics()!.retentionRate }}%</div>
+        <div class="stat-change positive">+2.3%</div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <div class="chart-card">
+        <h3>User Signups Trend</h3>
+        <div class="simple-chart">
+          @for (point of analytics()!.signupsTrend.slice(-7); track point.date) {
+            <div class="chart-bar" [style.height.%]="((point.value / 250) * 100)">
+              <div class="bar-tooltip">{{ point.label }}: {{ point.value }}</div>
+            </div>
+          }
+        </div>
+        <div class="chart-labels">
+          @for (point of analytics()!.signupsTrend.slice(-7); track point.date) {
+            <span class="chart-label">{{ point.label }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Active vs Inactive</h3>
+        <div class="pie-chart">
+          <div class="pie-segment active" [style.flex-grow]="analytics()!.activeUsers">
+            <span class="pie-label">Active</span>
+            <span class="pie-value">{{ analytics()!.activeUsers.toLocaleString() }}</span>
+          </div>
+          <div class="pie-segment inactive" [style.flex-grow]="analytics()!.inactiveUsers">
+            <span class="pie-label">Inactive</span>
+            <span class="pie-value">{{ analytics()!.inactiveUsers.toLocaleString() }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+      <h3>Recent Signups</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Signups</th>
+            <th>Growth</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (point of analytics()!.signupsTrend.slice(-10).reverse(); track point.date) {
+            <tr>
+              <td>{{ point.date | date:'short' }}</td>
+              <td>{{ point.value }}</td>
+              <td class="positive">+{{ ((point.value / 200) * 100).toFixed(1) }}%</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

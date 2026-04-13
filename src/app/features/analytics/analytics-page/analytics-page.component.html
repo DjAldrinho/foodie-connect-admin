@@ -1,0 +1,75 @@
+<div class="analytics-page">
+  <div class="page-header">
+    <h1 class="page-title">Analytics</h1>
+    <div class="header-actions">
+      <select
+        [value]="dateRange()"
+        (change)="changeDateRange($any($event.target).value)"
+        class="date-range-select"
+      >
+        @for (option of dateRangeOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+      <div class="export-buttons">
+        <button class="btn btn-secondary btn-sm" (click)="exportData('csv')">
+          Export CSV
+        </button>
+        <button class="btn btn-secondary btn-sm" (click)="exportData('json')">
+          Export JSON
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-container">
+    <div class="tabs">
+      <button
+        class="tab"
+        [class.active]="activeTab() === 'users'"
+        (click)="changeTab('users')"
+      >
+        <i class="icon-users"></i>
+        Users
+      </button>
+      <button
+        class="tab"
+        [class.active]="activeTab() === 'content'"
+        (click)="changeTab('content')"
+      >
+        <i class="icon-content"></i>
+        Content
+      </button>
+      <button
+        class="tab"
+        [class.active]="activeTab() === 'restaurants'"
+        (click)="changeTab('restaurants')"
+      >
+        <i class="icon-restaurants"></i>
+        Restaurants
+      </button>
+      <button
+        class="tab"
+        [class.active]="activeTab() === 'search'"
+        (click)="changeTab('search')"
+      >
+        <i class="icon-search"></i>
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    @if (activeTab() === 'users') {
+      <app-users-analytics [dateRange]="dateRange()" />
+    } @else if (activeTab() === 'content') {
+      <app-content-analytics [dateRange]="dateRange()" />
+    } @else if (activeTab() === 'restaurants') {
+      <app-restaurant-analytics [dateRange]="dateRange()" />
+    } @else if (activeTab() === 'search') {
+      <app-search-analytics [dateRange]="dateRange()" />
+    }
+  </div>
+</div>

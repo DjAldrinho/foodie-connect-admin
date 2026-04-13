@@ -1,0 +1,42 @@
+<div class="content-analytics">
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div><p>Loading...</p></div>
+  }
+  @if (!isLoading() && analytics()!) {
+    const data = analytics()!;
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Posts</div>
+        <div class="stat-value">{{ analytics()!.totalPosts.toLocaleString() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Reviews</div>
+        <div class="stat-value">{{ analytics()!.totalReviews.toLocaleString() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Photos</div>
+        <div class="stat-value">{{ analytics()!.totalPhotos.toLocaleString() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Engagement Rate</div>
+        <div class="stat-value">{{ analytics()!.engagementRate }}%</div>
+      </div>
+    </div>
+    <div class="top-content">
+      <h3>Top Content</h3>
+      @for (item of analytics()!.topPosts; track item.id) {
+        <div class="content-item">
+          <div class="content-info">
+            <span class="content-type">{{ item.type }}</span>
+            <span class="content-title">{{ item.title }}</span>
+          </div>
+          <div class="content-stats">
+            <span>Likes: {{ item.likes }}</span>
+            <span>Comments: {{ item.comments }}</span>
+            <span>Shares: {{ item.shares }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
