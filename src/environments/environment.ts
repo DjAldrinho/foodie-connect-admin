@@ -16,6 +16,7 @@ export const environment = {
     enableExport: true,
     enableBulkActions: true,
     enableAdvancedFilters: true,
+    useMockRestaurants: true, // Set to false when backend is ready
   },
 
   // App settings

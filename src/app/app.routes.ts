@@ -43,6 +43,11 @@ export const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./features/users/users.routes').then(m => m.usersRoutes),
       },
+      // Restaurants routes
+      {
+        path: 'restaurants',
+        loadChildren: () => import('./features/restaurants/restaurants.routes').then(m => m.restaurantsRoutes),
+      },
       // Other feature routes will be added here
       // Redirect root to dashboard
       {
