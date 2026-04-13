@@ -1,4 +1,7 @@
 <div class="main-layout" [class.mobile]="isMobile()">
+  <!-- Skip Navigation Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
   <!-- Sidebar -->
   <app-sidebar
     [open]="sidebarOpen"
@@ -24,7 +27,7 @@
     <app-top-bar (menuToggle)="toggleSidebar()"></app-top-bar>
 
     <!-- Page Content -->
-    <main class="page-content" role="main">
+    <main id="main-content" class="page-content" role="main" tabindex="-1">
       <router-outlet></router-outlet>
     </main>
   </div>

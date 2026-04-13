@@ -20,7 +20,7 @@
       [class.toast-warning]="toast.type === 'warning'"
       [class.toast-info]="toast.type === 'info'"
       [attr.aria-label]="toast.type + ': ' + toast.message"
-      role="alert"
+      [attr.role]="toast.type === 'error' ? 'alert' : 'status'"
     >
       <!-- Icon -->
       <div class="toast-icon">

@@ -4,6 +4,26 @@
   background: #f5f6fa;
 }
 
+/* Skip Navigation Link (Accessibility) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #ff6b35;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  font-weight: 600;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #2c3e50;
+  outline-offset: 2px;
+}
+
 /* Sidebar */
 /* Note: Sidebar styles are handled by sidebar.component.css */
 /* main-layout only controls main-content positioning */

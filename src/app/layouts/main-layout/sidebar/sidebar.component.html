@@ -59,6 +59,7 @@
           (keydown)="onKeydown($event, i)"
           role="menuitem"
           [attr.tabindex]="collapsed() ? -1 : 0"
+          [attr.aria-label]="collapsed() ? item.label : null"
         >
           <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
           @if (!collapsed()) {
