@@ -1,0 +1,133 @@
+<div class="backup-settings">
+  <div class="settings-header">
+    <h2>Backup</h2>
+    <p class="subtitle">Create and restore database backups</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="backup-info">
+        @if (lastBackupAt()) {
+          <div class="info-item">
+            <span class="label">Last Backup:</span>
+            <span class="value">{{ lastBackupAt() | date:'medium' }}</span>
+          </div>
+        }
+        @if (nextBackupAt()) {
+          <div class="info-item">
+            <span class="label">Next Backup:</span>
+            <span class="value">{{ nextBackupAt() | date:'medium' }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <div class="toggle-wrapper">
+          <label for="autoBackup">Automatic Backup</label>
+          <label class="toggle-switch">
+            <input
+              id="autoBackup"
+              type="checkbox"
+              [checked]="autoBackupEnabled()"
+              (change)="autoBackupEnabled.set($any($event.target).checked)"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="backupFrequency">Frequency</label>
+          <select
+            id="backupFrequency"
+            class="form-control"
+            [value]="backupFrequency()"
+            (change)="backupFrequency.set($any($event.target).value)"
+          >
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="retentionDays">Retention (days)</label>
+          <input
+            id="retentionDays"
+            type="number"
+            class="form-control"
+            [value]="backupRetentionDays()"
+            (input)="backupRetentionDays.set(+$any($event.target).value)"
+            min="1"
+            max="365"
+          />
+        </div>
+      </div>
+
+      @if (createSuccess()) {
+        <div class="alert" [class.success]="createSuccess()!.success" [class.error]="!createSuccess()!.success">
+          @if (createSuccess()!.backupUrl) {
+            <div>Backup created: <a [href]="createSuccess()!.backupUrl" download>Download</a></div>
+          }
+          <div>{{ createSuccess()!.message }}</div>
+        </div>
+      }
+
+      <div class="section">
+        <h3>Manual Backup</h3>
+        <button type="button" class="btn btn-primary" (click)="createBackup()" [disabled]="isCreating()">
+          @if (isCreating()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isCreating() ? 'Creating...' : 'Create Backup Now' }}
+        </button>
+      </div>
+
+      <div class="section">
+        <h3>Restore Backup</h3>
+        <div class="file-upload">
+          <input
+            type="file"
+            accept=".sql,.sql.gz"
+            (change)="onFileSelected($event)"
+            id="backupFile"
+            class="file-input"
+          />
+          <label for="backupFile" class="file-label">
+            @if (selectedFile()) {
+              <span>{{ selectedFile()!.name }}</span>
+            } @else {
+              <span>Choose backup file...</span>
+            }
+          </label>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="restoreBackup()"
+            [disabled]="isRestoring() || !selectedFile()"
+          >
+            @if (isRestoring()) {
+              <span class="spinner-small"></span>
+            }
+            {{ isRestoring() ? 'Restoring...' : 'Restore Backup' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

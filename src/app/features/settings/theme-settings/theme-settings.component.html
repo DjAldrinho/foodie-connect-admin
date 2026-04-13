@@ -1,0 +1,102 @@
+<div class="theme-settings">
+  <div class="settings-header">
+    <h2>Theme Settings</h2>
+    <p class="subtitle">Customize the appearance of your application</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="primaryColor">Primary Color</label>
+          <div class="color-input-wrapper">
+            <input
+              id="primaryColor"
+              type="color"
+              class="color-picker"
+              [value]="primaryColor()"
+              (input)="primaryColor.set($any($event.target).value)"
+            />
+            <input
+              type="text"
+              class="form-control"
+              [value]="primaryColor()"
+              (input)="primaryColor.set($any($event.target).value)"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="secondaryColor">Secondary Color</label>
+          <div class="color-input-wrapper">
+            <input
+              id="secondaryColor"
+              type="color"
+              class="color-picker"
+              [value]="secondaryColor()"
+              (input)="secondaryColor.set($any($event.target).value)"
+            />
+            <input
+              type="text"
+              class="form-control"
+              [value]="secondaryColor()"
+              (input)="secondaryColor.set($any($event.target).value)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="logoUrl">Logo URL</label>
+          <input
+            id="logoUrl"
+            type="text"
+            class="form-control"
+            placeholder="/assets/logo.png"
+            [value]="logoUrl()"
+            (input)="logoUrl.set($any($event.target).value)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="faviconUrl">Favicon URL</label>
+          <input
+            id="faviconUrl"
+            type="text"
+            class="form-control"
+            placeholder="/assets/favicon.ico"
+            [value]="faviconUrl()"
+            (input)="faviconUrl.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customCss">Custom CSS</label>
+        <textarea
+          id="customCss"
+          class="form-control"
+          rows="8"
+          placeholder="/* Add your custom CSS here */"
+          [value]="customCss()"
+          (input)="customCss.set($any($event.target).value)"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

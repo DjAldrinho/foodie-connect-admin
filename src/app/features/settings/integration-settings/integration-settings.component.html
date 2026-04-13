@@ -1,0 +1,100 @@
+<div class="integration-settings">
+  <div class="settings-header">
+    <h2>Integrations</h2>
+    <p class="subtitle">Configure third-party service integrations</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="section">
+        <h3>Google Maps</h3>
+        <div class="form-group">
+          <label for="googleMapsApiKey">API Key</label>
+          <input
+            id="googleMapsApiKey"
+            type="password"
+            class="form-control"
+            [value]="googleMapsApiKey()"
+            (input)="googleMapsApiKey.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Cloudinary</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cloudinaryCloudName">Cloud Name</label>
+            <input
+              id="cloudinaryCloudName"
+              type="text"
+              class="form-control"
+              [value]="cloudinaryCloudName()"
+              (input)="cloudinaryCloudName.set($any($event.target).value)"
+            />
+          </div>
+          <div class="form-group">
+            <label for="cloudinaryApiKey">API Key</label>
+            <input
+              id="cloudinaryApiKey"
+              type="password"
+              class="form-control"
+              [value]="cloudinaryApiKey()"
+              (input)="cloudinaryApiKey.set($any($event.target).value)"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cloudinaryApiSecret">API Secret</label>
+          <input
+            id="cloudinaryApiSecret"
+            type="password"
+            class="form-control"
+            [value]="cloudinaryApiSecret()"
+            (input)="cloudinaryApiSecret.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Elasticsearch</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="elasticsearchHost">Host</label>
+            <input
+              id="elasticsearchHost"
+              type="text"
+              class="form-control"
+              [value]="elasticsearchHost()"
+              (input)="elasticsearchHost.set($any($event.target).value)"
+            />
+          </div>
+          <div class="form-group">
+            <label for="elasticsearchPort">Port</label>
+            <input
+              id="elasticsearchPort"
+              type="number"
+              class="form-control"
+              [value]="elasticsearchPort()"
+              (input)="elasticsearchPort.set(+$any($event.target).value)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

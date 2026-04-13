@@ -1,0 +1,133 @@
+<div class="security-settings">
+  <div class="settings-header">
+    <h2>Security Settings</h2>
+    <p class="subtitle">Configure password policies and session management</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sessionTimeout">Session Timeout (minutes)</label>
+          <input
+            id="sessionTimeout"
+            type="number"
+            class="form-control"
+            [value]="sessionTimeout()"
+            (input)="sessionTimeout.set(+$any($event.target).value)"
+            min="5"
+            max="120"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="passwordMinLength">Password Min Length</label>
+          <input
+            id="passwordMinLength"
+            type="number"
+            class="form-control"
+            [value]="passwordMinLength()"
+            (input)="passwordMinLength.set(+$any($event.target).value)"
+            min="6"
+            max="32"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password Requirements</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input
+              type="checkbox"
+              [checked]="passwordRequireUppercase()"
+              (change)="passwordRequireUppercase.set($any($event.target).checked)"
+            />
+            <span>Require Uppercase Letters</span>
+          </label>
+          <label class="checkbox-item">
+            <input
+              type="checkbox"
+              [checked]="passwordRequireLowercase()"
+              (change)="passwordRequireLowercase.set($any($event.target).checked)"
+            />
+            <span>Require Lowercase Letters</span>
+          </label>
+          <label class="checkbox-item">
+            <input
+              type="checkbox"
+              [checked]="passwordRequireNumbers()"
+              (change)="passwordRequireNumbers.set($any($event.target).checked)"
+            />
+            <span>Require Numbers</span>
+          </label>
+          <label class="checkbox-item">
+            <input
+              type="checkbox"
+              [checked]="passwordRequireSpecialChars()"
+              (change)="passwordRequireSpecialChars.set($any($event.target).checked)"
+            />
+            <span>Require Special Characters</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="maxLoginAttempts">Max Login Attempts</label>
+          <input
+            id="maxLoginAttempts"
+            type="number"
+            class="form-control"
+            [value]="maxLoginAttempts()"
+            (input)="maxLoginAttempts.set(+$any($event.target).value)"
+            min="3"
+            max="10"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="lockoutDuration">Lockout Duration (minutes)</label>
+          <input
+            id="lockoutDuration"
+            type="number"
+            class="form-control"
+            [value]="lockoutDuration()"
+            (input)="lockoutDuration.set(+$any($event.target).value)"
+            min="5"
+            max="60"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="toggle-wrapper">
+          <label for="twoFactorAuth">Two-Factor Authentication</label>
+          <label class="toggle-switch">
+            <input
+              id="twoFactorAuth"
+              type="checkbox"
+              [checked]="twoFactorAuthEnabled()"
+              (change)="twoFactorAuthEnabled.set($any($event.target).checked)"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

@@ -1,0 +1,99 @@
+<div class="admin-management">
+  <div class="settings-header">
+    <h2>Admin Management</h2>
+    <p class="subtitle">Manage admin users and their roles</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <div class="admins-content">
+      @if (addSuccess()) {
+        <div class="alert success">✓ Admin added successfully</div>
+      }
+
+      <div class="admins-header">
+        <h3>Admins ({{ admins().length }})</h3>
+        <button class="btn btn-primary" (click)="toggleAddForm()">
+          {{ showAddForm() ? 'Cancel' : '+ Add Admin' }}
+        </button>
+      </div>
+
+      @if (showAddForm()) {
+        <div class="add-admin-form">
+          <h4>Add New Admin</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="adminEmail">Email</label>
+              <input
+                id="adminEmail"
+                type="email"
+                class="form-control"
+                placeholder="admin@example.com"
+                [value]="newAdminEmail()"
+                (input)="newAdminEmail.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="adminRole">Role</label>
+              <select
+                id="adminRole"
+                class="form-control"
+                [value]="newAdminRole()"
+                (change)="newAdminRole.set($any($event.target).value)"
+              >
+                <option value="ADMIN">Admin</option>
+                <option value="SUPER_ADMIN">Super Admin</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" (click)="addAdmin()" [disabled]="isAdding() || !newAdminEmail()">
+              @if (isAdding()) {
+                <span class="spinner-small"></span>
+              }
+              {{ isAdding() ? 'Adding...' : 'Add Admin' }}
+            </button>
+          </div>
+        </div>
+      }
+
+      <div class="admins-list">
+        @for (admin of admins(); track admin.id) {
+          <div class="admin-card">
+            <div class="admin-info">
+              <div class="admin-avatar">
+                {{ admin.name.charAt(0).toUpperCase() }}
+              </div>
+              <div class="admin-details">
+                <div class="admin-name">{{ admin.name }}</div>
+                <div class="admin-email">{{ admin.email }}</div>
+                <div class="admin-meta">
+                  <span class="badge" [class]="getRoleBadgeClass(admin.role)">
+                    {{ admin.role.replace('_', ' ') }}
+                  </span>
+                  <span class="admin-date">
+                    Added {{ admin.createdAt | date:'mediumDate' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="admin-actions">
+              @if (admin.role !== 'SUPER_ADMIN') {
+                <button class="btn btn-danger btn-sm" (click)="removeAdmin(admin.id, admin.email)" [disabled]="isRemoving()">
+                  {{ isRemoving() ? 'Removing...' : 'Remove' }}
+                </button>
+              }
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">
+            <p>No admins found. Add your first admin to get started.</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

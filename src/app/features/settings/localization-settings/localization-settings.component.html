@@ -1,0 +1,110 @@
+<div class="localization-settings">
+  <div class="settings-header">
+    <h2>Localization</h2>
+    <p class="subtitle">Configure language, timezone, and regional settings</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="defaultLanguage">Default Language</label>
+          <select
+            id="defaultLanguage"
+            class="form-control"
+            [value]="defaultLanguage()"
+            (change)="defaultLanguage.set($any($event.target).value)"
+          >
+            @for (lang of languages; track lang.code) {
+              <option [value]="lang.code">{{ lang.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="defaultTimezone">Timezone</label>
+          <select
+            id="defaultTimezone"
+            class="form-control"
+            [value]="defaultTimezone()"
+            (change)="defaultTimezone.set($any($event.target).value)"
+          >
+            @for (tz of timezones; track tz) {
+              <option [value]="tz">{{ tz }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateFormat">Date Format</label>
+          <select
+            id="dateFormat"
+            class="form-control"
+            [value]="dateFormat()"
+            (change)="dateFormat.set($any($event.target).value)"
+          >
+            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="timeFormat">Time Format</label>
+          <select
+            id="timeFormat"
+            class="form-control"
+            [value]="timeFormat()"
+            (change)="timeFormat.set($any($event.target).value)"
+          >
+            <option value="12h">12-hour (AM/PM)</option>
+            <option value="24h">24-hour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="currency">Currency</label>
+          <select
+            id="currency"
+            class="form-control"
+            [value]="currency()"
+            (change)="currency.set($any($event.target).value)"
+          >
+            <option value="EUR">EUR - Euro</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="GBP">GBP - British Pound</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="currencySymbol">Currency Symbol</label>
+          <input
+            id="currencySymbol"
+            type="text"
+            class="form-control"
+            [value]="currencySymbol()"
+            (input)="currencySymbol.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
