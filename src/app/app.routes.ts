@@ -47,6 +47,7 @@ export const routes: Routes = [
       {
         path: 'notifications',
         loadChildren: () => import('./features/notifications').then(m => m.NOTIFICATIONS_ROUTES),
+      },
       // Restaurants routes
       {
         path: 'restaurants',
@@ -56,6 +57,11 @@ export const routes: Routes = [
       {
         path: 'moderation',
         loadChildren: () => import('./features/moderation/moderation.routes').then(m => m.moderationRoutes),
+      },
+      // Analytics routes
+      {
+        path: 'analytics',
+        loadChildren: () => import('./features/analytics').then(m => m.ANALYTICS_ROUTES),
       },
       // Other feature routes will be added here
       // Redirect root to dashboard
