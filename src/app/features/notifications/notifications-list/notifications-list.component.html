@@ -1,0 +1,177 @@
+<div class="notifications-list">
+  <div class="page-header">
+    <h1 class="page-title">Notifications</h1>
+    <button class="btn btn-primary" (click)="navigateToCompose()">
+      <i class="icon-plus"></i>
+      Compose Notification
+    </button>
+  </div>
+
+  <!-- Statistics Cards -->
+  @if (statistics()) {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Sent Today</div>
+        <div class="stat-value">{{ statistics()?.sentToday || 0 }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sent This Week</div>
+        <div class="stat-value">{{ statistics()?.sentThisWeek || 0 }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sent This Month</div>
+        <div class="stat-value">{{ statistics()?.sentThisMonth || 0 }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Delivery Rate</div>
+        <div class="stat-value">{{ statistics()?.deliveryRate || 0 }}%</div>
+      </div>
+    </div>
+  }
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Type</label>
+      <select [value]="filters().type" (change)="applyFilter('type', $any($event.target).value)">
+        <option value="">All Types</option>
+        @for (type of notificationTypes; track type) {
+          <option [value]="type">{{ getTypeDisplayName(type) }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Status</label>
+      <select [value]="filters().status" (change)="applyFilter('status', $any($event.target).value)">
+        <option value="">All Statuses</option>
+        @for (status of notificationStatuses; track status) {
+          <option [value]="status">{{ getStatusDisplayName(status) }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Priority</label>
+      <select [value]="filters().priority" (change)="applyFilter('priority', $any($event.target).value)">
+        <option value="">All Priorities</option>
+        @for (priority of priorities; track priority) {
+          <option [value]="priority">{{ getPriorityDisplayName(priority) }}</option>
+        }
+      </select>
+    </div>
+
+    <button class="btn btn-secondary" (click)="clearFilters()">Clear Filters</button>
+    <button class="btn btn-secondary" (click)="markAllAsRead()">Mark All as Read</button>
+    <button class="btn btn-secondary" (click)="refreshNotifications()">
+      <i class="icon-refresh"></i>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading notifications...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (hasError()) {
+    <div class="error-state">
+      <i class="icon-error"></i>
+      <h3>Error Loading Notifications</h3>
+      <p>{{ errorMessage() }}</p>
+      <button class="btn btn-primary" (click)="refreshNotifications()">Try Again</button>
+    </div>
+  }
+
+  <!-- Notifications List -->
+  @if (!isLoading() && !hasError()) {
+    <div class="notifications-container">
+      @if (notifications().length === 0) {
+        <div class="empty-state">
+          <i class="icon-empty"></i>
+          <h3>No Notifications Found</h3>
+          <p>Try adjusting your filters or compose a new notification.</p>
+          <button class="btn btn-primary" (click)="navigateToCompose()">Compose Notification</button>
+        </div>
+      } @else {
+        <div class="notifications-table-wrapper">
+          <table class="notifications-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Target</th>
+                <th>Created</th>
+                <th>Read/Delivery</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (notification of notifications(); track notification.id) {
+                <tr class="notification-row" [class.unread]="notification.status === 'sent' && notification.readCount === 0">
+                  <td>
+                    <span class="badge badge-type" [class]="'badge-type-' + notification.type">
+                      {{ getTypeDisplayName(notification.type) }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="notification-title">{{ notification.title }}</div>
+                  </td>
+                  <td>
+                    <span class="badge" [class]="'badge-status-' + notification.status">
+                      {{ getStatusDisplayName(notification.status) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [class]="'badge-priority-' + notification.priority">
+                      {{ getPriorityDisplayName(notification.priority) }}
+                    </span>
+                  </td>
+                  <td>{{ notification.target.replace(/_/g, ' ') }}</td>
+                  <td>{{ notification.createdAt | date:'short' }}</td>
+                  <td>
+                    <span class="read-count">{{ notification.readCount }}</span>
+                    /
+                    <span class="delivery-count">{{ notification.deliveryCount }}</span>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" (click)="navigateToNotification(notification.id)">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button
+            class="btn btn-secondary"
+            [disabled]="!hasPrevious()"
+            (click)="changePage(pagination().page - 1)"
+          >
+            Previous
+          </button>
+          <span class="pagination-info">
+            Page {{ pagination().page }} of {{ totalPages() }}
+          </span>
+          <button
+            class="btn btn-secondary"
+            [disabled]="!hasNext()"
+            (click)="changePage(pagination().page + 1)"
+          >
+            Next
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

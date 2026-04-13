@@ -43,6 +43,11 @@ export const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./features/users/users.routes').then(m => m.usersRoutes),
       },
+      // Notifications routes
+      {
+        path: 'notifications',
+        loadChildren: () => import('./features/notifications').then(m => m.NOTIFICATIONS_ROUTES),
+      },
       // Other feature routes will be added here
       // Redirect root to dashboard
       {
