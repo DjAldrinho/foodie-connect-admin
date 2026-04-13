@@ -1,0 +1,220 @@
+<div class="moderation-queue">
+  <!-- Header Section -->
+  <div class="queue-header">
+    <h1 class="queue-title">Moderation Queue</h1>
+    <button class="btn-refresh" (click)="refreshQueue()" [disabled]="isLoading()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+        <path d="M16 21h5v-5"/>
+      </svg>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Statistics Cards -->
+  @if (statistics()) {
+  <div class="statistics-grid">
+    <div class="stat-card">
+      <div class="stat-label">Pending</div>
+      <div class="stat-value">{{ statistics()?.pendingCount }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">In Review</div>
+      <div class="stat-value">{{ statistics()?.inReviewCount }}</div>
+    </div>
+    <div class="stat-card escalated">
+      <div class="stat-label">Escalated</div>
+      <div class="stat-value">{{ statistics()?.escalatedCount }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Resolved Today</div>
+      <div class="stat-value">{{ statistics()?.todayResolved }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Resolution Time</div>
+      <div class="stat-value">{{ statistics()?.avgResolutionTime }}h</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">This Month</div>
+      <div class="stat-value">{{ statistics()?.totalReportsThisMonth }}</div>
+    </div>
+  </div>
+  }
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <label for="type-filter">Type</label>
+      <select id="type-filter" [value]="filters().type" (change)="applyFilter('type', $any($event.target).value)">
+        <option value="">All Types</option>
+        @for (type of reportTypes; track type) {
+        <option [value]="type">{{ type | titlecase }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="status-filter">Status</label>
+      <select id="status-filter" [value]="filters().status" (change)="applyFilter('status', $any($event.target).value)">
+        <option value="">All Statuses</option>
+        @for (status of reportStatuses; track status) {
+        <option [value]="status">{{ status | titlecase }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="priority-filter">Priority</label>
+      <select id="priority-filter" [value]="filters().priority" (change)="applyFilter('priority', $any($event.target).value)">
+        <option value="">All Priorities</option>
+        @for (priority of priorities; track priority) {
+        <option [value]="priority">{{ priority | titlecase }}</option>
+        }
+      </select>
+    </div>
+
+    @if (filters().type || filters().status || filters().priority) {
+    <button class="btn-clear-filters" (click)="clearFilters()">Clear Filters</button>
+    }
+  </div>
+
+  <!-- Bulk Actions Bar -->
+  @if (selectedCount() > 0) {
+  <div class="bulk-actions-bar">
+    <span class="selected-count">{{ selectedCount() }} reports selected</span>
+    <div class="bulk-actions">
+      <button class="btn-bulk btn-approve" (click)="performBulkAction('approve')">Approve</button>
+      <button class="btn-bulk btn-reject" (click)="performBulkAction('reject')">Reject</button>
+      <button class="btn-bulk btn-dismiss" (click)="performBulkAction('dismiss')">Dismiss</button>
+      <button class="btn-bulk btn-escalate" (click)="performBulkAction('escalate')">Escalate</button>
+    </div>
+  </div>
+  }
+
+  <!-- Error State -->
+  @if (hasError()) {
+  <div class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h3>Failed to Load Queue</h3>
+    <p>{{ errorMessage() }}</p>
+    <button class="btn-retry" (click)="refreshQueue()">Retry</button>
+  </div>
+  }
+
+  <!-- Loading State -->
+  @if (isLoading() && !hasError()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading moderation queue...</p>
+  </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && !hasError() && reports().length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <h3>No Reports Found</h3>
+    <p>There are no reports matching your current filters.</p>
+    @if (filters().type || filters().status || filters().priority) {
+    <button class="btn-clear" (click)="clearFilters()">Clear Filters</button>
+    }
+  </div>
+  }
+
+  <!-- Reports Table -->
+  @if (!isLoading() && !hasError() && reports().length > 0) {
+  <div class="reports-table-container">
+    <table class="reports-table">
+      <thead>
+        <tr>
+          <th class="checkbox-column">
+            <input type="checkbox" [checked]="selectedCount() > 0 && selectedCount() === reports().length" (change)="selectionService.clear()" />
+          </th>
+          <th class="priority-column">Priority</th>
+          <th class="type-column">Type</th>
+          <th class="content-column">Content</th>
+          <th class="reporter-column">Reporter</th>
+          <th class="count-column" [class.sorted]="pagination().sortBy === 'count'" (click)="changeSort('count')">
+            Reports
+            @if (pagination().sortBy === 'count') {
+            <span class="sort-icon">{{ pagination().sortOrder === 'asc' ? '↑' : '↓' }}</span>
+            }
+          </th>
+          <th class="date-column" [class.sorted]="pagination().sortBy === 'date'" (click)="changeSort('date')">
+            Created
+            @if (pagination().sortBy === 'date') {
+            <span class="sort-icon">{{ pagination().sortOrder === 'asc' ? '↑' : '↓' }}</span>
+            }
+          </th>
+          <th class="status-column">Status</th>
+          <th class="actions-column">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (report of reports(); track report.id; let i = $index) {
+        <tr class="report-row" [class.selected]="isSelected(report.id)">
+          <td class="checkbox-column">
+            <input type="checkbox" [checked]="isSelected(report.id)" (change)="toggleSelection(report.id)" />
+          </td>
+          <td class="priority-column">
+            <span class="priority-badge" [class.escalated]="report.priority === 'escalated'" [class.high]="report.priority === 'high'" [class.medium]="report.priority === 'medium'" [class.low]="report.priority === 'low'">
+              {{ report.priority | titlecase }}
+            </span>
+          </td>
+          <td class="type-column">
+            <span class="type-badge">{{ report.type }}</span>
+          </td>
+          <td class="content-column">
+            <div class="content-preview">
+              @if (report.contentPreview.thumbnail) {
+              <img [src]="report.contentPreview.thumbnail" alt="" class="content-thumbnail" />
+              }
+              <div class="content-info">
+                <div class="content-title">{{ report.contentPreview.title || report.type }}</div>
+                <div class="content-description">{{ report.contentPreview.description }}</div>
+              </div>
+            </div>
+          </td>
+          <td class="reporter-column">
+            <div class="reporter-info">
+              @if (report.reporter.avatar) {
+              <img [src]="report.reporter.avatar" alt="" class="reporter-avatar" />
+              }
+              <div class="reporter-details">
+                <div class="reporter-name">{{ report.reporter.name }}</div>
+                <div class="reporter-email">{{ report.reporter.email }}</div>
+              </div>
+            </div>
+          </td>
+          <td class="count-column">
+            <span class="report-count">{{ report.reportCount }}</span>
+          </td>
+          <td class="date-column">
+            <div class="date-info">{{ report.createdAt | date:'short' }}</div>
+          </td>
+          <td class="status-column">
+            <span class="status-badge" [class.pending]="report.status === 'pending'" [class.in_review]="report.status === 'in_review'" [class.resolved]="report.status === 'resolved'" [class.dismissed]="report.status === 'dismissed'">
+              {{ report.status | titlecase }}
+            </span>
+          </td>
+          <td class="actions-column">
+            <button class="btn-view" (click)="navigateToReport(report.id)">View</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+  <!-- Pagination -->
+  @if (!isLoading() && !hasError() && reports().length > 0) {
+  <div class="pagination">
+    <button class="btn-page" [disabled]="!hasPrevious()" (click)="changePage(pagination().page - 1)">Previous</button>
+    <span class="page-info">Page {{ pagination().page }} of {{ totalPages() }}</span>
+    <button class="btn-page" [disabled]="!hasNext()" (click)="changePage(pagination().page + 1)">Next</button>
+  </div>
+  }
+</div>

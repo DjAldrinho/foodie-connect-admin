@@ -1,0 +1,61 @@
+<div class="comment-preview">
+  @if (comment()) {
+  <div class="comment-content">
+    <!-- Comment Header -->
+    <div class="comment-header">
+      <div class="comment-type-badge">Comment</div>
+      <div class="comment-date">{{ comment()?.createdAt | date:'long' }}</div>
+    </div>
+
+    <!-- Comment Text -->
+    <div class="comment-text">
+      {{ comment()?.text }}
+    </div>
+
+    <!-- Comment Author -->
+    <div class="comment-author">
+      @if (comment()?.author?.avatar) {
+      <img [src]="comment()?.author?.avatar" [alt]="comment()?.author?.name" class="author-avatar" />
+      } @else {
+      <div class="author-avatar-placeholder">
+        {{ comment()?.author?.name?.charAt(0) || '?' }}
+      </div>
+      }
+
+      <div class="author-details">
+        <div class="author-name">{{ comment()?.author?.name }}</div>
+        <div class="author-label">Comment Author</div>
+      </div>
+    </div>
+
+    <!-- Parent Content Context -->
+    @if (comment()?.parentContent) {
+    <div class="parent-context">
+      <h4 class="parent-label">Comment on</h4>
+
+      <div class="parent-content-card">
+        <div class="parent-type-badge">{{ comment()?.parentType === 'review' ? 'Review' : 'Restaurant' }}</div>
+
+        @if (comment()?.parentContent?.title) {
+        <div class="parent-title">{{ comment()?.parentContent?.title }}</div>
+        }
+
+        @if (comment()?.parentContent?.text) {
+        <div class="parent-text">{{ comment()?.parentContent?.text }}</div>
+        }
+
+        @if (comment()?.parentType === 'review') {
+        <a [routerLink]="['/moderation', comment()?.parentId]" class="parent-link">
+          View full review
+        </a>
+        } @else {
+        <a [routerLink]="['/restaurants', comment()?.parentId]" class="parent-link">
+          View restaurant
+        </a>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

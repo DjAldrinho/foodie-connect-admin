@@ -1,0 +1,72 @@
+<div class="restaurant-preview">
+  @if (restaurant()) {
+  <div class="restaurant-profile">
+    <!-- Photos Gallery -->
+    @if (restaurant()?.photos && restaurant()!.photos!.length > 0) {
+    <div class="photos-gallery">
+      @for (photo of restaurant()?.photos; track photo; let isFirst = $first) {
+      <img [src]="photo" [alt]="restaurant()?.name" class="restaurant-photo" [class.main-photo]="isFirst" />
+      }
+    </div>
+    }
+
+    <!-- Restaurant Info -->
+    <div class="restaurant-info">
+      <div class="restaurant-header">
+        <h3 class="restaurant-name">{{ restaurant()?.name }}</h3>
+
+        <div class="restaurant-meta">
+          <div class="rating-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="star-icon">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            {{ restaurant()?.rating }}
+          </div>
+
+          <div class="cuisine-badge">{{ restaurant()?.cuisine }}</div>
+        </div>
+      </div>
+
+      @if (restaurant()?.description) {
+      <p class="restaurant-description">{{ restaurant()?.description }}</p>
+      }
+
+      <div class="restaurant-details">
+        <div class="detail-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          {{ restaurant()?.address }}
+        </div>
+
+        <div class="detail-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+            Added {{ restaurant()?.createdAt | date:'long' }}
+        </div>
+      </div>
+
+      <!-- Owner Info -->
+      @if (restaurant()?.owner) {
+      <div class="owner-info">
+        <h4 class="owner-label">Owner</h4>
+        <div class="owner-details">
+          <div class="owner-avatar">
+            {{ restaurant()?.owner?.name?.charAt(0) || '?' }}
+          </div>
+          <div>
+            <div class="owner-name">{{ restaurant()?.owner?.name }}</div>
+            <div class="owner-email">{{ restaurant()?.owner?.email }}</div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

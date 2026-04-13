@@ -1,0 +1,243 @@
+<div class="report-detail">
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading report details...</p>
+  </div>
+  }
+
+  <!-- Error State -->
+  @if (hasError()) {
+  <div class="error-state">
+    <div class="error-icon">⚠️</div>
+    <h3>Failed to Load Report</h3>
+    <p>{{ errorMessage() }}</p>
+    <button class="btn-back" (click)="goBack()">Back to Queue</button>
+  </div>
+  }
+
+  <!-- Report Content -->
+  @if (report() && !isLoading()) {
+  <div class="detail-container">
+    <!-- Header -->
+    <div class="detail-header">
+      <button class="btn-back-link" (click)="goBack()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Queue
+      </button>
+
+      <div class="header-meta">
+        <span class="report-id">Report #{{ report()?.id }}</span>
+        <span class="report-date">{{ report()?.createdAt | date:'long' }}</span>
+      </div>
+    </div>
+
+    <div class="detail-content">
+      <!-- Main Content Column -->
+      <div class="main-column">
+        <!-- Content Preview -->
+        <div class="content-preview-section">
+          <h2 class="section-title">Content Preview</h2>
+
+          <!-- User Preview -->
+          @if (report()?.type === 'user') {
+          <app-user-preview [user]="report()?.content?.user" />
+          }
+
+          <!-- Restaurant Preview -->
+          @if (report()?.type === 'restaurant') {
+          <app-restaurant-preview [restaurant]="report()?.content?.restaurant" />
+          }
+
+          <!-- Review Preview -->
+          @if (report()?.type === 'review') {
+          <app-review-preview [review]="report()?.content?.review" />
+          }
+
+          <!-- Photo Preview -->
+          @if (report()?.type === 'photo') {
+          <app-photo-preview [photo]="report()?.content?.photo" />
+          }
+
+          <!-- Comment Preview -->
+          @if (report()?.type === 'comment') {
+          <app-comment-preview [comment]="report()?.content?.comment" />
+          }
+        </div>
+
+        <!-- Report Information -->
+        <div class="report-info-section">
+          <h2 class="section-title">Report Information</h2>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Reported By</span>
+              <div class="info-value reporter-info">
+                @if (report()?.reporter?.avatar) {
+                <img [src]="report()?.reporter?.avatar" alt="" class="reporter-avatar" />
+                }
+                <div>
+                  <div class="reporter-name">{{ report()?.reporter?.name }}</div>
+                  <div class="reporter-email">{{ report()?.reporter?.email }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Reason</span>
+              <span class="info-value">{{ report()?.reason }}</span>
+            </div>
+
+            @if (report()?.description) {
+            <div class="info-item full-width">
+              <span class="info-label">Description</span>
+              <span class="info-value">{{ report()?.description }}</span>
+            </div>
+            }
+
+            <div class="info-item">
+              <span class="info-label">Report Count</span>
+              <span class="info-value report-count-badge">{{ report()?.reportCount }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Status</span>
+              <span class="info-value status-badge" [class]="report()?.status">{{ report()?.status | titlecase }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Priority</span>
+              <span class="info-value priority-badge" [class]="report()?.priority">{{ report()?.priority | titlecase }}</span>
+            </div>
+
+            @if (report()?.escalatedAt) {
+            <div class="info-item full-width">
+              <span class="info-label">Escalated By</span>
+              <span class="info-value">{{ report()?.escalatedBy?.name }} on {{ report()?.escalatedAt | date:'short' }}</span>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Action History -->
+        @if (actionHistory().length > 0) {
+        <div class="action-history-section">
+          <h2 class="section-title">Action History</h2>
+
+          <div class="history-timeline">
+            @for (action of actionHistory(); track action.id; let isLast = $last) {
+            <div class="history-item">
+              <div class="history-dot"></div>
+              <div class="history-content">
+                <div class="history-header">
+                  <span class="history-action">{{ getActionDisplayName(action.action) }}</span>
+                  <span class="history-time">{{ action.timestamp | date:'short' }}</span>
+                </div>
+                <div class="history-actor">by {{ action.actor.name }} ({{ action.actor.role }})</div>
+                @if (action.reason) {
+                <div class="history-reason">{{ action.reason }}</div>
+                }
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Sidebar Column -->
+      <div class="sidebar-column">
+        <!-- Actions Card -->
+        <div class="actions-card">
+          <h3 class="card-title">Moderation Actions</h3>
+
+          <div class="actions-list">
+            <button class="action-btn btn-approve" (click)="approveReport()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Approve Content
+            </button>
+
+            <button class="action-btn btn-reject" (click)="rejectReport()" [disabled]="!canReject()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              Reject Report
+            </button>
+
+            <div class="reject-reason-group">
+              <textarea
+                class="reject-reason-input"
+                placeholder="Enter rejection reason (min 10 characters)"
+                [value]="rejectReportReason()"
+                (input)="rejectReportReason.set($any($event.target).value)"
+                rows="3"
+              ></textarea>
+              <div class="char-count">{{ rejectReportReason().length }} / 10 min</div>
+            </div>
+
+            <button class="action-btn btn-dismiss" (click)="dismissReport()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+              Dismiss Report
+            </button>
+
+            <button class="action-btn btn-escalate" (click)="escalateReport()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              Escalate
+            </button>
+
+            <div class="escalate-reason-group">
+              <textarea
+                class="escalate-reason-input"
+                placeholder="Escalation reason (optional)"
+                [value]="escalateReportReason()"
+                (input)="escalateReportReason.set($any($event.target).value)"
+                rows="2"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Reports -->
+        @if (relatedReports().length > 0) {
+        <div class="related-reports-card">
+          <h3 class="card-title">Related Reports</h3>
+
+          <div class="related-list">
+            @for (related of relatedReports(); track related.id) {
+            <div class="related-item" (click)="navigateToRelatedReport(related.id)">
+              <div class="related-type-badge">{{ related.type }}</div>
+              <div class="related-info">
+                <div class="related-title">{{ related.contentPreview.title }}</div>
+                <div class="related-meta">
+                  <span class="related-count">{{ related.reportCount }} reports</span>
+                  <span class="related-status">{{ related.status }}</span>
+                </div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }
+</div>
