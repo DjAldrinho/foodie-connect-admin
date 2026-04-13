@@ -1,0 +1,113 @@
+<div class="cache-settings">
+  <div class="settings-header">
+    <h2>Cache Settings</h2>
+    <p class="subtitle">Configure cache TTL and clear cache</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="defaultTTL">Default TTL (seconds)</label>
+          <input
+            id="defaultTTL"
+            type="number"
+            class="form-control"
+            [value]="defaultTTL()"
+            (input)="defaultTTL.set(+$any($event.target).value)"
+            min="60"
+            max="86400"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="userCacheTTL">User Cache TTL (seconds)</label>
+          <input
+            id="userCacheTTL"
+            type="number"
+            class="form-control"
+            [value]="userCacheTTL()"
+            (input)="userCacheTTL.set(+$any($event.target).value)"
+            min="60"
+            max="86400"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="restaurantCacheTTL">Restaurant Cache TTL (seconds)</label>
+          <input
+            id="restaurantCacheTTL"
+            type="number"
+            class="form-control"
+            [value]="restaurantCacheTTL()"
+            (input)="restaurantCacheTTL.set(+$any($event.target).value)"
+            min="60"
+            max="86400"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="searchCacheTTL">Search Cache TTL (seconds)</label>
+          <input
+            id="searchCacheTTL"
+            type="number"
+            class="form-control"
+            [value]="searchCacheTTL()"
+            (input)="searchCacheTTL.set(+$any($event.target).value)"
+            min="60"
+            max="86400"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input
+              type="checkbox"
+              [checked]="enableQueryCache()"
+              (change)="enableQueryCache.set($any($event.target).checked)"
+            />
+            <span>Enable Query Cache</span>
+          </label>
+          <label class="checkbox-item">
+            <input
+              type="checkbox"
+              [checked]="enableResultCache()"
+              (change)="enableResultCache.set($any($event.target).checked)"
+            />
+            <span>Enable Result Cache</span>
+          </label>
+        </div>
+      </div>
+
+      @if (clearSuccess()) {
+        <div class="alert" [class.success]="clearSuccess()!.success" [class.error]="!clearSuccess()!.success">
+          {{ clearSuccess()!.message }}
+        </div>
+      }
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="button" class="btn btn-danger" (click)="clearCache()" [disabled]="isClearing()">
+          @if (isClearing()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isClearing() ? 'Clearing...' : 'Clear Cache' }}
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

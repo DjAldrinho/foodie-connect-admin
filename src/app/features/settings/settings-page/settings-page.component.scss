@@ -1,0 +1,132 @@
+.settings-page {
+  padding: 2rem;
+
+  .page-header {
+    margin-bottom: 2rem;
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2e3a59;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-description {
+      color: #6c757d;
+      font-size: 1rem;
+    }
+  }
+
+  .settings-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .settings-sidebar {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .settings-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    font-size: 0.95rem;
+    color: #495057;
+
+    .nav-icon {
+      font-size: 1.25rem;
+    }
+
+    .nav-label {
+      flex: 1;
+    }
+
+    &:hover {
+      background: #f8f9fa;
+    }
+
+    &.active {
+      background: #ff6b35;
+      color: white;
+      font-weight: 600;
+    }
+  }
+
+  .settings-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    min-height: 600px;
+  }
+
+  @media (max-width: 1024px) {
+    .settings-container {
+      grid-template-columns: 1fr;
+    }
+
+    .settings-sidebar {
+      position: static;
+    }
+
+    .settings-nav {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+
+      &::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #dee2e6;
+        border-radius: 2px;
+      }
+    }
+
+    .nav-item {
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 100px;
+      text-align: center;
+      font-size: 0.85rem;
+
+      .nav-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: 1rem;
+
+    .settings-content {
+      padding: 1rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+    }
+  }
+}

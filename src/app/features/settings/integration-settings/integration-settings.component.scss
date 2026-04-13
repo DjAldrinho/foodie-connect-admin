@@ -1,0 +1,23 @@
+@import '../site-settings/site-settings.component.scss';
+
+.integration-settings {
+  .settings-form {
+    .section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #dee2e6;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2e3a59;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+}

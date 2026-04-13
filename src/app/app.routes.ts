@@ -63,6 +63,11 @@ export const routes: Routes = [
         path: 'analytics',
         loadChildren: () => import('./features/analytics').then(m => m.ANALYTICS_ROUTES),
       },
+      // Settings routes
+      {
+        path: 'settings',
+        loadChildren: () => import('./features/settings/settings.routes').then(m => m.SETTINGS_ROUTES),
+      },
       // Other feature routes will be added here
       // Redirect root to dashboard
       {

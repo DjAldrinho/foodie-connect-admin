@@ -1,0 +1,82 @@
+@import '../security-settings/security-settings.component.scss';
+
+.feature-flags {
+  .flags-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 800px;
+  }
+
+  .flag-card {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+
+    .flag-info {
+      margin-bottom: 1rem;
+    }
+
+    .flag-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2e3a59;
+      }
+    }
+
+    .flag-description {
+      color: #6c757d;
+      margin: 0;
+    }
+
+    .flag-rollout {
+      label {
+        display: block;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+      }
+
+      .rollout-slider {
+        width: 100%;
+        height: 6px;
+        border-radius: 3px;
+        background: #dee2e6;
+        outline: none;
+        -webkit-appearance: none;
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #ff6b35;
+          cursor: pointer;
+        }
+
+        &::-moz-range-thumb {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #ff6b35;
+          cursor: pointer;
+          border: none;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

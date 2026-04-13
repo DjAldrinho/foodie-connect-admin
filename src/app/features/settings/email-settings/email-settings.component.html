@@ -1,0 +1,132 @@
+<div class="email-settings">
+  <div class="settings-header">
+    <h2>Email Settings</h2>
+    <p class="subtitle">Configure SMTP settings for sending emails</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><div class="spinner"></div></div>
+  } @else {
+    <form (submit)="saveSettings()" class="settings-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="smtpHost">SMTP Host</label>
+          <input
+            id="smtpHost"
+            type="text"
+            class="form-control"
+            placeholder="smtp.gmail.com"
+            [value]="smtpHost()"
+            (input)="smtpHost.set($any($event.target).value)"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="smtpPort">SMTP Port</label>
+          <input
+            id="smtpPort"
+            type="number"
+            class="form-control"
+            placeholder="587"
+            [value]="smtpPort()"
+            (input)="smtpPort.set(+$any($event.target).value)"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="smtpUser">SMTP User</label>
+        <input
+          id="smtpUser"
+          type="text"
+          class="form-control"
+          placeholder="noreply@yourdomain.com"
+          [value]="smtpUser()"
+          (input)="smtpUser.set($any($event.target).value)"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="smtpPassword">SMTP Password</label>
+        <input
+          id="smtpPassword"
+          type="password"
+          class="form-control"
+          placeholder="••••••••"
+          [value]="smtpPassword()"
+          (input)="smtpPassword.set($any($event.target).value)"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fromEmail">From Email</label>
+          <input
+            id="fromEmail"
+            type="email"
+            class="form-control"
+            placeholder="noreply@yourdomain.com"
+            [value]="fromEmail()"
+            (input)="fromEmail.set($any($event.target).value)"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="fromName">From Name</label>
+          <input
+            id="fromName"
+            type="text"
+            class="form-control"
+            placeholder="Your App Name"
+            [value]="fromName()"
+            (input)="fromName.set($any($event.target).value)"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="toggle-wrapper">
+          <label for="secureConnection">Use Secure Connection (TLS/SSL)</label>
+          <label class="toggle-switch">
+            <input
+              id="secureConnection"
+              type="checkbox"
+              [checked]="secureConnection()"
+              (change)="secureConnection.set($any($event.target).checked)"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      @if (testSuccess()) {
+        <div class="alert" [class.success]="testSuccess()!.success" [class.error]="!testSuccess()!.success">
+          {{ testSuccess()!.message }}
+        </div>
+      }
+
+      <div class="form-actions">
+        @if (saveSuccess()) {
+          <span class="success-message">✓ Settings saved successfully</span>
+        }
+        <button type="button" class="btn btn-secondary" (click)="testEmail()" [disabled]="isTesting()">
+          @if (isTesting()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isTesting() ? 'Sending...' : 'Send Test Email' }}
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="spinner-small"></span>
+          }
+          {{ isSaving() ? 'Saving...' : 'Save Settings' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

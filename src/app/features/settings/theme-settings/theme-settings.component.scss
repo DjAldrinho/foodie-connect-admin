@@ -1,0 +1,25 @@
+@import '../site-settings/site-settings.component.scss';
+
+.theme-settings {
+  .settings-form {
+    max-width: 700px;
+
+    .color-input-wrapper {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      .color-picker {
+        width: 50px;
+        height: 42px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .form-control {
+        flex: 1;
+      }
+    }
+  }
+}
