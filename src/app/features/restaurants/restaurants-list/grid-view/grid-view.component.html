@@ -1,0 +1,57 @@
+<div class="grid-view">
+  @if (loading()) {
+    <div class="grid-loading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  } @else if (restaurants().length === 0) {
+    <div class="grid-empty">
+      <p>No restaurants to display</p>
+    </div>
+  } @else {
+    <div class="restaurant-grid">
+      @for (restaurant of restaurants(); track restaurant.id) {
+        <div class="restaurant-card" (click)="onCardClick(restaurant.id)">
+          <!-- Cover Image -->
+          <div class="card-image">
+            @if (restaurant.coverImage) {
+              <img [src]="restaurant.coverImage" [alt]="restaurant.name" />
+            } @else {
+              <div class="image-placeholder">
+                <mat-icon>restaurant</mat-icon>
+              </div>
+            }
+            @if (restaurant.verificationStatus === VerificationStatus.VERIFIED) {
+              <div class="verified-badge">
+                <mat-icon>verified</mat-icon>
+              </div>
+            }
+          </div>
+
+          <!-- Card Content -->
+          <div class="card-content">
+            <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+            <p class="restaurant-cuisine">{{ restaurant.cuisine }}</p>
+
+            <div class="restaurant-meta">
+              <div class="rating">
+                <mat-icon>star</mat-icon>
+                <span>{{ restaurant.rating.toFixed(1) }}</span>
+                <span class="review-count">({{ restaurant.reviewCount }})</span>
+              </div>
+              <div class="price">{{ restaurant.priceRange }}</div>
+            </div>
+
+            <div class="restaurant-location">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ restaurant.city }}</span>
+            </div>
+
+            <mat-chip [class]="'status-chip status-' + getStatusColor(restaurant.status)">
+              {{ restaurant.status }}
+            </mat-chip>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

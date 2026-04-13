@@ -1,0 +1,89 @@
+/**
+ * User Preview Component Styles
+ */
+
+@reference "tailwindcss";
+
+.user-preview {
+  @apply bg-gray-50 rounded-lg p-6;
+}
+
+.user-profile {
+  @apply space-y-6;
+}
+
+.user-header {
+  @apply flex gap-4;
+}
+
+.user-avatar {
+  @apply w-20 h-20 rounded-full object-cover;
+}
+
+.user-avatar-placeholder {
+  @apply w-20 h-20 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-bold;
+}
+
+.user-info {
+  @apply flex-1;
+}
+
+.user-name {
+  @apply text-xl font-semibold text-gray-900 mb-1;
+}
+
+.user-email {
+  @apply text-gray-600 mb-1;
+}
+
+.user-joined {
+  @apply text-sm text-gray-500;
+}
+
+.user-bio {
+  @apply space-y-2;
+}
+
+.bio-label {
+  @apply text-sm font-medium text-gray-700;
+}
+
+.bio-text {
+  @apply text-gray-700;
+}
+
+.user-stats {
+  @apply space-y-3;
+}
+
+.stats-label {
+  @apply text-sm font-medium text-gray-700;
+}
+
+.stats-grid {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-4;
+}
+
+.stat-item {
+  @apply bg-white rounded-lg p-4 text-center;
+}
+
+.stat-value {
+  @apply text-2xl font-bold text-blue-600 mb-1;
+}
+
+.stat-label {
+  @apply text-sm text-gray-600;
+}
+
+.last-login {
+  @apply flex items-center gap-2 text-sm text-gray-600;
+}
+
+.last-login-label {
+  @apply font-medium;
+}
+
+.last-login-value {
+  @apply text-gray-900;
+}

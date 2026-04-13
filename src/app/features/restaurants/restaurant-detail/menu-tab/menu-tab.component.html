@@ -1,0 +1,43 @@
+<div class="menu-tab">
+  <div class="tab-header">
+    <h2>Menu</h2>
+  </div>
+
+  <div class="categories">
+    @for (category of categories(); track category.id) {
+      <div class="category">
+        <div class="category-header" (click)="toggleCategory(category.id)">
+          <mat-icon [class.expanded]="category.expanded">expand_more</mat-icon>
+          <h3>{{ category.name }}</h3>
+          <span class="item-count">{{ category.items.length }} items</span>
+        </div>
+
+        @if (category.expanded) {
+          <div class="category-items">
+            @for (item of category.items; track item.id) {
+              <div class="menu-item">
+                <div class="item-info">
+                  <div class="item-name-row">
+                    <h4 class="item-name">{{ item.name }}</h4>
+                    <div class="dietary-badges">
+                      @if (item.isVegetarian) {
+                        <span class="badge v">V</span>
+                      }
+                      @if (item.isVegan) {
+                        <span class="badge vg">VG</span>
+                      }
+                    </div>
+                  </div>
+                  @if (item.description) {
+                    <p class="item-description">{{ item.description }}</p>
+                  }
+                </div>
+                <div class="item-price">${{ item.price.toFixed(2) }}</div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,217 @@
+.list-view {
+  width: 100%;
+}
+
+.list-loading,
+.list-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  color: #6b7280;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.restaurants-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.restaurants-table thead {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.restaurants-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.restaurants-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+.restaurants-table th.sortable:hover {
+  background: #f3f4f6;
+}
+
+.restaurants-table th mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+  vertical-align: middle;
+  color: #9ca3af;
+}
+
+.restaurants-table tbody {
+  background: white;
+}
+
+.restaurant-row {
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.restaurant-row:hover {
+  background: #f9fafb;
+}
+
+.restaurant-row:last-child {
+  border-bottom: none;
+}
+
+.restaurants-table td {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.name-cell {
+  min-width: 280px;
+}
+
+.restaurant-info {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.restaurant-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.restaurant-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.restaurant-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.restaurant-name {
+  font-weight: 600;
+  color: #1f2937;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.verified-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: #4caf50;
+  flex-shrink: 0;
+}
+
+.restaurant-cuisine {
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.rating-cell {
+  min-width: 120px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.rating mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: #fbbf24;
+}
+
+.review-count {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.price-cell {
+  min-width: 80px;
+  font-weight: 600;
+  color: #059669;
+}
+
+.status-cell {
+  min-width: 120px;
+}
+
+.status-chip {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-chip.status-active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-chip.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-chip.status-suspended {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-chip.status-rejected {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .restaurants-table th,
+  .restaurants-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8125rem;
+  }
+
+  .name-cell {
+    min-width: 200px;
+  }
+
+  .restaurant-thumb {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -90,8 +90,16 @@ export class BreadcrumbsComponent implements OnDestroy {
 
     while (currentRoute) {
       const children = currentRoute.children;
-      currentRoute = children.length > 0 ? children[0] : this.activatedRoute;
 
+      // If no children, exit the loop
+      if (children.length === 0) {
+        break;
+      }
+
+      // Move to first child
+      currentRoute = children[0];
+
+      // If route has URL segment, add to breadcrumbs
       if (currentRoute?.snapshot?.url?.length) {
         const routeSegment = currentRoute.snapshot.url[0].path;
         url += `/${routeSegment}`;

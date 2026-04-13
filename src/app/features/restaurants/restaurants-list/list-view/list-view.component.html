@@ -1,0 +1,81 @@
+<div class="list-view">
+  @if (loading()) {
+    <div class="list-loading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  } @else if (restaurants().length === 0) {
+    <div class="list-empty">
+      <p>No restaurants to display</p>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table class="restaurants-table">
+        <thead>
+          <tr>
+            <th (click)="onSort('name')" class="sortable">
+              Restaurant
+              <mat-icon>{{ getSortIcon('name') }}</mat-icon>
+            </th>
+            <th (click)="onSort('cuisine')" class="sortable">
+              Cuisine
+              <mat-icon>{{ getSortIcon('cuisine') }}</mat-icon>
+            </th>
+            <th (click)="onSort('rating')" class="sortable">
+              Rating
+              <mat-icon>{{ getSortIcon('rating') }}</mat-icon>
+            </th>
+            <th (click)="onSort('city')" class="sortable">
+              Location
+              <mat-icon>{{ getSortIcon('city') }}</mat-icon>
+            </th>
+            <th (click)="onSort('priceRange')" class="sortable">
+              Price
+              <mat-icon>{{ getSortIcon('priceRange') }}</mat-icon>
+            </th>
+            <th (click)="onSort('status')" class="sortable">
+              Status
+              <mat-icon>{{ getSortIcon('status') }}</mat-icon>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (restaurant of restaurants(); track restaurant.id) {
+            <tr class="restaurant-row" (click)="onRowClick(restaurant.id)">
+              <td class="name-cell">
+                <div class="restaurant-info">
+                  @if (restaurant.coverImage) {
+                    <img [src]="restaurant.coverImage" [alt]="restaurant.name" class="restaurant-thumb" />
+                  }
+                  <div class="restaurant-details">
+                    <div class="restaurant-name-row">
+                      <span class="restaurant-name">{{ restaurant.name }}</span>
+                      @if (restaurant.verificationStatus === VerificationStatus.VERIFIED) {
+                        <mat-icon class="verified-icon">verified</mat-icon>
+                      }
+                    </div>
+                    <span class="restaurant-cuisine">{{ restaurant.cuisine }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{ restaurant.cuisine }}</td>
+              <td class="rating-cell">
+                <div class="rating">
+                  <mat-icon>star</mat-icon>
+                  <span>{{ restaurant.rating.toFixed(1) }}</span>
+                  <span class="review-count">({{ restaurant.reviewCount }})</span>
+                </div>
+              </td>
+              <td>{{ restaurant.city }}</td>
+              <td class="price-cell">{{ restaurant.priceRange }}</td>
+              <td class="status-cell">
+                <mat-chip [class]="'status-chip status-' + getStatusColor(restaurant.status)">
+                  {{ restaurant.status }}
+                </mat-chip>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

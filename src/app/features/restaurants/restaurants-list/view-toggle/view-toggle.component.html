@@ -1,0 +1,27 @@
+<div class="view-toggle" role="group" aria-label="Vista de restaurantes">
+  <!-- Grid View Button -->
+  <button
+    class="toggle-btn grid-btn"
+    [class.active]="viewMode() === 'grid'"
+    (click)="onGridView()"
+    aria-label="Vista de cuadrícula"
+    aria-pressed="viewMode() === 'grid'"
+    type="button"
+    title="Vista de cuadrícula"
+  >
+    <mat-icon>grid_view</mat-icon>
+  </button>
+
+  <!-- List View Button -->
+  <button
+    class="toggle-btn list-btn"
+    [class.active]="viewMode() === 'list'"
+    (click)="onListView()"
+    aria-label="Vista de lista"
+    aria-pressed="viewMode() === 'list'"
+    type="button"
+    title="Vista de lista"
+  >
+    <mat-icon>list</mat-icon>
+  </button>
+</div>

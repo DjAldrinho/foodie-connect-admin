@@ -1,0 +1,59 @@
+<div class="user-preview">
+  @if (user()) {
+    <div class="user-profile">
+      <div class="user-header">
+        @if (user()?.avatar) {
+          <img [src]="user()?.avatar" [alt]="user()?.name" class="user-avatar" />
+        } @else {
+          <div class="user-avatar-placeholder">
+            {{ user()?.name?.charAt(0) || '?' }}
+          </div>
+        }
+
+        <div class="user-info">
+          <h3 class="user-name">{{ user()?.name }}</h3>
+          <p class="user-email">{{ user()?.email }}</p>
+          <p class="user-joined">Joined {{ user()?.createdAt | date:'long' }}</p>
+        </div>
+      </div>
+
+      @if (user()?.bio) {
+        <div class="user-bio">
+          <h4 class="bio-label">About</h4>
+          <p class="bio-text">{{ user()?.bio }}</p>
+        </div>
+      }
+
+      <div class="user-stats">
+        <h4 class="stats-label">Activity Statistics</h4>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">{{ user()?.statistics?.totalLogins || 0 }}</div>
+            <div class="stat-label">Total Logins</div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-value">{{ user()?.statistics?.restaurantsCreated || 0 }}</div>
+            <div class="stat-label">Restaurants Created</div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-value">{{ user()?.statistics?.reviewsWritten || 0 }}</div>
+            <div class="stat-label">Reviews Written</div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-value">{{ user()?.statistics?.reportsSubmitted || 0 }}</div>
+            <div class="stat-label">Reports Submitted</div>
+          </div>
+        </div>
+
+        <div class="last-login">
+          <span class="last-login-label">Last Login:</span>
+          <span class="last-login-value">{{ user()?.statistics?.lastLoginAt | date:'short' }}</span>
+        </div>
+      </div>
+    </div>
+  }
+</div>

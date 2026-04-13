@@ -1,0 +1,310 @@
+/**
+ * Moderation Queue Component Styles
+ */
+
+@reference "tailwindcss";
+
+.moderation-queue {
+  @apply p-6 max-w-7xl mx-auto;
+}
+
+// Header
+.queue-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.queue-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.btn-refresh {
+  @apply flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors;
+}
+
+// Statistics
+.statistics-grid {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6;
+}
+
+.stat-card {
+  @apply bg-white rounded-lg p-4 border border-gray-200 shadow-sm;
+}
+
+.stat-label {
+  @apply text-sm font-medium text-gray-600 mb-1;
+}
+
+.stat-value {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.stat-card.escalated .stat-value {
+  @apply text-red-600;
+}
+
+// Filters
+.filters-section {
+  @apply bg-white rounded-lg p-4 mb-6 border border-gray-200 shadow-sm flex flex-wrap gap-4 items-center;
+}
+
+.filter-group {
+  @apply flex flex-col gap-1;
+}
+
+.filter-group label {
+  @apply text-sm font-medium text-gray-700;
+}
+
+.filter-group select {
+  @apply px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[150px];
+}
+
+.btn-clear-filters {
+  @apply ml-auto px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors;
+}
+
+// Bulk Actions
+.bulk-actions-bar {
+  @apply bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between;
+}
+
+.selected-count {
+  @apply font-medium text-blue-900;
+}
+
+.bulk-actions {
+  @apply flex gap-2;
+}
+
+.btn-bulk {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors;
+}
+
+.btn-approve {
+  @apply bg-green-600 text-white hover:bg-green-700;
+}
+
+.btn-reject {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.btn-dismiss {
+  @apply bg-gray-600 text-white hover:bg-gray-700;
+}
+
+.btn-escalate {
+  @apply bg-orange-600 text-white hover:bg-orange-700;
+}
+
+// Loading, Error, Empty States
+.loading-state,
+.error-state,
+.empty-state {
+  @apply flex flex-col items-center justify-center py-12 text-center;
+}
+
+.spinner {
+  @apply w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4;
+}
+
+.error-icon,
+.empty-icon {
+  @apply text-4xl mb-4;
+}
+
+.error-state h3,
+.empty-state h3 {
+  @apply text-lg font-semibold text-gray-900 mb-2;
+}
+
+.error-state p,
+.empty-state p {
+  @apply text-gray-600 mb-4;
+}
+
+.btn-retry,
+.btn-clear {
+  @apply px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors;
+}
+
+// Table
+.reports-table-container {
+  @apply bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden mb-6;
+}
+
+.reports-table {
+  @apply w-full;
+}
+
+.reports-table thead {
+  @apply bg-gray-50 border-b border-gray-200;
+}
+
+.reports-table th {
+  @apply px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors;
+}
+
+.reports-table th.sorted {
+  @apply bg-blue-50;
+}
+
+.sort-icon {
+  @apply ml-1;
+}
+
+.reports-table tbody tr {
+  @apply border-b border-gray-100 hover:bg-gray-50 transition-colors;
+}
+
+.reports-table tbody tr.selected {
+  @apply bg-blue-50;
+}
+
+.reports-table td {
+  @apply px-4 py-3;
+}
+
+.checkbox-column {
+  @apply w-12;
+}
+
+.priority-column {
+  @apply w-24;
+}
+
+.priority-badge {
+  @apply inline-flex px-2 py-1 text-xs font-medium rounded-full;
+}
+
+.priority-badge.escalated {
+  @apply bg-red-100 text-red-800;
+}
+
+.priority-badge.high {
+  @apply bg-orange-100 text-orange-800;
+}
+
+.priority-badge.medium {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.priority-badge.low {
+  @apply bg-gray-100 text-gray-800;
+}
+
+.type-column {
+  @apply w-24;
+}
+
+.type-badge {
+  @apply inline-flex px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800;
+}
+
+.content-column {
+  @apply min-w-[300px];
+}
+
+.content-preview {
+  @apply flex gap-3;
+}
+
+.content-thumbnail {
+  @apply w-16 h-16 rounded-lg object-cover;
+}
+
+.content-info {
+  @apply flex flex-col justify-center;
+}
+
+.content-title {
+  @apply font-medium text-gray-900 mb-1;
+}
+
+.content-description {
+  @apply text-sm text-gray-600 line-clamp-2;
+}
+
+.reporter-column {
+  @apply min-w-[200px];
+}
+
+.reporter-info {
+  @apply flex gap-3;
+}
+
+.reporter-avatar {
+  @apply w-10 h-10 rounded-full object-cover;
+}
+
+.reporter-details {
+  @apply flex flex-col justify-center;
+}
+
+.reporter-name {
+  @apply font-medium text-gray-900;
+}
+
+.reporter-email {
+  @apply text-sm text-gray-600;
+}
+
+.count-column {
+  @apply w-16 text-center;
+}
+
+.report-count {
+  @apply inline-flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full font-semibold text-gray-900;
+}
+
+.date-column {
+  @apply w-32;
+}
+
+.date-info {
+  @apply text-sm text-gray-600;
+}
+
+.status-column {
+  @apply w-32;
+}
+
+.status-badge {
+  @apply inline-flex px-2 py-1 text-xs font-medium rounded-full;
+}
+
+.status-badge.pending {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.status-badge.in_review {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.status-badge.resolved {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-badge.dismissed {
+  @apply bg-gray-100 text-gray-800;
+}
+
+.actions-column {
+  @apply w-24;
+}
+
+.btn-view {
+  @apply px-3 py-1 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded transition-colors;
+}
+
+// Pagination
+.pagination {
+  @apply flex items-center justify-center gap-4;
+}
+
+.btn-page {
+  @apply px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.page-info {
+  @apply text-sm text-gray-600;
+}

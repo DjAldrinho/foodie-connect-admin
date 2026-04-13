@@ -32,6 +32,9 @@ export const authGuard: CanActivateFn = (
   const authService = AuthService();
 
   // Check if user is authenticated
+  console.log('[AuthGuard] Checking authentication for:', state.url);
+  console.log('[AuthGuard] isAuthenticated:', authService.isAuthenticated());
+
   if (!authService.isAuthenticated()) {
     console.warn('[AuthGuard] User not authenticated, redirecting to login');
     router.navigate(['/auth/login'], {
@@ -72,6 +75,7 @@ export const authGuard: CanActivateFn = (
     }
   }
 
+  console.log('[AuthGuard] ✅ Access granted to:', state.url);
   return of(true);
 };
 

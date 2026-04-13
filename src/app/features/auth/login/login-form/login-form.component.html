@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" (keydown.enter)="onKeyPress($event)" class="login-form" novalidate>
+<form (submit)="onSubmit($event)" (keydown.enter)="onKeyPress($event)" class="login-form" novalidate>
   <!-- Email Input -->
   <app-input
     type="email"
@@ -7,7 +7,6 @@
     [required]="true"
     prefixIcon="email"
     [(value)]="email"
-    [error]="getEmailError()"
     (blur)="onEmailBlur()"
   >
   </app-input>
@@ -16,11 +15,10 @@
   <app-input
     type="password"
     label="Contraseña"
-    placeholder="••••••••"
+    placeholder="•••••••••"
     [required]="true"
     prefixIcon="lock"
     [(value)]="password"
-    [error]="getPasswordError()"
     (blur)="onPasswordBlur()"
   >
   </app-input>
@@ -48,11 +46,11 @@
 
   <!-- Submit Button -->
   <app-button
-    type="submit"
     variant="primary"
     size="large"
     [loading]="isLoading()"
     [disabled]="!isFormValid()"
+    (click)="onSubmit()"
     class="submit-btn"
   >
     {{ isLoading() ? 'Iniciando sesión...' : 'Iniciar Sesión' }}

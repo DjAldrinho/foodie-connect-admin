@@ -1,0 +1,73 @@
+<div class="restaurant-filters">
+  <div class="filter-row">
+    <!-- Search -->
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="filters().search" (ngModelChange)="onSearchChange($event)" placeholder="Search by name, city..." />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="filter-row">
+    <!-- Status Filter -->
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="filters().status" (ngModelChange)="onStatusChange($event)" placeholder="All statuses">
+        <mat-option [value]="undefined">All Statuses</mat-option>
+        @for (status of statusOptions; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Rating Filter -->
+    <mat-form-field appearance="outline">
+      <mat-label>Min Rating</mat-label>
+      <mat-select [(ngModel)]="filters().rating" (ngModelChange)="onRatingChange($event)" placeholder="Any rating">
+        <mat-option [value]="undefined">Any Rating</mat-option>
+        @for (rating of ratingOptions; track rating) {
+          <mat-option [value]="rating">{{ rating }}+ Stars</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="filter-row">
+    <!-- Cuisine Filter -->
+    <div class="chip-group">
+      <span class="chip-label">Cuisine:</span>
+      @for (cuisine of cuisineOptions; track cuisine) {
+        <mat-chip
+          [class.selected]="filters().cuisine?.includes(cuisine)"
+          (click)="onCuisineToggle(cuisine)"
+          standalone="true"
+        >
+          {{ cuisine }}
+        </mat-chip>
+      }
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <!-- Price Range Filter -->
+    <div class="chip-group">
+      <span class="chip-label">Price:</span>
+      @for (price of priceRangeOptions; track price) {
+        <mat-chip
+          [class.selected]="filters().priceRange?.includes(price)"
+          (click)="onPriceRangeToggle(price)"
+          standalone="true"
+        >
+          {{ price }}
+        </mat-chip>
+      }
+    </div>
+  </div>
+
+  <div class="filter-actions">
+    <button mat-stroked-button (click)="onReset()">
+      <mat-icon>clear</mat-icon>
+      Reset Filters
+    </button>
+  </div>
+</div>

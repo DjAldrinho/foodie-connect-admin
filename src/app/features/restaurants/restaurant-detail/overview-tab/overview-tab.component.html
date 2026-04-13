@@ -1,0 +1,167 @@
+<div class="overview-tab">
+  <!-- Restaurant Header -->
+  <div class="restaurant-header">
+    @if (restaurant().coverImage) {
+      <img [src]="restaurant().coverImage" [alt]="restaurant().name" class="cover-image" />
+    }
+    <div class="header-content">
+      <div class="title-row">
+        <h1>{{ restaurant().name }}</h1>
+        @if (restaurant().verificationStatus === VerificationStatus.VERIFIED) {
+          <mat-icon class="verified-badge">verified</mat-icon>
+        }
+      </div>
+      <p class="description">{{ restaurant().description }}</p>
+      <div class="badges">
+        <mat-chip [class]="'status-chip status-' + getStatusColor(restaurant().status)">
+          {{ restaurant().status }}
+        </mat-chip>
+        <mat-chip class="cuisine-chip">{{ restaurant().cuisine }}</mat-chip>
+        <mat-chip class="price-chip">{{ restaurant().priceRange }}</mat-chip>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <mat-icon class="stat-icon">star</mat-icon>
+      <div class="stat-content">
+        <div class="stat-value">{{ restaurant().rating.toFixed(1) }}</div>
+        <div class="stat-label">Rating</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <mat-icon class="stat-icon">review</mat-icon>
+      <div class="stat-content">
+        <div class="stat-value">{{ restaurant().reviewCount }}</div>
+        <div class="stat-label">Reviews</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <mat-icon class="stat-icon">photo_camera</mat-icon>
+      <div class="stat-content">
+        <div class="stat-value">{{ restaurant().photoCount }}</div>
+        <div class="stat-label">Photos</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <mat-icon class="stat-icon">check_in</mat-icon>
+      <div class="stat-content">
+        <div class="stat-value">{{ restaurant().checkInCount }}</div>
+        <div class="stat-label">Check-ins</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Info -->
+  <div class="info-section">
+    <h2>Contact Information</h2>
+    <div class="info-grid">
+      @if (restaurant().address) {
+        <div class="info-item">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <div class="info-label">Address</div>
+            <div class="info-value">
+              {{ restaurant().address.street }}, {{ restaurant().address.city }}
+              @if (restaurant().address.country) {
+                , {{ restaurant().address.country }}
+              }
+            </div>
+          </div>
+        </div>
+      }
+      @if (restaurant().phone) {
+        <div class="info-item">
+          <mat-icon>phone</mat-icon>
+          <div>
+            <div class="info-label">Phone</div>
+            <div class="info-value">{{ restaurant().phone }}</div>
+          </div>
+        </div>
+      }
+      @if (restaurant().email) {
+        <div class="info-item">
+          <mat-icon>email</mat-icon>
+          <div>
+            <div class="info-label">Email</div>
+            <div class="info-value">{{ restaurant().email }}</div>
+          </div>
+        </div>
+      }
+      @if (restaurant().website) {
+        <div class="info-item">
+          <mat-icon>language</mat-icon>
+          <div>
+            <div class="info-label">Website</div>
+            <a [href]="restaurant().website" target="_blank" rel="noopener" class="info-value link">
+              {{ restaurant().website }}
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Owner Info -->
+  @if (restaurant().ownerName) {
+    <div class="info-section">
+      <h2>Owner Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <mat-icon>person</mat-icon>
+          <div>
+            <div class="info-label">Owner</div>
+            <div class="info-value">{{ restaurant().ownerName }}</div>
+          </div>
+        </div>
+        @if (restaurant().ownerEmail) {
+          <div class="info-item">
+            <mat-icon>email</mat-icon>
+            <div>
+              <div class="info-label">Owner Email</div>
+              <div class="info-value">{{ restaurant().ownerEmail }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Verification Info -->
+  @if (restaurant().verificationStatus !== VerificationStatus.PENDING) {
+    <div class="info-section">
+      <h2>Verification Status</h2>
+      <div class="verification-info">
+        @if (restaurant().verificationStatus === VerificationStatus.VERIFIED && restaurant().verifiedAt) {
+          <div class="info-item">
+            <mat-icon>verified</mat-icon>
+            <div>
+              <div class="info-label">Verified On</div>
+              <div class="info-value">{{ restaurant().verifiedAt | date:'medium' }}</div>
+            </div>
+          </div>
+        }
+        @if (restaurant().verifiedBy) {
+          <div class="info-item">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <div>
+              <div class="info-label">Verified By</div>
+              <div class="info-value">{{ restaurant().verifiedBy }}</div>
+            </div>
+          </div>
+        }
+        @if (restaurant().rejectionReason) {
+          <div class="info-item">
+            <mat-icon>info</mat-icon>
+            <div>
+              <div class="info-label">Reason</div>
+              <div class="info-value">{{ restaurant().rejectionReason }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

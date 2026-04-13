@@ -1,0 +1,47 @@
+<div class="restaurant-detail-page">
+  <div class="header">
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Restaurants
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  } @else if (restaurant()) {
+    <div class="detail-container">
+      <!-- Verification Actions (shown only for pending restaurants) -->
+      <app-verification-actions
+        [restaurantId]="restaurantId()"
+        [verificationStatus]="restaurant()!.verificationStatus"
+        (verifyAction)="onVerifyAction($event)"
+      />
+
+      <!-- Tabs Navigation -->
+      <mat-tab-group [selectedIndex]="activeTab() === 'overview' ? 0 : activeTab() === 'photos' ? 1 : activeTab() === 'menu' ? 2 : 3" (selectedTabChange)="onTabChange($event.index === 0 ? 'overview' : $event.index === 1 ? 'photos' : $event.index === 2 ? 'menu' : 'reviews')">
+        <mat-tab label="Overview">
+          <ng-template matTabContent>
+            <app-overview-tab [restaurant]="restaurant()!" />
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Photos">
+          <ng-template matTabContent>
+            <app-photos-tab [restaurantId]="restaurantId()" />
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Menu">
+          <ng-template matTabContent>
+            <app-menu-tab [restaurantId]="restaurantId()" />
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Reviews">
+          <ng-template matTabContent>
+            <app-reviews-tab [restaurantId]="restaurantId()" />
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  }
+</div>
