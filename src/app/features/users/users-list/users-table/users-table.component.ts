@@ -1,7 +1,8 @@
 /**
- * UsersTableComponent - Table displaying users list
+ * UsersTableComponent - Table displaying users list with virtual scroll
  *
  * Features:
+ * - Virtual scroll for performance with 1000+ rows
  * - Checkbox column for selection
  * - Columns: Avatar, Name, Email, Role, Status, Created Date, Actions
  * - Avatar shows user image or initials
@@ -14,11 +15,12 @@
  * - Loading skeleton
  * - Empty state illustration
  * - Responsive (hide less important columns on mobile)
+ * - Sticky header
  */
 
 import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +34,7 @@ import type { UserListItem } from '../../../../models/users.types';
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule,
+    ScrollingModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatIconModule,
@@ -59,11 +61,9 @@ export class UsersTableComponent {
   readonly loading = input(false);
 
   /**
-   * Displayed columns
+   * Row height for virtual scroll (in pixels)
    */
-  readonly displayedColumns = computed(() => {
-    return ['select', 'user', 'role', 'status', 'created', 'lastLogin', 'actions'];
-  });
+  readonly rowHeight = 72;
 
   /**
    * Output when selection changes
