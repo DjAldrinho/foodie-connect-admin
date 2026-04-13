@@ -25,8 +25,8 @@ import type {
   ReportDetail,
   ActionHistoryItem,
   ReportListItem,
-} from '../../../models/moderation.types';
-import { ReportType, ModerationAction } from '../../../models/moderation.types';
+} from '../../../../models/moderation.types';
+import { ReportType, ModerationAction } from '../../../../models/moderation.types';
 
 /**
  * Report Detail Component
@@ -74,7 +74,7 @@ export class ReportDetailComponent implements OnInit {
   readonly errorMessage = signal('');
 
   // Type assertion for toast service
-  private readonly toast = inject(ToastNotificationService) as {
+  private readonly toast = inject(ToastNotificationService) as unknown as {
     showSuccess: (message: string) => void;
     showError: (message: string) => void;
   };

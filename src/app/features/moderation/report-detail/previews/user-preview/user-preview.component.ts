@@ -3,11 +3,11 @@
  * Displays user profile information in moderation detail view
  */
 
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import type { ReportDetail } from '../../../../../models/moderation.types';
+import type { ReportDetail } from '../../../../../../models/moderation.types';
 
 /**
  * User Preview Component
@@ -24,7 +24,7 @@ import type { ReportDetail } from '../../../../../models/moderation.types';
   imports: [CommonModule, RouterLink],
   templateUrl: './user-preview.component.html',
   styleUrls: ['./user-preview.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserPreviewComponent {
   readonly user = input<ReportDetail['content']['user']>();

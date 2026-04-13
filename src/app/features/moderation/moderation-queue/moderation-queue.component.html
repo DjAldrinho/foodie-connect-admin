@@ -130,7 +130,7 @@
       <thead>
         <tr>
           <th class="checkbox-column">
-            <input type="checkbox" [checked]="selectedCount() > 0 && selectedCount() === reports().length" (change)="selectionService.clearSelections()" />
+            <input type="checkbox" [checked]="selectedCount() > 0 && selectedCount() === reports().length" (change)="selectionService.clear()" />
           </th>
           <th class="priority-column">Priority</th>
           <th class="type-column">Type</th>

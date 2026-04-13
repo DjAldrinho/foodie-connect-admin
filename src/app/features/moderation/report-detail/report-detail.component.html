@@ -77,12 +77,12 @@
             <div class="info-item">
               <span class="info-label">Reported By</span>
               <div class="info-value reporter-info">
-                @if (report()?.reporter.avatar) {
-                <img [src]="report()?.reporter.avatar" alt="" class="reporter-avatar" />
+                @if (report()?.reporter?.avatar) {
+                <img [src]="report()?.reporter?.avatar" alt="" class="reporter-avatar" />
                 }
                 <div>
-                  <div class="reporter-name">{{ report()?.reporter.name }}</div>
-                  <div class="reporter-email">{{ report()?.reporter.email }}</div>
+                  <div class="reporter-name">{{ report()?.reporter?.name }}</div>
+                  <div class="reporter-email">{{ report()?.reporter?.email }}</div>
                 </div>
               </div>
             </div>

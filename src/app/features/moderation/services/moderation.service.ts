@@ -11,18 +11,18 @@ import type {
   ReportListItem,
   ReportDetail,
   QueueQuery,
-  BulkActionRequest,
+  ModerationBulkActionRequest,
   BulkActionResponse,
   ModerationStatistics,
   ActionHistoryItem,
-} from '../../../models/moderation.types';
+} from '../../../../models/moderation.types';
 import type { PaginatedResponse, PaginationParams } from '../../../models/common.types';
 import {
   ReportType,
   ReportStatus,
   Priority,
   ModerationAction,
-} from '../../../models/moderation.types';
+} from '../../../../models/moderation.types';
 
 /**
  * Mock reports data (30 sample reports)
@@ -682,7 +682,7 @@ export class ModerationService extends BaseService<Report> {
   /**
    * Perform bulk action on multiple reports
    */
-  bulkAction(request: BulkActionRequest): Observable<BulkActionResponse> {
+  bulkAction(request: ModerationBulkActionRequest): Observable<BulkActionResponse> {
     const results: BulkActionResponse = {
       successCount: 0,
       failedCount: 0,

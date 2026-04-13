@@ -215,7 +215,7 @@ export interface QueueQuery {
 /**
  * Bulk action request
  */
-export interface BulkActionRequest {
+export interface ModerationBulkActionRequest {
   action: 'approve' | 'reject' | 'dismiss' | 'escalate';
   reportIds: string[];
   reason?: string;

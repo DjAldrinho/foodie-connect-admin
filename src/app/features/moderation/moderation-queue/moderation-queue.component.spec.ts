@@ -27,14 +27,14 @@ describe('ModerationQueueComponent', () => {
       'bulkAction',
     ]);
     mockSelectionService = jasmine.createSpyObj('SelectionService', [
-      'getSelections',
-      'clearSelections',
-      'setSelected',
-      'toggleSelection',
+      'selected',
+      'selectedCount',
+      'clear',
+      'toggle',
     ]);
     mockToastService = jasmine.createSpyObj('ToastNotificationService', [
-      'showSuccess',
-      'showError',
+      'success',
+      'error',
     ]);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
@@ -194,8 +194,8 @@ describe('ModerationQueueComponent', () => {
       action: 'approve',
       reportIds: ['123', '456'],
     });
-    expect(mockToastService.showSuccess).toHaveBeenCalled();
-    expect(mockSelectionService.clearSelections).toHaveBeenCalled();
+    expect(mockToastService.success).toHaveBeenCalled();
+    expect(mockSelectionService.clear).toHaveBeenCalled();
   });
 
   it('should perform bulk dismiss action', () => {
@@ -232,8 +232,8 @@ describe('ModerationQueueComponent', () => {
     fixture.detectChanges();
     component.performBulkAction('approve');
 
-    expect(mockToastService.showSuccess).toHaveBeenCalled();
-    expect(mockToastService.showError).toHaveBeenCalled();
+    expect(mockToastService.success).toHaveBeenCalled();
+    expect(mockToastService.error).toHaveBeenCalled();
   });
 
   it('should refresh queue', () => {

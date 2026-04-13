@@ -62,8 +62,8 @@ describe('ReportDetailComponent', () => {
       'getRelatedReports',
     ]);
     mockToastService = jasmine.createSpyObj('ToastNotificationService', [
-      'showSuccess',
-      'showError',
+      'success',
+      'error',
     ]);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
@@ -117,7 +117,7 @@ describe('ReportDetailComponent', () => {
 
     component.approveReport();
     expect(mockModerationService.approveReport).toHaveBeenCalledWith('1');
-    expect(mockToastService.showSuccess).toHaveBeenCalled();
+    expect(mockToastService.success).toHaveBeenCalled();
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/moderation']);
   });
 
@@ -130,7 +130,7 @@ describe('ReportDetailComponent', () => {
     component.rejectReport();
 
     expect(mockModerationService.rejectReport).toHaveBeenCalledWith('1', reason);
-    expect(mockToastService.showSuccess).toHaveBeenCalled();
+    expect(mockToastService.success).toHaveBeenCalled();
   });
 
   it('should not reject report without reason', () => {
@@ -139,7 +139,7 @@ describe('ReportDetailComponent', () => {
 
     component.rejectReport();
     expect(mockModerationService.rejectReport).not.toHaveBeenCalled();
-    expect(mockToastService.showError).toHaveBeenCalled();
+    expect(mockToastService.error).toHaveBeenCalled();
   });
 
   it('should dismiss report', () => {
@@ -148,7 +148,7 @@ describe('ReportDetailComponent', () => {
 
     component.dismissReport();
     expect(mockModerationService.dismissReport).toHaveBeenCalledWith('1');
-    expect(mockToastService.showSuccess).toHaveBeenCalled();
+    expect(mockToastService.success).toHaveBeenCalled();
   });
 
   it('should escalate report', () => {
@@ -161,7 +161,7 @@ describe('ReportDetailComponent', () => {
     component.escalateReport();
 
     expect(mockModerationService.escalateReport).toHaveBeenCalledWith('1', 'Needs senior review');
-    expect(mockToastService.showSuccess).toHaveBeenCalled();
+    expect(mockToastService.success).toHaveBeenCalled();
   });
 
   it('should load action history', () => {

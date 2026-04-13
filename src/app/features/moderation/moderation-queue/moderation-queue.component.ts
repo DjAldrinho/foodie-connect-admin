@@ -3,9 +3,9 @@
  * Main component for displaying and managing the moderation queue
  */
 
-import { Component, OnInit, inject, DestroyRef, computed, signal } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef, computed, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,12 +17,12 @@ import { ToastNotificationService } from '../../../core/services/toast-notificat
 import type {
   ReportListItem,
   QueueQuery,
-  BulkActionRequest,
+  ModerationBulkActionRequest,
   ModerationStatistics,
-  PaginationParams,
-} from '../../../models/moderation.types';
+} from '../../../../models/moderation.types';
 import type { PaginatedResponse } from '../../../models/common.types';
-import { ReportType, ReportStatus, Priority } from '../../../models/moderation.types';
+import { PaginationParams } from '../../../models/common.types';
+import { ReportType, ReportStatus, Priority } from '../../../../models/moderation.types';
 
 /**
  * Moderation Queue Component
@@ -33,17 +33,23 @@ import { ReportType, ReportStatus, Priority } from '../../../models/moderation.t
 @Component({
   selector: 'app-moderation-queue',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './moderation-queue.component.html',
   styleUrls: ['./moderation-queue.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush, // OnPush
 })
 export class ModerationQueueComponent implements OnInit {
   private readonly moderationService = inject(ModerationService);
-  private readonly selectionService = inject(SelectionService);
+  readonly selectionService = inject(SelectionService);
   private readonly toastService = inject(ToastNotificationService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+
+  // Type assertion for toast service
+  private readonly toast = this.toastService as unknown as {
+    success: (message: string) => void;
+    error: (message: string) => void;
+  };
 
   // Signals
   readonly reports = signal<ReportListItem[]>([]);
@@ -105,7 +111,7 @@ export class ModerationQueueComponent implements OnInit {
     const query: QueueQuery = {
       ...this.filters(),
       ...this.pagination(),
-    };
+    } as QueueQuery;
 
     this.moderationService.getAll(this.pagination(), query).subscribe({
       next: (response: PaginatedResponse<ReportListItem>) => {
@@ -207,7 +213,7 @@ export class ModerationQueueComponent implements OnInit {
   /**
    * Perform bulk action
    */
-  performBulkAction(action: BulkActionRequest['action']): void {
+  performBulkAction(action: ModerationBulkActionRequest['action']): void {
     const selectedIds = this.selectionService.selected();
 
     if (selectedIds.length === 0) {
@@ -215,7 +221,7 @@ export class ModerationQueueComponent implements OnInit {
       return;
     }
 
-    const request: BulkActionRequest = {
+    const request: ModerationBulkActionRequest = {
       action,
       reportIds: selectedIds,
     };
@@ -231,7 +237,7 @@ export class ModerationQueueComponent implements OnInit {
             `${action.charAt(0).toUpperCase() + action.slice(1)} completed: ${response.successCount} succeeded, ${response.failedCount} failed`
           );
           if (response.errors.length > 0) {
-            response.errors.forEach((err) => {
+            response.errors.forEach((err: { id: string; error: string }) => {
               console.error(`Failed to ${action} report ${err.id}: ${err.error}`);
             });
           }
