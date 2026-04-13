@@ -138,7 +138,31 @@
     "engagement": "Engagement",
     "activity": "Activity",
     "reports": "Reports",
-    "dateRange": "Date Range"
+    "dateRange": "Date Range",
+    "users": {
+      "title": "Users",
+      "signupsTrend": "Signups Trend",
+      "activeInactive": "Active vs Inactive",
+      "retentionRate": "Retention Rate"
+    },
+    "content": {
+      "title": "Content",
+      "postsTrend": "Posts Trend",
+      "engagement": "Engagement Rate",
+      "topContent": "Top Content"
+    },
+    "restaurants": {
+      "title": "Restaurants",
+      "byCity": "By City",
+      "topRated": "Top Rated",
+      "reviews": "Reviews Distribution"
+    },
+    "search": {
+      "title": "Search",
+      "topSearches": "Top Searches",
+      "noResults": "No Results",
+      "searchVolume": "Search Volume"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -147,6 +171,83 @@
     "preferences": "Preferences",
     "notifications": "Notifications",
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "site": {
+      "title": "Site",
+      "name": "Site Name",
+      "description": "Description",
+      "contactEmail": "Contact Email",
+      "maintenanceMode": "Maintenance Mode"
+    },
+    "email": {
+      "title": "Email",
+      "smtpHost": "SMTP Host",
+      "smtpPort": "SMTP Port",
+      "smtpUser": "SMTP User",
+      "smtpPassword": "SMTP Password",
+      "fromEmail": "From Email",
+      "testEmail": "Send Test Email"
+    },
+    "security": {
+      "title": "Security",
+      "passwordMinLength": "Password Min Length",
+      "requireUppercase": "Require Uppercase",
+      "requireLowercase": "Require Lowercase",
+      "requireNumbers": "Require Numbers",
+      "requireSpecialChars": "Require Special Chars",
+      "sessionTimeout": "Session Timeout",
+      "enable2FA": "Enable 2FA"
+    },
+    "admins": {
+      "title": "Administrators",
+      "addAdmin": "Add Administrator",
+      "removeAdmin": "Remove Administrator",
+      "changeRole": "Change Role"
+    },
+    "auditLogs": {
+      "title": "Audit Logs",
+      "export": "Export Logs",
+      "filterByAction": "Filter by Action",
+      "filterByUser": "Filter by User",
+      "filterByDate": "Filter by Date"
+    },
+    "integrations": {
+      "title": "Integrations",
+      "googleMaps": "Google Maps",
+      "cloudinary": "Cloudinary",
+      "elasticsearch": "Elasticsearch"
+    },
+    "featureFlags": {
+      "title": "Feature Flags",
+      "enableFeature": "Enable Feature",
+      "disableFeature": "Disable Feature",
+      "rolloutPercentage": "Rollout Percentage"
+    },
+    "themeSettings": {
+      "title": "Theme",
+      "primaryColor": "Primary Color",
+      "secondaryColor": "Secondary Color",
+      "logo": "Logo",
+      "favicon": "Favicon",
+      "customCSS": "Custom CSS"
+    },
+    "localization": {
+      "title": "Localization",
+      "language": "Language",
+      "timezone": "Timezone",
+      "dateFormat": "Date Format",
+      "currency": "Currency"
+    },
+    "cache": {
+      "title": "Cache",
+      "ttl": "Time to Live",
+      "clearCache": "Clear Cache"
+    },
+    "backup": {
+      "title": "Backup",
+      "autoBackup": "Auto Backup",
+      "createBackup": "Create Backup",
+      "restoreBackup": "Restore Backup"
+    }
   }
 }
