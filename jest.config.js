@@ -10,7 +10,13 @@ export default {
   setupFilesAfterEnv: ['<rootDir>/src/setup-jest.ts'],
   testMatch: ['**/+(*.)+(spec|test).+(ts|tsx)?'],
   transform: {
-    '^.+\\.(ts|js)$': 'ts-jest',
+    '^.+\\.(ts|js)$': [
+      'ts-jest',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$',
+      },
+    ],
   },
   collectCoverage: true,
   coverageDirectory: 'coverage',
@@ -28,16 +34,5 @@ export default {
     '^@core/(.*)$': '<rootDir>/src/app/core/$1',
     '^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
     '^@features/(.*)$': '<rootDir>/src/app/features/$1',
-  },
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.(html|svg)$',
-      astTransformers: {
-        processing: {
-          preprocess: false,
-        },
-      },
-    },
   },
 };

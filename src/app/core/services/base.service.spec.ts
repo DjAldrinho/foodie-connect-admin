@@ -10,9 +10,8 @@ import { BaseService } from './base.service';
  * for all feature services.
  */
 describe('BaseService', () => {
-  let service: BaseService;
+  let service: BaseService<any>;
   let httpMock: HttpTestingController;
-  let httpClient: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,9 +19,8 @@ describe('BaseService', () => {
       providers: [BaseService],
     });
 
-    httpClient = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
-    service = new BaseService(httpClient);
+    service = TestBed.inject(BaseService);
   });
 
   afterEach(() => {
@@ -37,7 +35,7 @@ describe('BaseService', () => {
     it('should make GET request', () => {
       const mockData = { id: '1', name: 'Test' };
 
-      service.get<{ id: string; name: string }>('api/test').subscribe(data => {
+      service.get<{ id: string; name: string }>('api/test').subscribe((data) => {
         expect(data).toEqual(mockData);
       });
 
@@ -50,7 +48,7 @@ describe('BaseService', () => {
       const mockBody = { name: 'New' };
       const mockResponse = { id: '1', ...mockBody };
 
-      service.post('api/test', mockBody).subscribe(data => {
+      service.post('api/test', mockBody).subscribe((data) => {
         expect(data).toEqual(mockResponse);
       });
 
@@ -64,7 +62,7 @@ describe('BaseService', () => {
       const mockBody = { name: 'Updated' };
       const mockResponse = { id: '1', ...mockBody };
 
-      service.put('api/test/1', mockBody).subscribe(data => {
+      service.put('api/test/1', mockBody).subscribe((data) => {
         expect(data).toEqual(mockResponse);
       });
 
@@ -86,7 +84,7 @@ describe('BaseService', () => {
       const mockBody = { name: 'Patched' };
       const mockResponse = { id: '1', ...mockBody };
 
-      service.patch('api/test/1', mockBody).subscribe(data => {
+      service.patch('api/test/1', mockBody).subscribe((data) => {
         expect(data).toEqual(mockResponse);
       });
 
@@ -103,7 +101,7 @@ describe('BaseService', () => {
 
       service.get('api/test').subscribe({
         next: () => fail('Should not succeed'),
-        error: (error) => {
+        error: (error: Error) => {
           expect(error).toBeTruthy();
         },
       });
@@ -115,7 +113,7 @@ describe('BaseService', () => {
     it('should handle 404 error', () => {
       service.get('api/notfound').subscribe({
         next: () => fail('Should not succeed'),
-        error: (error) => {
+        error: (error: Error) => {
           expect(error).toBeTruthy();
         },
       });
@@ -127,7 +125,7 @@ describe('BaseService', () => {
     it('should handle 500 error', () => {
       service.get('api/server-error').subscribe({
         next: () => fail('Should not succeed'),
-        error: (error) => {
+        error: (error: Error) => {
           expect(error).toBeTruthy();
         },
       });
