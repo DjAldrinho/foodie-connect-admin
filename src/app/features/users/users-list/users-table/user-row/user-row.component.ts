@@ -24,7 +24,7 @@ import type { UserListItem } from '../../../../../models/users.types';
 import type { UserRole, UserStatus } from '../../../../../models/auth.types';
 
 @Component({
-  selector: 'tr[app-user-row]',
+  selector: 'div[app-user-row]',
   standalone: true,
   imports: [
     CommonModule,

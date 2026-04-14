@@ -4,6 +4,26 @@
   background: #f5f6fa;
 }
 
+/* Skip Navigation Link (Accessibility) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #ff6b35;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  font-weight: 600;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #2c3e50;
+  outline-offset: 2px;
+}
+
 /* Sidebar */
 /* Note: Sidebar styles are handled by sidebar.component.css */
 /* main-layout only controls main-content positioning */
@@ -17,7 +37,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {
@@ -36,7 +56,7 @@
   flex-direction: column;
   min-height: 100vh;
   margin-left: 70px; /* Default to collapsed sidebar width */
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .main-content.sidebar-shifted {
@@ -95,7 +115,8 @@ app-top-bar {
 @media (prefers-reduced-motion: reduce) {
   .main-content,
   .sidebar-overlay {
-    transition: none;
+    animation: none !important;
+    transition: none !important;
   }
 }
 

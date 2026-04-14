@@ -1,4 +1,4 @@
-<td class="checkbox-cell">
+<div class="checkbox-cell">
   <mat-checkbox
     [checked]="selected()"
     (change)="onCheckboxChange($event)"
@@ -6,9 +6,9 @@
     aria-label="Select user"
   >
   </mat-checkbox>
-</td>
+</div>
 
-<td class="avatar-cell">
+<div class="avatar-cell">
   @if (user().avatar) {
     <img
       [src]="user().avatar"
@@ -25,29 +25,29 @@
     <div class="user-name">{{ user().fullName }}</div>
     <div class="user-email">{{ user().email }}</div>
   </div>
-</td>
+</div>
 
-<td class="role-cell">
+<div class="role-cell">
   <span class="badge {{ getRoleBadgeClass(user().role) }}">
     {{ user().role.replace('_', ' ') }}
   </span>
-</td>
+</div>
 
-<td class="status-cell">
+<div class="status-cell">
   <span class="badge {{ getStatusBadgeClass(user().status) }}">
     {{ user().status }}
   </span>
-</td>
+</div>
 
-<td class="date-cell">
+<div class="date-cell">
   {{ formatDate(user().createdAt) }}
-</td>
+</div>
 
-<td class="last-login-cell">
+<div class="last-login-cell">
   {{ formatLastLogin(user().lastLoginAt) }}
-</td>
+</div>
 
-<td class="actions-cell">
+<div class="actions-cell">
   <button
     mat-icon-button
     [matMenuTriggerFor]="actionsMenu"
@@ -98,4 +98,4 @@
       <span>Delete</span>
     </button>
   </mat-menu>
-</td>
+</div>

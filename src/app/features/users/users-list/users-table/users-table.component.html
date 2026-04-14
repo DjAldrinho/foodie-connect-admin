@@ -12,10 +12,15 @@
     >
     </app-empty-state>
   } @else {
-    <table mat-table [dataSource]="users()" class="users-table">
-      <!-- Checkbox column header -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
+    <cdk-virtual-scroll-viewport
+      [itemSize]="rowHeight"
+      [minBufferPx]="500"
+      [maxBufferPx]="1000"
+      class="users-table-viewport"
+    >
+      <!-- Sticky Header -->
+      <div class="table-header sticky-header">
+        <div class="header-cell select-cell">
           <mat-checkbox
             [checked]="isAllSelected()"
             [indeterminate]="isSomeSelected()"
@@ -23,61 +28,37 @@
             aria-label="Select all users"
           >
           </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let user"></td>
-      </ng-container>
-
-      <!-- User column header -->
-      <ng-container matColumnDef="user">
-        <th mat-header-cell *matHeaderCellDef class="sortable-header" (click)="onSort('fullName')">
+        </div>
+        <div class="header-cell sortable-header" (click)="onSort('fullName')">
           User
-          <mat-icon>sort</mat-icon>
-        </th>
-      </ng-container>
-
-      <!-- Role column header -->
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef class="sortable-header" (click)="onSort('role')">
+          <mat-icon class="sort-icon">sort</mat-icon>
+        </div>
+        <div class="header-cell sortable-header" (click)="onSort('role')">
           Role
-          <mat-icon>sort</mat-icon>
-        </th>
-      </ng-container>
-
-      <!-- Status column header -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="sortable-header" (click)="onSort('status')">
+          <mat-icon class="sort-icon">sort</mat-icon>
+        </div>
+        <div class="header-cell sortable-header" (click)="onSort('status')">
           Status
-          <mat-icon>sort</mat-icon>
-        </th>
-      </ng-container>
-
-      <!-- Created date column header -->
-      <ng-container matColumnDef="created">
-        <th mat-header-cell *matHeaderCellDef class="sortable-header" (click)="onSort('createdAt')">
+          <mat-icon class="sort-icon">sort</mat-icon>
+        </div>
+        <div class="header-cell sortable-header" (click)="onSort('createdAt')">
           Created
-          <mat-icon>sort</mat-icon>
-        </th>
-      </ng-container>
-
-      <!-- Last login column header -->
-      <ng-container matColumnDef="lastLogin">
-        <th mat-header-cell *matHeaderCellDef class="sortable-header" (click)="onSort('lastLoginAt')">
+          <mat-icon class="sort-icon">sort</mat-icon>
+        </div>
+        <div class="header-cell sortable-header" (click)="onSort('lastLoginAt')">
           Last Login
-          <mat-icon>sort</mat-icon>
-        </th>
-      </ng-container>
-
-      <!-- Actions column header -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>
+          <mat-icon class="sort-icon">sort</mat-icon>
+        </div>
+        <div class="header-cell actions-cell">
           <span class="sr-only">Actions</span>
-        </th>
-      </ng-container>
+        </div>
+      </div>
 
-      <!-- Data rows -->
-      <tr
-        mat-row
-        *matRowDef="let user; trackBy: trackUser"
+      <!-- Virtual Scroll Rows -->
+      <div
+        *cdkVirtualFor="let user of users(); trackBy: trackUser"
+        class="table-row"
+        [class.selected]="isSelected(user)"
         app-user-row
         [user]="user"
         [selected]="isSelected(user)"
@@ -87,7 +68,7 @@
         (deactivate)="deactivate.emit($event)"
         (delete)="delete.emit($event)"
       >
-      </tr>
-    </table>
+      </div>
+    </cdk-virtual-scroll-viewport>
   }
 </div>

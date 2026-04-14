@@ -1,14 +1,13 @@
-import { inject } from '@angular/core';
 import {
-  HttpInterceptorFn,
   HttpErrorResponse,
-  HttpStatusCode,
-  HttpRequest,
   HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
+  HttpStatusCode,
 } from '@angular/common/http';
-import { catchError, switchMap, filter, take, throwError, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 /**
  * URLs that should bypass authentication

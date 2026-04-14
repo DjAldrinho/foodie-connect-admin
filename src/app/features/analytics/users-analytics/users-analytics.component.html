@@ -47,8 +47,13 @@
     <!-- Charts Section -->
     <div class="charts-section">
       <div class="chart-card">
-        <h3>User Signups Trend</h3>
-        <div class="simple-chart">
+        <h3 id="signups-chart-title">User Signups Trend</h3>
+        <div
+          class="simple-chart"
+          role="img"
+          aria-labelledby="signups-chart-title"
+          aria-describedby="signups-chart-desc"
+        >
           @for (point of analytics()!.signupsTrend.slice(-7); track point.date) {
             <div class="chart-bar" [style.height.%]="((point.value / 250) * 100)">
               <div class="bar-tooltip">{{ point.label }}: {{ point.value }}</div>
@@ -63,8 +68,13 @@
       </div>
 
       <div class="chart-card">
-        <h3>Active vs Inactive</h3>
-        <div class="pie-chart">
+        <h3 id="active-inactive-chart-title">Active vs Inactive</h3>
+        <div
+          class="pie-chart"
+          role="img"
+          aria-labelledby="active-inactive-chart-title"
+          aria-describedby="active-inactive-chart-desc"
+        >
           <div class="pie-segment active" [style.flex-grow]="analytics()!.activeUsers">
             <span class="pie-label">Active</span>
             <span class="pie-value">{{ analytics()!.activeUsers.toLocaleString() }}</span>
@@ -80,6 +90,32 @@
     <!-- Table Section -->
     <div class="table-section">
       <h3>Recent Signups</h3>
+
+      <!-- Screen reader only descriptions for charts -->
+      <div id="signups-chart-desc" class="sr-only">
+        Gráfico de tendencia de registros de usuarios. Datos detallados disponibles en la tabla de abajo.
+      </div>
+      <div id="active-inactive-chart-desc" class="sr-only">
+        Gráfico circular comparando usuarios activos e inactivos. Usuarios activos: {{ analytics()!.activeUsers }},
+        usuarios inactivos: {{ analytics()!.inactiveUsers }}.
+      </div>
+
+      <!-- Hidden data for screen readers -->
+      <div class="sr-only" role="region" aria-label="Datos de gráficos">
+        <h4>Datos del gráfico de registros:</h4>
+        <ul>
+          @for (point of analytics()!.signupsTrend.slice(-7); track point.date) {
+            <li>{{ point.label }}: {{ point.value }} registros</li>
+          }
+        </ul>
+        <h4>Datos del gráfico de actividad:</h4>
+        <ul>
+          <li>Usuarios activos: {{ analytics()!.activeUsers }} ({{ getActivePercentage().toFixed(1) }}%)</li>
+          <li>Usuarios inactivos: {{ analytics()!.inactiveUsers }} ({{ getInactivePercentage().toFixed(1) }}%)</li>
+        </ul>
+      </div>
+
+
       <table class="data-table">
         <thead>
           <tr>

@@ -39,12 +39,30 @@
           </tr>
         </thead>
         <tbody>
-          @for (restaurant of restaurants(); track restaurant.id) {
+          @for (restaurant of restaurants(); track restaurant.id; let i = $index) {
             <tr class="restaurant-row" (click)="onRowClick(restaurant.id)">
               <td class="name-cell">
                 <div class="restaurant-info">
                   @if (restaurant.coverImage) {
-                    <img [src]="restaurant.coverImage" [alt]="restaurant.name" class="restaurant-thumb" />
+                    @if (i < 3) {
+                      <!-- First 3: priority load -->
+                      <img
+                        ngSrc="{{ restaurant.coverImage }}"
+                        [alt]="restaurant.name"
+                        class="restaurant-thumb"
+                        width="80"
+                        height="80"
+                        priority
+                      />
+                    } @else {
+                      <!-- Rest: lazy load -->
+                      <img
+                        appLazyLoadImage
+                        [src]="restaurant.coverImage"
+                        [alt]="restaurant.name"
+                        class="restaurant-thumb"
+                      />
+                    }
                   }
                   <div class="restaurant-details">
                     <div class="restaurant-name-row">

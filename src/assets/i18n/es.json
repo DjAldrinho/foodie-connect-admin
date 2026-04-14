@@ -138,7 +138,31 @@
     "engagement": "Participación",
     "activity": "Actividad",
     "reports": "Reportes",
-    "dateRange": "Rango de Fechas"
+    "dateRange": "Rango de Fechas",
+    "users": {
+      "title": "Usuarios",
+      "signupsTrend": "Tendencia de Registros",
+      "activeInactive": "Activos vs Inactivos",
+      "retentionRate": "Tasa de Retención"
+    },
+    "content": {
+      "title": "Contenido",
+      "postsTrend": "Tendencia de Publicaciones",
+      "engagement": "Tasa de Participación",
+      "topContent": "Contenido Popular"
+    },
+    "restaurants": {
+      "title": "Restaurantes",
+      "byCity": "Por Ciudad",
+      "topRated": "Mejor Calificados",
+      "reviews": "Distribución de Reseñas"
+    },
+    "search": {
+      "title": "Búsqueda",
+      "topSearches": "Búsquedas Populares",
+      "noResults": "Sin Resultados",
+      "searchVolume": "Volumen de Búsqueda"
+    }
   },
   "settings": {
     "title": "Configuración",
@@ -147,6 +171,83 @@
     "preferences": "Preferencias",
     "notifications": "Notificaciones",
     "language": "Idioma",
-    "theme": "Tema"
+    "theme": "Tema",
+    "site": {
+      "title": "Sitio",
+      "name": "Nombre del Sitio",
+      "description": "Descripción",
+      "contactEmail": "Correo de Contacto",
+      "maintenanceMode": "Modo de Mantenimiento"
+    },
+    "email": {
+      "title": "Correo",
+      "smtpHost": "Servidor SMTP",
+      "smtpPort": "Puerto SMTP",
+      "smtpUser": "Usuario SMTP",
+      "smtpPassword": "Contraseña SMTP",
+      "fromEmail": "Correo de Envío",
+      "testEmail": "Enviar Correo de Prueba"
+    },
+    "security": {
+      "title": "Seguridad",
+      "passwordMinLength": "Longitud Mínima de Contraseña",
+      "requireUppercase": "Requerir Mayúsculas",
+      "requireLowercase": "Requerir Minúsculas",
+      "requireNumbers": "Requerir Números",
+      "requireSpecialChars": "Requerir Caracteres Especiales",
+      "sessionTimeout": "Tiempo de Espera de Sesión",
+      "enable2FA": "Habilitar 2FA"
+    },
+    "admins": {
+      "title": "Administradores",
+      "addAdmin": "Agregar Administrador",
+      "removeAdmin": "Eliminar Administrador",
+      "changeRole": "Cambiar Rol"
+    },
+    "auditLogs": {
+      "title": "Logs de Auditoría",
+      "export": "Exportar Logs",
+      "filterByAction": "Filtrar por Acción",
+      "filterByUser": "Filtrar por Usuario",
+      "filterByDate": "Filtrar por Fecha"
+    },
+    "integrations": {
+      "title": "Integraciones",
+      "googleMaps": "Google Maps",
+      "cloudinary": "Cloudinary",
+      "elasticsearch": "Elasticsearch"
+    },
+    "featureFlags": {
+      "title": "Flags de Funcionalidades",
+      "enableFeature": "Habilitar Funcionalidad",
+      "disableFeature": "Deshabilitar Funcionalidad",
+      "rolloutPercentage": "Porcentaje de Lanzamiento"
+    },
+    "themeSettings": {
+      "title": "Tema",
+      "primaryColor": "Color Primario",
+      "secondaryColor": "Color Secundario",
+      "logo": "Logo",
+      "favicon": "Favicon",
+      "customCSS": "CSS Personalizado"
+    },
+    "localization": {
+      "title": "Localización",
+      "language": "Idioma",
+      "timezone": "Zona Horaria",
+      "dateFormat": "Formato de Fecha",
+      "currency": "Moneda"
+    },
+    "cache": {
+      "title": "Caché",
+      "ttl": "Tiempo de Vida",
+      "clearCache": "Limpiar Caché"
+    },
+    "backup": {
+      "title": "Respaldo",
+      "autoBackup": "Respaldo Automático",
+      "createBackup": "Crear Respaldo",
+      "restoreBackup": "Restaurar Respaldo"
+    }
   }
 }
